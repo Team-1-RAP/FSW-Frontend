@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import "./App.css"
 import LandingPage from "./features/guests/LandingPage"
-import Dashboard from "./features/dashboard/Dashboard"
 import NotFound from "./features/NotFound"
+import HomePage from "./features/home/HomePage"
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />}></Route>
-        <Route path="/home" element={<Dashboard />}></Route>
+        <Route path="/home" element={<HomePage />}></Route>
 
         {/* NotFound */}
         <Route path="*" element={<NotFound />} />
