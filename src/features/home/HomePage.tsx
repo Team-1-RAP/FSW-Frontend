@@ -9,7 +9,7 @@ const HomePage: React.FC = () => {
   return (
     <>
       <DashboardLayout>
-        <div className="">
+        <div className="lg:ml-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-4 gap-1">
             {transactions.map((transaction) => (
               <TransactionItem key={transaction.id} {...transaction} />
