@@ -80,7 +80,7 @@ const Card = ({
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div>
       <div className={classNameMerger(cardVariants({ variant, size }))}>
         <div className="flex justify-between items-start">
           <div>

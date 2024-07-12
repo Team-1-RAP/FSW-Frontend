@@ -1,12 +1,12 @@
-import { AlignJustify, HelpCircle, LogOut, Search } from "react-feather"
-import logo from "../../../assets/images/logo.png"
+import { AlignJustify, HelpCircle, LogOut, Search } from "react-feather";
+import logo from "../../../assets/images/logo.png";
 
 interface NavbarProps {
-  toggleAside: () => void
+  toggleAside: () => void;
 }
 const Navbar: React.FC<NavbarProps> = ({ toggleAside }) => {
   return (
-    <header className="h-25 md:h-20 bg-[#FFFFFF] top-0 w-full py-5 md:py-0 fixed shadow">
+    <header className="h-25 md:h-20 bg-[#FFFFFF] top-0 w-full py-5 md:py-0 fixed shadow z-10">
       <div className="flex flex-col md:flex-row justify-between md:items-center gap-y-3 md-gap-y-0 px-4 md:px-10 h-full mb-auto">
         <div className="flex flex-col md:flex-row justify-between md:items-center gap-x-0 md:gap-x-2">
           <div className="w-24">
@@ -40,7 +40,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleAside }) => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

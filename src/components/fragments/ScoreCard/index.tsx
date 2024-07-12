@@ -12,7 +12,7 @@ const ScoreCard = ({ imgFile, title, value, isVisible }: ScoreCardProps) => {
     <div>
       <div>
         <div className="flex items-center bg-white p-4 rounded-3xl shadow-md">
-          <img src={`/assets/images/${imgFile}`} alt="Balance" width="70px" />
+          <img src={`/assets/images/${imgFile}`} alt="Balance" width="75px" />
           <div className="ms-4">
             <div className="text-[#718EBF] text-base">{title}</div>
             <div className="flex">
@@ -29,7 +29,7 @@ const ScoreCard = ({ imgFile, title, value, isVisible }: ScoreCardProps) => {
                   onClick={toggleNumberVisibility}
                   className={`ms-6 cursor-pointer flex items-center`}
                 >
-                  {isNumberVisible ? <Eye /> : <EyeOff className="w-7 h-7"/>}
+                  {isNumberVisible ? <Eye /> : <EyeOff className="w-7 h-7" />}
                 </div>
               )}
             </div>
