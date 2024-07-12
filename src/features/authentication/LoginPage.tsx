@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { User, Lock, EyeOff, Eye } from "react-feather";
 import logo from "../../assets/images/logo.png";
 import bgLogin from "../../assets/images/bgLogin.png";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -32,9 +34,12 @@ const LoginPage: React.FC = () => {
     };
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
         if (validateInput()) {
             // Menunggu API dari backend
             // Pastikan apakah hash password diperlukan atau tidak
+            const path = "/home";
+            navigate(path);
         }
     };
 
