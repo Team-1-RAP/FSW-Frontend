@@ -1,9 +1,43 @@
-import React from "react";
-import { User, Lock, EyeOff } from "react-feather";
+import React, { useState } from "react";
+import { User, Lock, EyeOff, Eye } from "react-feather";
 import logo from "../../assets/images/logo.png";
 import bgLogin from "../../assets/images/bgLogin.png";
 
 const LoginPage: React.FC = () => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState("");
+
+    const validateInput = () => {
+        const usernamePattern = /^[a-z0-9]+$/;
+        if (!username) {
+            setError("Username wajib diisi!");
+            return false;
+        }
+        if (!usernamePattern.test(username)) {
+            setError("Username harus huruf kecil dan hanya berisi huruf dan angka");
+            return false;
+        }
+        if (!password) {
+            setError("Password harus diisi");
+            return false;
+        }
+
+        setError("");
+        return true;
+    };
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (validateInput()) {
+            // Menunggu API dari backend
+            // Pastikan apakah hash password diperlukan atau tidak
+        }
+    };
+
     return (
         <div className="relative">
             <div className="">
@@ -17,43 +51,44 @@ const LoginPage: React.FC = () => {
                                 Selamat Datang di <b>Simple Bank</b>
                             </p>
                             <p className="text-[27px]">
-                                <b>Login</b> untuk akses akun <b>Simple Bank</b>{" "}
-                                mu
+                                <b>Login</b> untuk akses akun <b>Simple Bank</b> mu
                             </p>
                         </div>
                     </div>
                     <div className="absolute inset-x-0 bottom-0 flex flex-col items-start justify-end ml-[36px] mb-[52px] text-white">
-                        <p>
-                            Simple bank adalah pelaku jasa keuangan terdaftar
-                            dan diawasi oleh Otoritas Jasa Keuangan
-                        </p>
+                        <p>Simple bank adalah pelaku jasa keuangan terdaftar dan diawasi oleh Otoritas Jasa Keuangan</p>
                         <p>Copyright © 2024 - Simple Bank</p>
                     </div>
                 </div>
                 <div className="flex flex-col items-center justify-center w-1/2 h-screen">
-                    <img
-                        src={logo}
-                        alt="Simple Bank"
-                        className="w-[194px] mb-[29px]"
-                    />
-                    <form action="" className="w-1/2 space-y-3">
+                    <img src={logo} alt="Simple Bank" className="w-[194px] mb-[29px]" />
+                    <form onSubmit={handleSubmit} className="w-1/2 space-y-3">
                         <div className="relative">
                             <User className="text-[#c4c4c4] absolute left-2 top-3" />
                             <input
                                 type="text"
                                 placeholder="your account"
                                 className="border rounded-md border-[#c4c4c4] py-[10px] pl-[40px] pr-[10px] w-full"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                aria-label="Username, hanya huruf kecil dan angka diperbolehkan"
                             />
                         </div>
                         <div className="relative">
                             <Lock className="text-[#c4c4c4] absolute left-2 top-3" />
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 placeholder="password"
                                 className="border rounded-md border-[#c4c4c4] py-[10px] px-[40px] w-full"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                aria-label="password"
                             />
-                            <EyeOff className="text-[#c4c4c4] absolute right-4 top-3" />
+                            <div className="absolute right-4 top-3 cursor-pointer" onClick={toggleShowPassword}>
+                                {showPassword ? <Eye className="text-[#c4c4c4]" /> : <EyeOff className="text-[#c4c4c4]" />}
+                            </div>
                         </div>
+                        {error && <div className="text-red-500 text-sm">{error}</div>}
                         <p className="flex justify-end text-[#153193]">
                             <span>
                                 forgot your <b>password?</b>
@@ -61,10 +96,7 @@ const LoginPage: React.FC = () => {
                         </p>
                         <div className="border border-[#6C8FEE] w-full"></div>
                         <div className="flex justify-center">
-                            <button
-                                type="submit"
-                                className="mb-[100px] mt-[111px] bg-gradient-to-tr to-[#2AF0FA] from-[#0C32FB] py-[10px] px-[60px] rounded-[12px] text-white text-base border-[#5375EC] border-2"
-                            >
+                            <button type="submit" className="mb-[100px] mt-[111px] bg-gradient-to-tr to-[#2AF0FA] from-[#0C32FB] py-[10px] px-[60px] rounded-[12px] text-white text-base border-[#5375EC] border-2">
                                 Login
                             </button>
                         </div>
