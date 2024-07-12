@@ -1,11 +1,11 @@
-import TarikTunai from "../assets/images/icons/tarik-tunai.png";
+import HandWithdraw from "../assets/images/icons/handwithdraw.png";
 import Transfer from "../assets/images/icons/transfer.png";
-import TopUp from "../assets/images/icons/topup.png";
-import VA from "../assets/images/icons/va.png";
-import Investasi from "../assets/images/icons/investasi.png";
-import Pinjam from "../assets/images/icons/pinjam.png";
-import Valas from "../assets/images/icons/valas.png";
-import More from "../assets/images/icons/lainnya.png";
+import Wallet from "../assets/images/icons/wallet.png";
+import Receipt from "../assets/images/icons/receipt.png";
+import LineChart from "../assets/images/icons/linechart.png";
+import HandShake from "../assets/images/icons/handshake.png";
+import Dollar from "../assets/images/icons/dollar.png";
+import More from "../assets/images/icons/more.png";
 
 export interface ServiceButtonUtils {
   id: string;
@@ -17,7 +17,7 @@ export interface ServiceButtonUtils {
 export const services: ServiceButtonUtils[] = [
   {
     id: "Tarik-Tunai-Services",
-    icon: TarikTunai,
+    icon: HandWithdraw,
     label: "Tarik Tunai",
     link: "/tarik-tunai",
   },
@@ -29,31 +29,31 @@ export const services: ServiceButtonUtils[] = [
   },
   {
     id: "Top-Up-E-Wallet-Services",
-    icon: TopUp,
+    icon: Wallet,
     label: "Top Up E-Wallet",
     link: "/top-up-e-wallet",
   },
   {
     id: "Virtual-Account-Services",
-    icon: VA,
+    icon: Receipt,
     label: "Virtual Account",
     link: "/virtual-account",
   },
   {
     id: "Investasi-Services",
-    icon: Investasi,
+    icon: LineChart,
     label: "Investasi",
     link: "/investasi",
   },
   {
     id: "Simpan-Pinjam-Services",
-    icon: Pinjam,
+    icon: HandShake,
     label: "Simpan Pinjam",
     link: "/simpan-pinjam",
   },
   {
     id: "Simpan-Valas-Services",
-    icon: Valas,
+    icon: Dollar,
     label: "Simpan Valas",
     link: "/simpan-valas",
   },
