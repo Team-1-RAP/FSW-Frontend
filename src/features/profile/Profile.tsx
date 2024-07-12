@@ -88,12 +88,12 @@ const Profile: React.FC = () => {
   };
   return (
     <DashboardLayout>
-      <div className="me-8">
-        <div className="flex">
-          <div className="w-1/5 font-semibold text-xl text-[#343C6A]">
+      <div className="w-full flex flex-col">
+        <div className="flex mx-8">
+          <div className="lg:w-4/12 w-1/2 font-semibold text-xl text-[#343C6A]">
             Rekeningku
           </div>
-          <div className="w-2/6 flex justify-end">
+          <div className="lg:w-3/12 w-1/2 flex justify-end">
             <Link className="text-[#838383] text-base" to="/add-account">
               Ganti Kartu
               <ChevronRight
@@ -103,18 +103,17 @@ const Profile: React.FC = () => {
             </Link>
           </div>
         </div>
-        <div className="mt-11 flex">
-          <div className="">
+        <div className="mt-11 flex lg:w-100 sm:mx-8">
+          <div className="lg:w-2/3 w-full">
             <Swiper
               modules={[Navigation]}
               onSlideChange={handleSlideChange}
               loop={true}
-              navigation={true}
               breakpoints={{
                 0: {
                   slidesPerView: 1,
                 },
-                576: {
+                1024: {
                   slidesPerView: 2,
                 },
               }}
@@ -139,8 +138,8 @@ const Profile: React.FC = () => {
             </Swiper>
           </div>
         </div>
-        <div className="flex gap-5 mt-10">
-          <div className="w-1/3">
+        <div className="flex xl:flex-row flex-col gap-3 mt-10 mx-8">
+          <div className="xl:w-1/3 w-full">
             <ScoreCard
               imgFile="income-icon.png"
               title="Pengeluaran"
@@ -148,7 +147,7 @@ const Profile: React.FC = () => {
               isVisible={true}
             />
           </div>
-          <div className="w-1/3">
+          <div className="xl:w-1/3 w-full">
             <ScoreCard
               imgFile="balance-icon.png"
               title="Saldo Rekening"
@@ -156,7 +155,7 @@ const Profile: React.FC = () => {
               isVisible={false}
             />
           </div>
-          <div className="w-1/3">
+          <div className="xl:w-1/3 w-full">
             <ScoreCard
               imgFile="expense-icon.png"
               title="Pemasukan"
@@ -165,8 +164,8 @@ const Profile: React.FC = () => {
             />
           </div>
         </div>
-        <div className="flex mt-20">
-          <div className="w-1/2">
+        <div className="flex mt-20 sm:mx-8 mx-4">
+          <div className="xl:w-1/2 w-full">
             <span className="font-semibold text-2xl text-[#343C6A]">
               Aktivitas keuangan anda
             </span>

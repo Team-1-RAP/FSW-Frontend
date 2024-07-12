@@ -16,7 +16,7 @@ const ScoreCard = ({ imgFile, title, value, isVisible }: ScoreCardProps) => {
           <div className="ms-4">
             <div className="text-[#718EBF] text-base">{title}</div>
             <div className="flex">
-              <div className="text-2xl font-bold">
+              <div className="[400px]:text-2xl text-xl font-bold">
                 {isVisible || isNumberVisible
                   ? `Rp.${Number(value).toLocaleString("id-ID", {
                       currency: "IDR",
