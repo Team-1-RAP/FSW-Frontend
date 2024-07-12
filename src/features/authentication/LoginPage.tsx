@@ -13,6 +13,8 @@ const LoginPage: React.FC = () => {
 
     const validateInput = () => {
         const usernamePattern = /^[a-z0-9]+$/;
+        const passwordPattern = /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
         if (!username) {
             setError("Username wajib diisi!");
             return false;
@@ -25,6 +27,10 @@ const LoginPage: React.FC = () => {
             setError("Password harus diisi");
             return false;
         }
+        if (!passwordPattern.test(password)) {
+            setError("Kombinasi password belum sesuai");
+            return false;
+        }
 
         setError("");
         return true;
@@ -32,14 +38,30 @@ const LoginPage: React.FC = () => {
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
         if (validateInput()) {
-            // Menunggu API dari backend
-            // Pastikan apakah hash password diperlukan atau tidak
-            const path = "/home";
-            navigate(path);
+            try {
+                const response = await fetch("https://cautious-noelyn-ridho-71c54445.koyeb.app/api/v1/auth/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+                if (!response) {
+                    setError("Login Gagal");
+                }
+                const data = await response.json();
+                if (data) {
+                    localStorage.setItem("token", data.data.accessToken);
+                    navigate("/home");
+                } else {
+                    setError("Kredensial tidak sesuai");
+                }
+            } catch (error) {
+                setError("An error occurred during login");
+            }
         }
     };
 
