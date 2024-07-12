@@ -21,7 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleAside }) => {
           <div className="flex flex-row">
             <div className="relative">
               <input
-                className="appearance-none border-2 pl-10 bg-[#F1F5F9] rounded-2xl transition-colors md:w-[269px] w-[170px] md:h-[36px] h-[36px] py-2 px-3 text-[#747474] leading-tight focus:outline-none text-base"
+                className="appearance-none border-2 pl-10 bg-[#F1F5F9] rounded-2xl transition-colors md:w-[269px] w-[170px] md:h-[36px] h-[36px] py-2 px-3 text-[#747474] leading-tight focus:outline-none focus:ring text-base"
                 id="username"
                 type="text"
                 placeholder="Cari layanan..."
