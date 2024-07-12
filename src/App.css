@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @media (max-width: 399px) {
   .swiper {
     width: 99vw;
@@ -18,7 +17,7 @@
 
 @media (min-width: 768px) {
   .swiper {
-    width:50vw;
+    width: 50vw;
   }
 }
 

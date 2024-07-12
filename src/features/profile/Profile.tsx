@@ -179,11 +179,18 @@ const Profile: React.FC = () => {
                   <option value="" hidden>
                     Pilih Bulan
                   </option>
-                  <option value="08:00">08:00</option>
-                  <option value="09:00">09:00</option>
-                  <option value="10:00">10:00</option>
-                  <option value="11:00">11:00</option>
-                  <option value="12:00">12:00</option>
+                  <option value="january">Januari</option>
+                  <option value="february">Februari</option>
+                  <option value="march">Maret</option>
+                  <option value="april">April</option>
+                  <option value="may">Mei</option>
+                  <option value="june">Juni</option>
+                  <option value="july">Juli</option>
+                  <option value="august">Agustus</option>
+                  <option value="september">September</option>
+                  <option value="october">Oktober</option>
+                  <option value="november">November</option>
+                  <option value="december">Desember</option>
                 </select>
               </div>
               <div className="w-1/2 flex justify-end">
