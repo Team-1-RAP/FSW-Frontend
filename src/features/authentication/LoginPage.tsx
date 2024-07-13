@@ -1,4 +1,3 @@
-// src/pages/LoginPage.tsx
 import React from "react";
 import logo from "../../assets/images/logo.png";
 import bgLogin from "../../assets/images/bgLogin.png";

@@ -1,112 +1,56 @@
-// src/components/LoginForm.tsx
-import React, { useState } from "react";
+import React from "react";
 import { User, Lock, EyeOff, Eye } from "react-feather";
 import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
 import Button from "./Button";
+import { useAuth } from "../../../context/AuthContext";
+import { useToggle } from "../../../hooks/useToggle";
+import { loginValidationSchema } from "../../../utils/validationSchema";
+import { loginUser } from "../../../services/authService";
 
 const LoginForm: React.FC = () => {
     const navigate = useNavigate();
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
-    const [error, setError] = useState("");
+    const { setToken } = useAuth();
+    const [showPassword, toggleShowPassword] = useToggle(false);
 
-    const validateInput = () => {
-        const usernamePattern = /^[a-z0-9]+$/;
-        const passwordPattern = /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-
-        if (!username) {
-            setError("Username wajib diisi!");
-            return false;
-        }
-        if (!usernamePattern.test(username)) {
-            setError(
-                "Username harus huruf kecil dan hanya berisi huruf dan angka"
-            );
-            return false;
-        }
-        if (!password) {
-            setError("Password harus diisi");
-            return false;
-        }
-        if (!passwordPattern.test(password)) {
-            setError("Kombinasi password belum sesuai");
-            return false;
-        }
-
-        setError("");
-        return true;
-    };
-
-    const toggleShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (validateInput()) {
+    const formik = useFormik({
+        initialValues: {
+            username: "",
+            password: "",
+        },
+        validationSchema: loginValidationSchema,
+        onSubmit: async (values, { setErrors }) => {
             try {
-                const response = await fetch(
-                    "https://cautious-noelyn-ridho-71c54445.koyeb.app/api/v1/auth/login",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ username, password }),
-                    }
-                );
-                if (!response) {
-                    setError("Login Gagal");
-                }
-                const data = await response.json();
-                if (data) {
-                    localStorage.setItem("token", data.data.accessToken);
-                    navigate("/home");
-                } else {
-                    setError("Kredensial tidak sesuai");
-                }
+                const data = await loginUser(values.username, values.password);
+                setToken(data);
+                navigate("/home");
             } catch (error) {
-                setError("An error occurred during login");
+                setErrors({ username: "Login gagal atau kredensial tidak sesuai" });
             }
-        }
-    };
+        },
+    });
 
     return (
-        <form onSubmit={handleSubmit} className="w-11/12 space-y-3 md:w-1/2">
+        <form onSubmit={formik.handleSubmit} className="w-11/12 space-y-3 md:w-1/2">
             <div className="relative">
                 <User className="text-[#c4c4c4] absolute left-2 top-3" />
-                <input
-                    type="text"
-                    placeholder="your account"
-                    className="border rounded-md border-[#c4c4c4] py-[10px] pl-[40px] pr-[10px] w-full focus:outline-[#5375EC]"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    aria-label="Username, hanya huruf kecil dan angka diperbolehkan"
-                />
+                <input type="text" placeholder="your account" className="border rounded-md border-[#c4c4c4] py-[10px] pl-[40px] pr-[10px] w-full focus:outline-[#5375EC]" {...formik.getFieldProps("username")} aria-label="Username" />
+                {formik.touched.username && formik.errors.username ? <div className="text-sm text-red-500">{formik.errors.username}</div> : null}
             </div>
             <div className="relative">
                 <Lock className="text-[#c4c4c4] absolute left-2 top-3" />
                 <input
                     type={showPassword ? "text" : "password"}
                     placeholder="password"
-                    className="border rounded-md border-[#c4c4c4] py-[10px] px-[40px] w-full focus:outline-[#5375EC] "
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    aria-label="password"
+                    className="border rounded-md border-[#c4c4c4] py-[10px] px-[40px] w-full focus:outline-[#5375EC]"
+                    {...formik.getFieldProps("password")}
+                    aria-label="Password"
                 />
-                <div
-                    className="absolute cursor-pointer right-4 top-3"
-                    onClick={toggleShowPassword}
-                >
-                    {showPassword ? (
-                        <Eye className="text-[#c4c4c4]" />
-                    ) : (
-                        <EyeOff className="text-[#c4c4c4]" />
-                    )}
+                <div className="absolute cursor-pointer right-4 top-3" onClick={toggleShowPassword}>
+                    {showPassword ? <Eye className="text-[#c4c4c4]" /> : <EyeOff className="text-[#c4c4c4]" />}
                 </div>
+                {formik.touched.password && formik.errors.password ? <div className="text-sm text-red-500">{formik.errors.password}</div> : null}
             </div>
-            {error && <div className="text-sm text-red-500">{error}</div>}
             <p className="flex justify-end text-[#153193]">
                 <span>
                     forgot your <b>password?</b>
@@ -114,7 +58,7 @@ const LoginForm: React.FC = () => {
             </p>
             <div className="border border-[#6C8FEE] w-full"></div>
             <div className="flex justify-center">
-                <Button type="submit" className="mb-[100px] mt-[111px]">
+                <Button type="submit" className="my-4">
                     Login
                 </Button>
             </div>
