@@ -25,7 +25,7 @@ const HomePage: React.FC = () => {
       <DashboardLayout>
         <div className="lg:ml-12">
           <div className="flex justify-between">
-            <h1 className="text-[22px] text-[#343C6A] font-semibold">Rekeningku</h1>
+            <h1 className="text-[22px] text-[#343C6A] font-semibold">Rekeningku </h1>
             <button className="flex items-center">
               <p className="text-[#838383] text-[15px] font-semibold">Ganti kartu</p>
               <svg xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="#235697"  stroke-width="1"  stroke-linecap="round"  stroke-linejoin="round"  className="ms-3 icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>
