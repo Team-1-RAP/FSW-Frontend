@@ -21,7 +21,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         {/* Sidebar */}
         <SideBar isAsideOpen={isAsideOpen} closeAside={closeAside} />
         {/* Main */}
-        <main className="flex flex-grow lg:ml-[200px] pt-5 lg:pt-10 bg-gray-50">{children}</main>
+        <main className="container mx-auto lg:flex flex-grow lg:ml-[200px] pt-5 lg:pt-10 bg-gray-50">{children}</main>
       </div>
     </div>
   );
