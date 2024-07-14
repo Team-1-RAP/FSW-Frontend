@@ -1,17 +1,17 @@
-import HandWithdraw from "../assets/images/icons/handwithdraw.png";
-import Transfer from "../assets/images/icons/transfer.png";
-import Wallet from "../assets/images/icons/wallet.png";
-import Receipt from "../assets/images/icons/receipt.png";
-import LineChart from "../assets/images/icons/linechart.png";
-import HandShake from "../assets/images/icons/handshake.png";
-import Dollar from "../assets/images/icons/dollar.png";
-import More from "../assets/images/icons/more.png";
+import HandWithdraw from "../assets/icons/handwithdraw.png"
+import Transfer from "../assets/icons/transfer.png"
+import Wallet from "../assets/icons/wallet.png"
+import Receipt from "../assets/icons/receipt.png"
+import LineChart from "../assets/icons/linechart.png"
+import HandShake from "../assets/icons/handshake.png"
+import Dollar from "../assets/icons/dollar.png"
+import More from "../assets/icons/more.png"
 
 export interface ServiceButtonUtils {
-  id: string;
-  icon: string;
-  label: string;
-  link: string;
+  id: string
+  icon: string
+  label: string
+  link: string
 }
 
 export const services: ServiceButtonUtils[] = [
@@ -63,4 +63,4 @@ export const services: ServiceButtonUtils[] = [
     label: "Lainnya",
     link: "/lainnya",
   },
-];
+]

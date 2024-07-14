@@ -3,7 +3,7 @@ import logo from "../../../assets/images/logo.png"
 import logout from "../../../assets/images/icons/logout-left.png"
 
 interface NavbarProps {
-  toggleAside: () => void
+  toggleAside: () => void;
 }
 const Navbar: React.FC<NavbarProps> = ({ toggleAside }) => {
   return (
@@ -42,7 +42,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleAside }) => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

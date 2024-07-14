@@ -1,12 +1,12 @@
-import Income from "../assets/images/icons/income.png";
-import Outcome from "../assets/images/icons/outcome.png";
+import Income from "../assets/icons/income.png"
+import Outcome from "../assets/icons/outcome.png"
 
 export interface TransactionItemUtils {
-  id: string;
-  icon: string;
-  label: string;
-  value: number | string;
-  color: string;
+  id: string
+  icon: string
+  label: string
+  value: number | string
+  color: string
 }
 
 export const transactions: TransactionItemUtils[] = [
@@ -24,4 +24,4 @@ export const transactions: TransactionItemUtils[] = [
     value: "Rp.14.678.990,00-",
     color: "FFE0EB",
   },
-];
+]

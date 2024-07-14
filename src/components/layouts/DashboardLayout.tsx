@@ -1,18 +1,18 @@
-import { useState } from "react"
-import Navbar from "../fragments/Dashboard/Navbar"
-import SideBar from "../fragments/Dashboard/Sidebar"
+import { useState } from "react";
+import Navbar from "../fragments/Dashboard/Navbar";
+import SideBar from "../fragments/Dashboard/Sidebar";
 
 interface DashboardLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
-  const [isAsideOpen, setIsAsideOpen] = useState(false)
+  const [isAsideOpen, setIsAsideOpen] = useState(false);
   const toggleAside = () => {
-    setIsAsideOpen(!isAsideOpen)
-  }
+    setIsAsideOpen(!isAsideOpen);
+  };
   const closeAside = () => {
-    setIsAsideOpen(false)
-  }
+    setIsAsideOpen(false);
+  };
   return (
     <div className="flex h-screen">
       {/* Navbar */}
@@ -24,7 +24,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         <main className="flex flex-grow lg:ml-[200px] pt-5 lg:pt-10 bg-gray-50">{children}</main>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;
