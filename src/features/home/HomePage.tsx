@@ -52,7 +52,7 @@ const HomePage: React.FC = () => {
               ))}
             </div>
             <div className="mt-4">
-              <ScoreCard imgFile="expense-icon.png" title="Saldo Rekening" value={1000000} isVisible={false} />
+              <ScoreCard imgFile="balance-icon.png" title="Saldo Rekening" value={1000000} isVisible={false} />
             </div>
             <div className=" mt-4 grid gap-3 shadow-md p-7 rounded-3xl bg-white">
               {mutasiItems.map((mutasi) => (
@@ -68,7 +68,7 @@ const HomePage: React.FC = () => {
               ))}
             </div>
             <h1 className="text-[15px] font-semibold ml-2 mt-4 mb-4 text-[#121F59]">Layanan Digital</h1>
-            <div className="grid grid-cols-4 lg:gap-8 gap-4">
+            <div className="grid grid-cols-4 lg:gap-2 gap-4">
               {services.map((services, index) => (
                 <ServiceButton key={index} id={services.id} icon={services.icon} label={services.label} link={services.link} />
               ))}
