@@ -8,7 +8,7 @@ interface SidebarProps {
 const SideBar: React.FC<SidebarProps> = ({ isAsideOpen, closeAside }) => {
   return (
     <>
-      <aside id="aside" className="hidden md:flex w-[209px] h-screen md:flex-col items-center pb-4 shadow fixed">
+      <aside id="aside" className="hidden lg:flex w-[209px] h-screen lg:flex-col items-center pb-4 shadow fixed">
         <div className="flex flex-col justify-between h-full">
           <ul className="flex flex-col gap-1 mt-2">
             <li className="w-[164px]">
@@ -40,7 +40,7 @@ const SideBar: React.FC<SidebarProps> = ({ isAsideOpen, closeAside }) => {
       </aside>
 
       {/* Aside Offcanvas */}
-      <aside id="aside" className={`md:hidden fixed inset-y-0 left-0 z-50 bg-white w-[209px] h-screen flex flex-col items-center pb-4 shadow transition-transform ${isAsideOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      <aside id="aside" className={`lg:hidden fixed inset-y-0 left-0 z-50 bg-white w-[209px] h-screen flex flex-col items-center pb-4 shadow transition-transform ${isAsideOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="flex justify-end w-full px-4 mt-5">
           <button className="text-[#235697]" onClick={closeAside}>
             <X />
