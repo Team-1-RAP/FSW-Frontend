@@ -2,13 +2,13 @@ import { Home, List, Settings, User, X } from "react-feather"
 import { Link } from "react-router-dom"
 
 interface SidebarProps {
-  isAsideOpen: boolean
+                                isAsideOpen: boolean
   closeAside: () => void
 }
 const SideBar: React.FC<SidebarProps> = ({ isAsideOpen, closeAside }) => {
   return (
     <>
-      <aside id="aside" className="hidden lg:flex w-[209px] h-screen lg:flex-col items-center pb-4 shadow fixed">
+      <aside id="aside" className="hidden lg:flex w-[209px] h-screen lg:flex-col items-center pb-4 shadow fixed z-10">
         <div className="flex flex-col justify-between h-full">
           <ul className="flex flex-col gap-1 mt-2">
             <li className="w-[164px]">

@@ -1,3 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media (max-width: 399px) {
+  .swiper {
+    width: 99vw;
+    transform: scale(0.8);
+  }
+}
+
+@media (min-width: 400px) {
+  .swiper {
+    width: 85vw;
+  }
+}
+
+@media (min-width: 768px) {
+  .swiper {
+    width: 50vw;
+  }
+}
+
+@media (min-width: 1024px) {
+  .swiper {
+    width: 70vw;
+  }
+}
+
+@media (min-width: 1280px) {
+  .swiper {
+    width: 55vw;
+  }
+}

@@ -5,12 +5,13 @@ import SwiperCore from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Navigation } from "swiper/modules";
+import { Navigation, Keyboard } from "swiper/modules";
 import { CardProps } from "./../../components/fragments/Card/types";
 import ScoreCard from "../../components/fragments/ScoreCard";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "react-feather";
+import * as XLSX from "xlsx";
 
 import {
   Chart as ChartJS,
@@ -58,11 +59,11 @@ const Profile: React.FC = () => {
   ];
 
   const data = {
-    labels: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"],
+    labels: ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"],
     datasets: [
       {
         label: "Pemasukan",
-        data: [500, 300, 400, 250, 450, 150, 300],
+        data: [500, 300, 400, 250],
         backgroundColor: "#396AFF",
         borderRadius: Number.MAX_VALUE,
         categoryPercentage: 0.6,
@@ -71,7 +72,7 @@ const Profile: React.FC = () => {
       },
       {
         label: "Pengeluaran",
-        data: [200, 150, 100, 300, 350, 200, 250],
+        data: [200, 150, 100, 300],
         backgroundColor: "#FF82AC",
         borderRadius: Number.MAX_VALUE,
         categoryPercentage: 0.6,
@@ -81,16 +82,40 @@ const Profile: React.FC = () => {
     ],
   };
 
+  const downloadXLS = () => {
+    const wb = XLSX.utils.book_new();
+    const wsName = "Laporan Keuangan";
+
+    const wsData = [
+      ["Hari", "Pemasukan", "Pengeluaran"],
+      ...data.labels.map((label, index) => [
+        label,
+        data.datasets[0].data[index],
+        data.datasets[1].data[index],
+      ]),
+    ];
+
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+    XLSX.utils.book_append_sheet(wb, ws, wsName);
+    XLSX.writeFile(wb, "laporan-keuangan.xlsx");
+  };
+
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const handleSlideChange = (swiper: SwiperCore) => {
     console.log(swiper.realIndex);
     setActiveIndex(swiper.realIndex);
   };
+
+  const [selectedMonth, setSelectedMonth] = useState("");
+
   return (
     <DashboardLayout>
       <div className="w-full flex flex-col">
         <div className="flex mx-8">
-          <div className="lg:w-4/12 w-1/2 font-semibold text-xl text-[#343C6A]">
+          <div
+            className="lg:w-4/12 w-1/2 font-semibold text-xl text-[#343C6A]"
+            tabIndex={0}
+          >
             Rekeningku
           </div>
           <div className="lg:w-3/12 w-1/2 flex justify-end">
@@ -106,8 +131,11 @@ const Profile: React.FC = () => {
         <div className="mt-11 flex lg:w-100 sm:mx-8">
           <div className="lg:w-2/3 w-full">
             <Swiper
-              modules={[Navigation]}
+              modules={[Navigation, Keyboard]}
               onSlideChange={handleSlideChange}
+              keyboard={{
+                enabled: true,
+              }}
               loop={true}
               breakpoints={{
                 0: {
@@ -166,7 +194,10 @@ const Profile: React.FC = () => {
         </div>
         <div className="flex mt-20 sm:mx-8 mx-4">
           <div className="xl:w-1/2 w-full">
-            <span className="font-semibold text-2xl text-[#343C6A]">
+            <span
+              className="font-semibold text-2xl text-[#343C6A]"
+              tabIndex={0}
+            >
               Aktivitas keuangan anda
             </span>
             <div className="flex items-center mb-4">
@@ -174,7 +205,8 @@ const Profile: React.FC = () => {
                 <select
                   id="time"
                   name="Waktu Sewa"
-                  className="border-2 border-[#1454FB] rounded-lg w-32 h-8 flex items-center"
+                  className="border-2 border-[#1454FB] rounded-lg w-32 h-8 flex items-center focus:border-black"
+                  onChange={(e) => setSelectedMonth(e.target.value)}
                 >
                   <option value="" hidden>
                     Pilih Bulan
@@ -197,12 +229,19 @@ const Profile: React.FC = () => {
                 <button
                   type="submit"
                   className="bg-gradient-to-tr to-[#2AF0FA] from-[#0C32FB] rounded-xl text-white text-xs font-medium w-36 h-9"
+                  onClick={downloadXLS}
+                  aria-label="Unduh chart data ke dalam file excel"
                 >
-                  Unduh xls
+                  Unduh .xls
                 </button>
               </div>
             </div>
-            <BarChart data={data} />
+            <BarChart
+              data={data}
+              ariaLabel={`Bar Chart Aktivitas keuangan ${
+                selectedMonth ? "bulan " + selectedMonth : ""
+              }`}
+            />
           </div>
         </div>
       </div>
