@@ -6,6 +6,7 @@ import HomePage from "./features/home/HomePage";
 import LoginPage from "./features/authentication/LoginPage";
 import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext"; // Pastikan untuk mengimpor AuthProvider dari file yang benar
+import Profile from "./features/profile/Profile";
 
 function App() {
     return (
@@ -20,6 +21,8 @@ function App() {
                     {/* LoginPage - Public Route */}
                     <Route path="/login" element={<LoginPage />} />
 
+                    <Route path='/profile' element={<Profile />} />
+
                     {/* HomePage - Private Route */}
                     <Route
                         path="/home"
@@ -29,6 +32,7 @@ function App() {
                             </PrivateRoute>
                         }
                     />
+                    
 
                     {/* NotFound - Fallback Route */}
                     <Route path="*" element={<NotFound />} />
