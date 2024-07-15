@@ -1,7 +1,13 @@
-import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
+import React, {
+    createContext,
+    useState,
+    useEffect,
+    useCallback,
+    ReactNode,
+} from "react";
 import { jwtDecode } from "jwt-decode";
 
-interface AuthContextProps {
+export interface AuthContextProps {
     token: string | null;
     setToken: (token: string | null) => void;
     fullname: string | null;
@@ -9,25 +15,29 @@ interface AuthContextProps {
     logout: () => void;
 }
 
-interface DecodedToken {
-    full_name: string;
+export interface DecodedToken {
+    user_name: string;
     exp: number;
 }
 
-interface AuthProviderProps {
+export interface AuthProviderProps {
     children: ReactNode;
 }
 
-const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+export const AuthContext = createContext<AuthContextProps | undefined>(
+    undefined
+);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
+    const [token, setToken] = useState<string | null>(
+        localStorage.getItem("token")
+    );
     const [fullname, setFullname] = useState<string | null>(null);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
     const decodeToken = useCallback((token: string) => {
         const decoded: DecodedToken = jwtDecode(token);
-        setFullname(decoded.full_name);
+        setFullname(decoded.user_name);
         return decoded.exp;
     }, []);
 
@@ -70,13 +80,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     }, [decodeToken]);
 
-    return <AuthContext.Provider value={{ token, setToken: handleSetToken, fullname, isAuthenticated, logout }}>{children}</AuthContext.Provider>;
-};
-
-export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error("useAuth must be used within an AuthProvider");
-    }
-    return context;
+    return (
+        <AuthContext.Provider
+            value={{
+                token,
+                setToken: handleSetToken,
+                fullname,
+                isAuthenticated,
+                logout,
+            }}
+        >
+            {children}
+        </AuthContext.Provider>
+    );
 };

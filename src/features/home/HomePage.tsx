@@ -23,7 +23,7 @@ const HomePage: React.FC = () => {
   return (
     <>
       <DashboardLayout>
-        <div className="flex flex-col lg:flex-row lg:space-x-6 lg:ml-12">
+        <div className="flex flex-col mx-2 lg:flex-row lg:space-x-6 lg:ml-12 lg:mx-0">
           <div className="lg:w-1/2">
             <div className="flex justify-between">
               <h1 className="text-[22px] text-[#343C6A] font-semibold">Rekeningku </h1>
@@ -46,7 +46,7 @@ const HomePage: React.FC = () => {
                 </svg>
               </button>
             </div>
-            <div className="mt-3">
+            <div className="flex justify-center mt-3 lg:justify-normal">
               {cards.map((card) => (
                 <Card variant={card.variant} size={card.size} userFullName={card.userFullName} userCardNumber={card.userCardNumber} userCardExpiration={card.userCardExpiration} />
               ))}
@@ -54,21 +54,21 @@ const HomePage: React.FC = () => {
             <div className="mt-4">
               <ScoreCard imgFile="balance-icon.png" title="Saldo Rekening" value={1000000} isVisible={false} />
             </div>
-            <div className=" mt-4 grid gap-3 shadow-md p-7 rounded-3xl bg-white">
+            <div className="grid gap-3 mt-4 bg-white shadow-md p-7 rounded-3xl">
               {mutasiItems.map((mutasi) => (
                 <MutasiItems key={mutasi.id} id={mutasi.id} icon={mutasi.icon} label={mutasi.label} value={mutasi.value} date={mutasi.date} />
               ))}
             </div>
           </div>
 
-          <div className="lg:w-1/2 space-y-6 mt-2 lg:space-y-0 lg:mt-0">
-            <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-20 gap-4">
+          <div className="mt-2 space-y-6 lg:w-1/2 lg:space-y-0 lg:mt-0">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-20">
               {transactions.map((transaction) => (
                 <TransactionItem key={transaction.id} {...transaction} />
               ))}
             </div>
             <h1 className="text-[15px] font-semibold ml-2 mt-4 mb-4 text-[#121F59]">Layanan Digital</h1>
-            <div className="grid grid-cols-4 lg:gap-2 gap-4">
+            <div className="grid grid-cols-4 gap-4 lg:gap-2">
               {services.map((services, index) => (
                 <ServiceButton key={index} id={services.id} icon={services.icon} label={services.label} link={services.link} />
               ))}

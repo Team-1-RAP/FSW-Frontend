@@ -3,7 +3,7 @@ import { User, Lock, EyeOff, Eye } from "react-feather";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import Button from "./Button";
-import { useAuth } from "../../../context/AuthContext";
+import { useAuth } from "../../../hooks/useAuth";
 import { useToggle } from "../../../hooks/useToggle";
 import { loginValidationSchema } from "../../../utils/validationSchema";
 import { loginUser } from "../../../services/authService";
