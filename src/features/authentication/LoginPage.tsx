@@ -1,9 +1,21 @@
-import React from "react";
 import logo from "../../assets/images/logo.png";
 import bgLogin from "../../assets/images/bgLogin.png";
 import LoginForm from "../../components/fragments/Authentication/LoginForm";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import { useEffect } from "react";
 
 const LoginPage: React.FC = () => {
+    const { token } = useAuth();
+    const navigate = useNavigate();
+
+    // Cek Authentication
+    useEffect(() => {
+        if (token && localStorage.getItem("token")) {
+            navigate("/home");
+        }
+    }, [token, navigate]);
+
     return (
         <div className="relative">
             <div className="">
