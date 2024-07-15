@@ -7,17 +7,25 @@ export const loginUser = async (username: string, password: string): Promise<str
             },
             body: JSON.stringify({ username, password }),
         });
-        if (!response) {
-            throw new Error("Login Gagal");
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error("Username tidak ditemukan!");
+            } else {
+                throw new Error("Username atau Password Salah!");
+            }
         }
+
         const data = await response.json();
-        if (data) {
+
+        if (data?.data?.accessToken) {
             localStorage.setItem("token", data.data.accessToken);
             return data.data.accessToken;
         } else {
-            throw new Error("Kredensial tidak sesuai");
+            throw new Error("Token tidak ditemukan di data respons");
         }
     } catch (error) {
-        throw new Error("An error occurred during login");
+        console.error("Login error:", error);
+        throw error;
     }
 };

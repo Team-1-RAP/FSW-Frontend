@@ -24,8 +24,10 @@ const LoginForm: React.FC = () => {
                 const data = await loginUser(values.username, values.password);
                 setToken(data);
                 navigate("/home");
-            } catch (error) {
-                setErrors({ username: "Login gagal atau kredensial tidak sesuai" });
+            } catch (error: unknown) {
+                if (error instanceof Error) {
+                    setErrors({ username: error.message });
+                }
             }
         },
     });
