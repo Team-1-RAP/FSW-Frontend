@@ -17,11 +17,11 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     <div className="flex h-screen">
       {/* Navbar */}
       <Navbar toggleAside={toggleAside} />
-      <div className="flex flex-row flex-grow w-full mt-40 md:mt-20">
+      <div className="flex flex-row flex-grow w-full mt-40 lg:mt-20">
         {/* Sidebar */}
         <SideBar isAsideOpen={isAsideOpen} closeAside={closeAside} />
         {/* Main */}
-        <main className="flex flex-grow ml-[10px] lg:ml-[240px] pt-5 lg:pt-10">{children}</main>
+        <main className="container lg:mx-auto lg:flex flex-grow lg:ml-[200px] pt-5 lg:pt-10 bg-gray-50">{children}</main>
       </div>
     </div>
   )
