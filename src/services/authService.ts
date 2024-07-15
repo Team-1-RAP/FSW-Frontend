@@ -19,7 +19,10 @@ export const loginUser = async (username: string, password: string): Promise<str
         const data = await response.json();
 
         if (data?.data?.accessToken) {
-            localStorage.setItem("token", data.data.accessToken);
+            sessionStorage.setItem("token", data.data.accessToken);
+            window.addEventListener("unload", () => {
+                sessionStorage.removeItem("token");
+            });
             return data.data.accessToken;
         } else {
             throw new Error("Token tidak ditemukan di data respons");
