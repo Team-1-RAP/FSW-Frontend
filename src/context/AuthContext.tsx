@@ -1,10 +1,4 @@
-import React, {
-    createContext,
-    useState,
-    useEffect,
-    useCallback,
-    ReactNode,
-} from "react";
+import React, { createContext, useState, useEffect, useCallback, ReactNode } from "react";
 import { jwtDecode } from "jwt-decode";
 
 export interface AuthContextProps {
@@ -24,14 +18,10 @@ export interface AuthProviderProps {
     children: ReactNode;
 }
 
-export const AuthContext = createContext<AuthContextProps | undefined>(
-    undefined
-);
+export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    const [token, setToken] = useState<string | null>(
-        localStorage.getItem("token")
-    );
+    const [token, setToken] = useState<string | null>(sessionStorage.getItem("token"));
     const [fullname, setFullname] = useState<string | null>(null);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
