@@ -133,6 +133,7 @@ const Profile: React.FC = () => {
             <Swiper
               modules={[Navigation, Keyboard]}
               onSlideChange={handleSlideChange}
+              slideToClickedSlide={true}
               keyboard={{
                 enabled: true,
               }}
