@@ -34,12 +34,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const handleSetToken = useCallback(
         (token: string | null) => {
             if (token) {
-                localStorage.setItem("token", token);
+                sessionStorage.setItem("token", token);
                 const expiryTime = decodeToken(token);
                 const currentTime = Date.now() / 1000;
                 setIsAuthenticated(expiryTime > currentTime);
             } else {
-                localStorage.removeItem("token");
+                sessionStorage.removeItem("token");
                 setIsAuthenticated(false);
             }
             setToken(token);
@@ -48,14 +48,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     );
 
     const logout = useCallback(() => {
-        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
         setToken(null);
         setFullname(null);
         setIsAuthenticated(false);
     }, []);
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         if (token) {
             try {
                 const expiryTime = decodeToken(token);
