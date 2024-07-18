@@ -37,19 +37,30 @@ const MutasiItems: React.FC<MutasiItemsProps> = ({
     <div
       id={id}
       className="flex justify-between items-center"
-      role="listitem"
-      aria-label={`${label} on ${formattedDate}: ${sign}${formattedValue}`}
+      role="region"
+      aria-labelledby={`${id}-label ${id}-date ${id}-value`}
     >
       <div className="flex items-center">
-        <div className="bg-[#E7EDFF] rounded-3xl p-3 mr-5" aria-hidden="true">
-          <img src={icon} alt="" className="h-[25px] w-[25px]" />
+        <div
+          className="bg-[#E7EDFF] rounded-3xl p-3 mr-5"
+          role="img"
+          aria-hidden="true"
+        >
+          <img src={icon} alt="tipe pembayaran" className="h-[25px] w-[25px]" />
         </div>
         <div className="grid justify-items-start">
-          <span className="text-[16px] font-semibold">{label}</span>
-          <span className="text-[15px] text-[#718EBF]">{formattedDate}</span>
+          <span id={`${id}-label`} className="text-[16px] font-semibold">
+            {label}
+          </span>
+          <span id={`${id}-date`} className="text-[15px] text-[#718EBF]">
+            {formattedDate}
+          </span>
         </div>
       </div>
-      <span className={`text-[16px] font-semibold ${valueClass}`}>
+      <span
+        id={`${id}-value`}
+        className={`text-[16px] font-semibold ${valueClass}`}
+      >
         {sign}
         {formattedValue}
       </span>

@@ -14,7 +14,7 @@ const HomePage: React.FC = () => {
   const cards: CardProps[] = [
     {
       variant: "purpleCyan",
-      size: "md",
+      size: "lg",
       userFullName: "John Doe",
       userCardExpiration: new Date(),
       userCardNumber: "1234 5678 910",
@@ -24,10 +24,10 @@ const HomePage: React.FC = () => {
     <>
       <DashboardLayout>
         <div className="flex flex-col lg:flex-row lg:space-x-6 lg:ml-12">
-          <div className="lg:w-1/2">
+          <div className="lg:w-[415px]">
             <div className="flex justify-between">
-              <h1 className="text-[22px] text-[#343C6A] font-semibold">
-                Rekeningku{" "}
+              <h1 className="text-[22px] text-[#343C6A] font-semibold" aria-label="Rekeningku" role="heading">
+                Rekeningku
               </h1>
               <button className="flex items-center">
                 <p className="text-[#838383] text-[15px] font-semibold">
@@ -50,7 +50,7 @@ const HomePage: React.FC = () => {
                 </svg>
               </button>
             </div>
-            <div className="mt-3">
+            <div className="mt-3 grid justify-center">
               {cards.map((card) => (
                 <Card
                   variant={card.variant}
@@ -69,7 +69,7 @@ const HomePage: React.FC = () => {
                 isVisible={false}
               />
             </div>
-            <div className=" mt-4 grid gap-3 shadow-md p-7 rounded-3xl bg-white">
+            <div className=" mt-4 grid gap-3 shadow-md p-7 rounded-3xl bg-white" aria-label="Mutasi Terbaru" role="log">
               {mutasiItems.map((mutasi) => (
                 <MutasiItems
                   key={mutasi.id}
