@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { ScoreCardProps } from "./types";
-import { Eye, EyeOff } from "react-feather";
+import { useState } from "react"
+import { ScoreCardProps } from "./types"
+import { Eye, EyeOff } from "react-feather"
 
 const ScoreCard = ({ imgFile, title, value, isVisible }: ScoreCardProps) => {
-  const [isNumberVisible, setIsNumberVisible] = useState(false);
+  const [isNumberVisible, setIsNumberVisible] = useState(false)
 
   const toggleNumberVisibility = () => {
-    setIsNumberVisible(!isNumberVisible);
-  };
+    setIsNumberVisible(!isNumberVisible)
+  }
   return (
     <div>
       <div>
@@ -25,10 +25,7 @@ const ScoreCard = ({ imgFile, title, value, isVisible }: ScoreCardProps) => {
                   : `**********`}
               </div>
               {isVisible ? null : (
-                <div
-                  onClick={toggleNumberVisibility}
-                  className={`ms-6 cursor-pointer flex items-center`}
-                >
+                <div onClick={toggleNumberVisibility} className={`ms-6 cursor-pointer flex items-center`}>
                   {isNumberVisible ? <Eye /> : <EyeOff className="w-7 h-7" />}
                 </div>
               )}
@@ -37,7 +34,7 @@ const ScoreCard = ({ imgFile, title, value, isVisible }: ScoreCardProps) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ScoreCard;
+export default ScoreCard
