@@ -4,8 +4,12 @@ import LandingPage from "./features/guests/LandingPage";
 import NotFound from "./features/NotFound";
 import HomePage from "./features/home/HomePage";
 import LoginPage from "./features/authentication/LoginPage";
-import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
+import MutasiPage from "./features/mutasi/MutasiPage";
+import SettingPage from "./features/setting/SettingPage";
+// import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext"; // Pastikan untuk mengimpor AuthProvider dari file yang benar
+import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
+import Profile from "./features/profile/Profile";
 
 function App() {
     return (
@@ -26,6 +30,36 @@ function App() {
                         element={
                             <PrivateRoute>
                                 <HomePage />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    {/* Profile - Private Route */}
+                    <Route
+                        path="/profile"
+                        element={
+                            <PrivateRoute>
+                                <Profile />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    {/* MutasiPage - Private Route */}
+                    <Route
+                        path="/mutasi"
+                        element={
+                            <PrivateRoute>
+                                <MutasiPage />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    {/* SettingPage - Private Route */}
+                    <Route
+                        path="/pengaturan"
+                        element={
+                            <PrivateRoute>
+                                <SettingPage />
                             </PrivateRoute>
                         }
                     />
