@@ -1,13 +1,14 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
-import LandingPage from "./features/guests/LandingPage";
-import NotFound from "./features/NotFound";
-import HomePage from "./features/home/HomePage";
-import LoginPage from "./features/authentication/LoginPage";
-import MutasiPage from "./features/mutasi/MutasiPage";
-import SettingPage from "./features/setting/SettingPage";
-// import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
-import { AuthProvider } from "./context/AuthContext"; // Pastikan untuk mengimpor AuthProvider dari file yang benar
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import "./App.css"
+import LandingPage from "./features/guests/LandingPage"
+import NotFound from "./features/NotFound"
+import HomePage from "./features/home/HomePage"
+import LoginPage from "./features/authentication/LoginPage"
+import MutasiPage from "./features/mutasi/MutasiPage"
+import SettingPage from "./features/setting/SettingPage"
+import PrivateRoute from "./components/fragments/Authentication/PrivateRoute"
+import { AuthProvider } from "./context/AuthContext" // Pastikan untuk mengimpor AuthProvider dari file yang benar
+import { AccountProvider } from "./context/AccountContext"
 
 function App() {
   return (
@@ -26,9 +27,11 @@ function App() {
           <Route
             path="/home"
             element={
-              // <PrivateRoute>
-              <HomePage />
-              // </PrivateRoute>
+              <PrivateRoute>
+                <AccountProvider>
+                  <HomePage />
+                </AccountProvider>
+              </PrivateRoute>
             }
           />
 
@@ -36,9 +39,9 @@ function App() {
           <Route
             path="/mutasi"
             element={
-              // <PrivateRoute>
-              <MutasiPage />
-              // </PrivateRoute>
+              <PrivateRoute>
+                <MutasiPage />
+              </PrivateRoute>
             }
           />
 
@@ -46,9 +49,9 @@ function App() {
           <Route
             path="/pengaturan"
             element={
-              // <PrivateRoute>
-              <SettingPage />
-              // </PrivateRoute>
+              <PrivateRoute>
+                <SettingPage />
+              </PrivateRoute>
             }
           />
 
@@ -57,7 +60,7 @@ function App() {
         </Routes>
       </AuthProvider>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
