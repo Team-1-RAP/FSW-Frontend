@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../../components/fragments/Card";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
@@ -23,6 +23,7 @@ import {
   Legend,
 } from "chart.js";
 import { BarChart } from "../../components/fragments/Chart";
+import { useAccount } from "../../hooks/useAccount";
 
 ChartJS.register(
   CategoryScale,
@@ -34,29 +35,50 @@ ChartJS.register(
 );
 
 const Profile: React.FC = () => {
-  const cards: CardProps[] = [
-    {
-      variant: "purpleCyan",
-      size: "md",
-      userFullName: "John Doe",
-      userCardExpiration: new Date(),
-      userCardNumber: "1234 5678 910",
-    },
-    {
-      variant: "blueCyan",
-      size: "md",
-      userFullName: "Adilla Wulandari",
-      userCardExpiration: new Date(2028, 10),
-      userCardNumber: "1234 5678 910",
-    },
-    {
-      variant: "blueCyan",
-      size: "md",
-      userFullName: "Adilla Wulandari",
-      userCardExpiration: new Date(2028, 10),
-      userCardNumber: "1234 5678 910",
-    },
-  ];
+  const { accounts, fetchAccounts } = useAccount();
+  const [activeAccount, setActiveAccount] = useState<number>(0);
+  const [isRefresh, setRefresh] = useState(true);
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (token && isRefresh) {
+      fetchAccounts(token);
+      setRefresh(false);
+    }
+  }, [fetchAccounts, isRefresh]);
+  const cards: CardProps[] =
+    accounts?.map((account) => {
+      return {
+        variant: "purpleCyan",
+        size: "md",
+        userFullName: account.fullName,
+        userCardExpiration: new Date(account.expDate),
+        userCardNumber: account.cardNumber,
+      };
+    }) ?? [];
+
+  // const cards: CardProps[] = [
+  //   {
+  //     variant: "purpleCyan",
+  //     size: "md",
+  //     userFullName: "John Doe",
+  //     userCardExpiration: new Date(),
+  //     userCardNumber: "1234 5678 910",
+  //   },
+  //   {
+  //     variant: "blueCyan",
+  //     size: "md",
+  //     userFullName: "Adilla Wulandari",
+  //     userCardExpiration: new Date(2028, 10),
+  //     userCardNumber: "1234 5678 910",
+  //   },
+  //   {
+  //     variant: "blueCyan",
+  //     size: "md",
+  //     userFullName: "Adilla Wulandari",
+  //     userCardExpiration: new Date(2028, 10),
+  //     userCardNumber: "1234 5678 910",
+  //   },
+  // ];
 
   const data = {
     labels: ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"],
@@ -100,10 +122,9 @@ const Profile: React.FC = () => {
     XLSX.writeFile(wb, "laporan-keuangan.xlsx");
   };
 
-  const [activeIndex, setActiveIndex] = useState<number>(0);
   const handleSlideChange = (swiper: SwiperCore) => {
     console.log(swiper.realIndex);
-    setActiveIndex(swiper.realIndex);
+    setActiveAccount(swiper.realIndex);
   };
 
   const [selectedMonth, setSelectedMonth] = useState("");
@@ -118,7 +139,7 @@ const Profile: React.FC = () => {
           >
             Rekeningku
           </div>
-          <div className="lg:w-3/12 w-1/2 flex justify-end">
+          <div className="lg:w-5/12 w-1/2 flex justify-end">
             <Link className="text-[#838383] text-base" to="/add-account">
               Ganti Kartu
               <ChevronRight
@@ -129,11 +150,12 @@ const Profile: React.FC = () => {
           </div>
         </div>
         <div className="mt-11 flex lg:w-100 sm:mx-8">
-          <div className="lg:w-2/3 w-full">
+          <div className="lg:w-3/4 w-full flex">
             <Swiper
               modules={[Navigation, Keyboard]}
               onSlideChange={handleSlideChange}
               slideToClickedSlide={true}
+              navigation={true}
               keyboard={{
                 enabled: true,
               }}
@@ -143,7 +165,7 @@ const Profile: React.FC = () => {
                   slidesPerView: 1,
                 },
                 1024: {
-                  slidesPerView: 2,
+                  slidesPerView: cards.length > 1 ? 2 : 1,
                 },
               }}
             >
@@ -152,7 +174,7 @@ const Profile: React.FC = () => {
                   key={index}
                   style={{
                     transform:
-                      index === activeIndex ? "scale(1)" : "scale(0.8)",
+                      index === activeAccount ? "scale(1)" : "scale(0.8)",                    
                   }}
                 >
                   <Card
@@ -180,7 +202,7 @@ const Profile: React.FC = () => {
             <ScoreCard
               imgFile="balance-icon.png"
               title="Saldo Rekening"
-              value={1000000}
+              value={accounts ? accounts[activeAccount].balance : 0}
               isVisible={false}
             />
           </div>
