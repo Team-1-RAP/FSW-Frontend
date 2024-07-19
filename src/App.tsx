@@ -8,56 +8,68 @@ import MutasiPage from "./features/mutasi/MutasiPage";
 import SettingPage from "./features/setting/SettingPage";
 // import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext"; // Pastikan untuk mengimpor AuthProvider dari file yang benar
+import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
+import Profile from "./features/profile/Profile";
 
 function App() {
-  return (
-    <Router>
-      <AuthProvider>
-        {" "}
-        {/* Memastikan AuthProvider ditempatkan di sini */}
-        <Routes>
-          {/* LandingPage - Public Route */}
-          <Route path="/" element={<LandingPage />} />
+    return (
+        <Router>
+            <AuthProvider>
+                {" "}
+                {/* Memastikan AuthProvider ditempatkan di sini */}
+                <Routes>
+                    {/* LandingPage - Public Route */}
+                    <Route path="/" element={<LandingPage />} />
 
-          {/* LoginPage - Public Route */}
-          <Route path="/login" element={<LoginPage />} />
+                    {/* LoginPage - Public Route */}
+                    <Route path="/login" element={<LoginPage />} />
 
-          {/* HomePage - Private Route */}
-          <Route
-            path="/home"
-            element={
-              // <PrivateRoute>
-              <HomePage />
-              // </PrivateRoute>
-            }
-          />
+                    {/* HomePage - Private Route */}
+                    <Route
+                        path="/home"
+                        element={
+                            <PrivateRoute>
+                                <HomePage />
+                            </PrivateRoute>
+                        }
+                    />
 
-          {/* MutasiPage - Private Route */}
-          <Route
-            path="/mutasi"
-            element={
-              // <PrivateRoute>
-              <MutasiPage />
-              // </PrivateRoute>
-            }
-          />
+                    {/* Profile - Private Route */}
+                    <Route
+                        path="/profile"
+                        element={
+                            <PrivateRoute>
+                                <Profile />
+                            </PrivateRoute>
+                        }
+                    />
 
-          {/* SettingPage - Private Route */}
-          <Route
-            path="/pengaturan"
-            element={
-              // <PrivateRoute>
-              <SettingPage />
-              // </PrivateRoute>
-            }
-          />
+                    {/* MutasiPage - Private Route */}
+                    <Route
+                        path="/mutasi"
+                        element={
+                            <PrivateRoute>
+                                <MutasiPage />
+                            </PrivateRoute>
+                        }
+                    />
 
-          {/* NotFound - Fallback Route */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </AuthProvider>
-    </Router>
-  );
+                    {/* SettingPage - Private Route */}
+                    <Route
+                        path="/pengaturan"
+                        element={
+                            <PrivateRoute>
+                                <SettingPage />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    {/* NotFound - Fallback Route */}
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+            </AuthProvider>
+        </Router>
+    );
 }
 
 export default App;
