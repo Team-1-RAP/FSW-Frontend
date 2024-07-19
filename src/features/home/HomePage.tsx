@@ -1,82 +1,85 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import DashboardLayout from "../../components/layouts/DashboardLayout"
 import ServiceButton from "../../components/elements/home/ServiceButton"
 import { services } from "../../utils/ServiceButtonUtils"
 import TransactionItem from "../../components/elements/home/TransactionItem"
 import { transactions } from "../../utils/TransactionItemUtils"
-import { CardProps } from "./../../components/fragments/Card/types"
 import Card from "../../components/fragments/Card"
 import ScoreCard from "../../components/fragments/ScoreCard"
 import MutasiItems from "../../components/elements/home/MutasiItems"
 import { mutasiItems } from "../../utils/MutasiItemsUtils"
+import { useAccount } from "../../hooks/useAccount"
 
 const HomePage: React.FC = () => {
-  const cards: CardProps[] = [
-    {
-      variant: "purpleCyan",
-      size: "md",
-      userFullName: "John Doe",
-      userCardExpiration: new Date(),
-      userCardNumber: "1234 5678 910",
-    },
-  ]
-  return (
-    <>
-      <DashboardLayout>
-        <div className="flex flex-col mx-2 lg:flex-row lg:space-x-6 lg:ml-12 lg:mx-0">
-          <div className="lg:w-1/2">
-            <div className="flex justify-between">
-              <h1 className="text-[22px] text-[#343C6A] font-semibold">Rekeningku </h1>
-              <button className="flex items-center">
-                <p className="text-[#838383] text-[15px] font-semibold">Ganti kartu</p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="15"
-                  height="15"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#235697"
-                  stroke-width="1"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  className="ms-3 icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M9 6l6 6l-6 6" />
-                </svg>
-              </button>
-            </div>
-            <div className="flex justify-center mt-3 lg:justify-normal">
-              {cards.map((card) => (
-                <Card variant={card.variant} size={card.size} userFullName={card.userFullName} userCardNumber={card.userCardNumber} userCardExpiration={card.userCardExpiration} />
-              ))}
-            </div>
-            <div className="mt-4">
-              <ScoreCard imgFile="balance-icon.png" title="Saldo Rekening" value={1000000} isVisible={false} />
-            </div>
-            <div className="grid gap-3 mt-4 bg-white shadow-md p-7 rounded-3xl">
-              {mutasiItems.map((mutasi) => (
-                <MutasiItems key={mutasi.id} id={mutasi.id} icon={mutasi.icon} label={mutasi.label} value={mutasi.value} date={mutasi.date} />
-              ))}
-            </div>
-          </div>
+  const { accounts, fetchAccounts } = useAccount()
+  const [currentAccountIndex, setCurrentAccountIndex] = useState(0)
 
-          <div className="mt-2 space-y-6 lg:w-1/2 lg:space-y-0 lg:mt-0">
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-20">
-              {transactions.map((transaction) => (
-                <TransactionItem key={transaction.id} {...transaction} />
-              ))}
-            </div>
-            <h1 className="text-[15px] font-semibold ml-2 mt-4 mb-4 text-[#121F59]">Layanan Digital</h1>
-            <div className="grid grid-cols-4 gap-4 lg:gap-2">
-              {services.map((services, index) => (
-                <ServiceButton key={index} id={services.id} icon={services.icon} label={services.label} link={services.link} />
-              ))}
-            </div>
+  useEffect(() => {
+    const token = sessionStorage.getItem("token")
+    if (token) {
+      fetchAccounts(token)
+    }
+  }, [fetchAccounts])
+
+  const handleChangeCard = () => {
+    setCurrentAccountIndex((prevIndex) => (accounts ? (prevIndex + 1) % accounts.length : 0))
+  }
+
+  const currentAccount = accounts ? accounts[currentAccountIndex] : null
+
+  return (
+    <DashboardLayout>
+      <div className="flex flex-col lg:flex-row lg:space-x-6 lg:ml-12">
+        <div className="lg:w-[415px]">
+          <div className="flex justify-between">
+            <h1 className="text-[22px] text-[#343C6A] font-semibold" aria-label="Rekeningku" role="heading">
+              Rekeningku
+            </h1>
+            <button className="flex items-center" onClick={handleChangeCard}>
+              <p className="text-[#838383] text-[15px] font-semibold">Ganti kartu</p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#235697"
+                strokeWidth="1"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="ms-3 icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M9 6l6 6l-6 6" />
+              </svg>
+            </button>
+          </div>
+          <div className="mt-3 grid justify-center">
+            {currentAccount && <Card variant="purpleCyan" size="lg" userFullName={currentAccount.fullName} userCardNumber={currentAccount.cardNumber} userCardExpiration={new Date(currentAccount.expDate)} />}
+          </div>
+          <div className="mt-4">{currentAccount && <ScoreCard imgFile="balance-icon.png" title="Saldo Rekening" value={currentAccount.balance} isVisible={false} />}</div>
+          <div className="mt-4 grid gap-3 shadow-md p-7 rounded-3xl bg-white" aria-label="Mutasi Terbaru" role="log">
+            {mutasiItems.map((mutasi) => (
+              <MutasiItems key={mutasi.id} id={mutasi.id} icon={mutasi.icon} label={mutasi.label} value={mutasi.value} date={mutasi.date} />
+            ))}
           </div>
         </div>
-      </DashboardLayout>
-    </>
+
+        <div className="lg:w-1/2 space-y-6 mt-2 lg:space-y-0 lg:mt-0">
+          <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-20 gap-4">
+            {transactions.map((transaction) => (
+              <TransactionItem key={transaction.id} icon={transaction.icon} label={transaction.label} value={transaction.value} color={transaction.color} />
+            ))}
+          </div>
+          <h1 className="text-[15px] font-semibold ml-2 mt-4 md:mb-10 text-[#121F59]">Layanan Digital</h1>
+          <div className="grid grid-cols-4 lg:gap-4 gap-4">
+            {services.map((service, index) => (
+              <ServiceButton key={index} id={service.id} icon={service.icon} label={service.label} link={service.link} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </DashboardLayout>
   )
 }
 

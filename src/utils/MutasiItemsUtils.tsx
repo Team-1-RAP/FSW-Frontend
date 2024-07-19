@@ -18,7 +18,7 @@ export const mutasiItems: MutasiItemsUtils[] = [
       date: new Date(),
    },
    {
-      id: "Mutasi-1",
+      id: "Mutasi-2",
       icon: SetorTunai,
       label: "Candra",
       value: "187000",
