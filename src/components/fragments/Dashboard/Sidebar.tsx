@@ -19,7 +19,7 @@ const SideBar: React.FC<SidebarProps> = ({ isAsideOpen, closeAside }) => {
     <>
       <aside
         id="aside"
-        className="hidden lg:flex w-[209px] h-screen lg:flex-col items-center pb-4 shadow fixed"
+        className="hidden lg:flex w-[209px] h-screen lg:flex-col items-center pb-4 shadow fixed z-10"
       >
         <div className="flex flex-col justify-between h-full">
           <ul className="flex flex-col gap-1 mt-2">
