@@ -20,7 +20,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
 
   return (
     <div
-      className="lg:w-[280px] lg:h-[98px] lg:mb-5 bg-white mx-2 flex flex-col items-start justify-center text-center rounded-2xl p-3"
+      className="shadow-md w-[100%] lg:w-[48%] xl:w-[280px] xl:h-[98px] xl:mb-5 bg-white flex flex-col items-start justify-center text-center rounded-2xl p-3"
       role="region"
       aria-labelledby={`transaction-${label}`}
     >
@@ -35,11 +35,11 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
         <div className="flex flex-col items-start justify-start">
           <span
             id={`transaction-${label}`}
-            className="lg:text-[14px] text-[#718EBF]"
+            className="xl:text-[14px] text-[#718EBF]"
           >
             {label}
           </span>
-          <span className="lg:text-[16px] font-semibold text-[#232323]">
+          <span className="xl:text-[16px] font-semibold text-[#232323]">
             {formattedValue}-
           </span>
         </div>

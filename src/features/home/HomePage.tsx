@@ -29,8 +29,8 @@ const HomePage: React.FC = () => {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col lg:flex-row lg:space-x-6 lg:ml-12">
-        <div className="lg:w-[415px]">
+      <div className="flex flex-col xl:flex-row xl:space-x-6 xl:ml-12">
+        <div className="xl:w-[415px]">
           <div className="flex justify-between">
             <h1 className="text-[22px] text-[#343C6A] font-semibold" aria-label="Rekeningku" role="heading">
               Rekeningku
@@ -65,14 +65,14 @@ const HomePage: React.FC = () => {
           </div>
         </div>
 
-        <div className="lg:w-1/2 space-y-6 mt-2 lg:space-y-0 lg:mt-0">
-          <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-20 gap-4">
+        <div className="space-y-6 mt-4 xl:space-y-0 xl:mt-0">
+          <div className="flex flex-wrap xl:flex-row gap-4 lg:gap-7 xl:gap-4">
             {transactions.map((transaction) => (
               <TransactionItem key={transaction.id} icon={transaction.icon} label={transaction.label} value={transaction.value} color={transaction.color} />
             ))}
           </div>
           <h1 className="text-[15px] font-semibold ml-2 mt-4 md:mb-10 text-[#121F59]">Layanan Digital</h1>
-          <div className="grid grid-cols-4 lg:gap-4 gap-4">
+          <div className="flex flex-wrap lg:gap-4">
             {services.map((service, index) => (
               <ServiceButton key={index} id={service.id} icon={service.icon} label={service.label} link={service.link} />
             ))}
