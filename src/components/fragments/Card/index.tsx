@@ -97,18 +97,19 @@ const Card = ({
             {isNumberVisible ? (
               <span className="text-xl">{userCardNumber}</span>
             ) : (
-              <span className="text-2xl">**********</span>
+              <span className="text-2xl" aria-label="Angka Tersembunyi">**********</span>
             )}
-            <div
+            <button
               onClick={toggleNumberVisibility}
               className={`ms-4 cursor-pointer ${sizeLogo}`}
+              
             >
               {isNumberVisible ? (
                 <Eye className={sizeLogo} />
               ) : (
                 <EyeOff className={sizeLogo} />
               )}
-            </div>
+            </button>
           </div>
           <div className={`flex flex-wrap ${marginText}`}>
             <div className="w-2/4">

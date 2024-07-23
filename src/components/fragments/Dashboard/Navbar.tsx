@@ -15,7 +15,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleAside }) => {
     logout();
   };
   return (
-    <header className="h-25 lg:h-20 bg-[#FFFFFF] top-0 w-full py-5 lg:py-0 fixed shadow">
+    <header className="h-25 lg:h-20 bg-[#FFFFFF] top-0 w-full py-5 lg:py-0 fixed shadow z-10">
       <div className="flex flex-col justify-between h-full px-4 mb-auto lg:flex-row lg:items-center gap-y-3 md-gap-y-0 lg:px-10">
         <div className="flex flex-col justify-between lg:flex-row lg:items-center gap-x-0 lg:gap-x-2">
           <div className="w-24">

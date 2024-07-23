@@ -13,13 +13,15 @@ import { useAccount } from "../../hooks/useAccount"
 const HomePage: React.FC = () => {
   const { accounts, fetchAccounts } = useAccount()
   const [currentAccountIndex, setCurrentAccountIndex] = useState(0)
+  const [isRefresh, setRefresh] = useState(true)
 
   useEffect(() => {
     const token = sessionStorage.getItem("token")
-    if (token) {
+    if (token && isRefresh) {
       fetchAccounts(token)
+      setRefresh(false);
     }
-  }, [fetchAccounts])
+  }, [fetchAccounts, isRefresh])
 
   const handleChangeCard = () => {
     setCurrentAccountIndex((prevIndex) => (accounts ? (prevIndex + 1) % accounts.length : 0))
