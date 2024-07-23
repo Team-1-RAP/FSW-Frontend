@@ -1,54 +1,23 @@
 import { useState } from "react";
 import { ScoreCardProps } from "./types";
-import { Eye, EyeOff, Copy } from "react-feather";
+import { Eye, EyeOff } from "react-feather";
 
-const ScoreCard = ({
-  imgFile,
-  title,
-  value1,
-  value2,
-  isVisible,
-}: ScoreCardProps) => {
+const ScoreCard = ({ imgFile, title, value, isVisible }: ScoreCardProps) => {
   const [isNumberVisible, setIsNumberVisible] = useState(false);
 
   const toggleNumberVisibility = () => {
     setIsNumberVisible(!isNumberVisible);
   };
-
-  const [copied, setCopied] = useState(false);
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(value1).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1000);
-    });
-  };
-
   return (
     <div>
       <div>
         <div className="flex items-center bg-white p-4 rounded-3xl shadow-md">
           <img src={`/assets/images/${imgFile}`} alt="Balance" width="75px" />
-          <div className="ms-4 flex-1">
-            <p className="text-[#718EBF] text-base" tabIndex={0}>
+          <div className="ms-4">
+            <label className="text-[#718EBF] text-base" tabIndex={0}>
               {title}
-            </p>
-            <div className="flex items-center gap-2 mb-3">
-              <p className="text-[#718EBF] text-base" tabIndex={0}>
-                No Rek. <span className="font-medium">{value1}</span>
-              </p>
-              <button
-                onClick={copyToClipboard}
-                aria-label="Salin nomor rekening"
-              >
-                <Copy
-                  className={`h-5 w-5 ${
-                    copied ? "text-[#FFBB38]" : "text-[#718EBF]"
-                  }`}
-                />
-              </button>
-            </div>
-            <div className="flex items-center justify-between">
+            </label>
+            <div className="flex">
               <div
                 className="[400px]:text-2xl text-xl font-bold"
                 tabIndex={0}
@@ -57,7 +26,7 @@ const ScoreCard = ({
                 }
               >
                 {isVisible || isNumberVisible
-                  ? `Rp${Number(value2).toLocaleString("id-ID", {
+                  ? `Rp${Number(value).toLocaleString("id-ID", {
                       currency: "IDR",
                       minimumFractionDigits: 0,
                     })}`
@@ -66,17 +35,13 @@ const ScoreCard = ({
               {isVisible ? null : (
                 <button
                   onClick={toggleNumberVisibility}
-                  className="mr-3 flex items-center"
+                  className={`ms-6 cursor-pointer flex items-center`}
                   aria-pressed={isNumberVisible}
                   aria-label={`Toggle angka ${
                     isNumberVisible ? "tersembunyi" : "tampil"
                   }`}
                 >
-                  {isNumberVisible ? (
-                    <Eye className="w-6 h-6" />
-                  ) : (
-                    <EyeOff className="w-6 h-6" />
-                  )}
+                  {isNumberVisible ? <Eye /> : <EyeOff className="w-7 h-7" />}
                 </button>
               )}
             </div>

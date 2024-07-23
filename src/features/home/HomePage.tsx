@@ -5,10 +5,10 @@ import { services } from "../../utils/ServiceButtonUtils";
 import TransactionItem from "../../components/elements/home/TransactionItem";
 import { transactions } from "../../utils/TransactionItemUtils";
 import Card from "../../components/fragments/Card";
-import ScoreCard from "../../components/fragments/ScoreCard";
 import MutasiItems from "../../components/elements/home/MutasiItems";
 import { mutasiItems } from "../../utils/MutasiItemsUtils";
 import { useAccount } from "../../hooks/useAccount";
+import BalanceItem from "../../components/elements/home/BalanceItem";
 
 const HomePage: React.FC = () => {
   const { accounts, fetchAccounts } = useAccount();
@@ -77,7 +77,7 @@ const HomePage: React.FC = () => {
           </div>
           <div className="mt-4">
             {currentAccount && (
-              <ScoreCard
+              <BalanceItem
                 imgFile="balance-icon.png"
                 title="Saldo Rekening"
                 value1={currentAccount.noAccount}
