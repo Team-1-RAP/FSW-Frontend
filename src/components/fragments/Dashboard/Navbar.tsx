@@ -21,7 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleAside }) => {
           <div className="w-24">
             <img src={logo} alt="Logo" className="w-[62px] h-[62px]" />
           </div>
-          <p className="text-sm font-normal">Hi,{fullname}</p>
+          <p className="text-sm font-normal">Hi, {fullname}</p>
         </div>
         <div className="flex flex-row">
           <button className="lg:hidden flex items-center justify-center bg-[#F1F5F9] w-[36px] h-[36px] rounded-full">
@@ -30,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleAside }) => {
           <div className="flex flex-row ml-[auto]">
             <div className="relative">
               <input
-                className="appearance-none border-2 pl-10 bg-[#F1F5F9] rounded-2xl transition-colors lg:w-[269px] w-[170px] lg:h-[36px] h-[36px] py-2 px-3 text-[#747474] leading-tight focus:outline-none text-base w-[auto]"
+                className="appearance-none border-2 pl-10 bg-[#F1F5F9] rounded-2xl transition-colors lg:w-[269px] lg:h-[36px] h-[36px] py-2 px-3 text-[#747474] leading-tight focus:outline-none text-base w-[auto]"
                 id="username"
                 type="text"
                 placeholder="Cari layanan..."

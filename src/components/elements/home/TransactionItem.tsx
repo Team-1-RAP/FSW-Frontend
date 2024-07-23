@@ -16,11 +16,15 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
   const formattedValue = new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
-  }).format(Math.abs(value));
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  })
+    .format(Math.abs(value))
+    .replace(/\s/g, "");
 
   return (
     <div
-      className="shadow-md w-[100%] lg:w-[48%] xl:w-[280px] xl:h-[98px] xl:mb-5 bg-white flex flex-col items-start justify-center text-center rounded-2xl p-3"
+      className="shadow-md w-[100%] lg:w-[48%] xl:w-[330px] xl:h-[98px] xl:mb-5 xl:mr-2 bg-white flex flex-col items-start justify-center text-center rounded-2xl p-3"
       role="region"
       aria-labelledby={`transaction-${label}`}
     >
@@ -35,12 +39,15 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
         <div className="flex flex-col items-start justify-start">
           <span
             id={`transaction-${label}`}
-            className="xl:text-[14px] text-[#718EBF]"
+            className="xl:text-[16px] text-[#718EBF]"
           >
             {label}
           </span>
-          <span className="xl:text-[16px] font-semibold text-[#232323]">
-            {formattedValue}-
+          <span
+            className="xl:text-[16px] font-semibold text-[#232323]"
+            aria-label={`${formattedValue}`}
+          >
+            {formattedValue}
           </span>
         </div>
       </div>
