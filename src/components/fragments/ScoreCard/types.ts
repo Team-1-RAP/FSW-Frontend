@@ -1,6 +1,7 @@
 export interface ScoreCardProps {
   imgFile: string
   title: string
-  value: number
+  value1: number
+  value2?: string
   isVisible?: boolean
 }

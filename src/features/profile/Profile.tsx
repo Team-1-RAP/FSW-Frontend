@@ -1,75 +1,75 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Card from "../../components/fragments/Card";
 import ScoreCard from "../../components/fragments/ScoreCard";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { ChevronRight } from "react-feather";
 import { CardSelection } from "../../components/fragments/CardSelection";
 import { CardInfo } from "./types";
-import { useAccount } from "../../hooks/useAccount";
+// import { useAccount } from "../../hooks/useAccount";
 
 const Profile: React.FC = () => {
   const [isDropdownOpen, setIsDropDownOpen] = useState<boolean>(false);
-  const { accounts, user, fetchAccounts, fetchUserInfo } = useAccount();
+  // const { accounts, user, fetchAccounts, fetchUserInfo } = useAccount();
   const [activeAccount, setActiveAccount] = useState<number>(0);
-  const [isRefresh, setRefresh] = useState(true);
-  useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    if (token && isRefresh) {
-      fetchAccounts(token);
-      fetchUserInfo(token);
-      setRefresh(false);
-    }
-  }, [fetchAccounts, fetchUserInfo, isRefresh]);
-  const cards: CardInfo[] =
-    accounts?.map((account) => {
-      return {
-        userFullName: account.fullName,
-        userCardExpiration: new Date(account.expDate),
-        userCardNumber: account.cardNumber,
-        noAccount: account.noAccount.toString(),
-        accountType: account.accountType,
-        balance: account.balance,
-      };
-    }) ?? [];
-
-  const userInfo = {
-    username: user?.username ?? "",
-    phoneNumber: user?.phoneNumber ?? "",
-    email: user?.email ?? "",
-  };
-
-  // const cards: CardInfo[] = [
-  //   {
-  //     userFullName: "John Doe",
-  //     userCardExpiration: new Date(2029, 1),
-  //     userCardNumber: "1234 5678 910",
-  //     noAccount: "3737657598213561",
-  //     accountType: "Gold",
-  //     balance: 100000000,
-  //   },
-  //   {
-  //     userFullName: "Adilla Wulandari",
-  //     userCardExpiration: new Date(2028, 10),
-  //     userCardNumber: "1234 5678 910",
-  //     noAccount: "3737657598233361",
-  //     accountType: "Bronze",
-  //     balance: 100000000,
-  //   },
-  //   {
-  //     userFullName: "Adilla Wulandari",
-  //     userCardExpiration: new Date(2028, 10),
-  //     userCardNumber: "1234 5678 910",
-  //     noAccount: "3737657598213532",
-  //     accountType: "Silver",
-  //     balance: 100000000,
-  //   },
-  // ];
+  // const [isRefresh, setRefresh] = useState(true);
+  // useEffect(() => {
+  //   const token = sessionStorage.getItem("token");
+  //   if (token && isRefresh) {
+  //     fetchAccounts(token);
+  //     fetchUserInfo(token);
+  //     setRefresh(false);
+  //   }
+  // }, [fetchAccounts, fetchUserInfo, isRefresh]);
+  // const cards: CardInfo[] =
+  //   accounts?.map((account) => {
+  //     return {
+  //       userFullName: account.fullName,
+  //       userCardExpiration: new Date(account.expDate),
+  //       userCardNumber: account.cardNumber,
+  //       noAccount: account.noAccount.toString(),
+  //       accountType: account.accountType,
+  //       balance: account.balance,
+  //     };
+  //   }) ?? [];
 
   // const userInfo = {
-  //   username: "adila24",
-  //   phoneNumber: "+6281234567890",
-  //   email: "adila24@gmail.com",
+  //   username: user?.username ?? "",
+  //   phoneNumber: user?.phoneNumber ?? "",
+  //   email: user?.email ?? "",
   // };
+
+  const cards: CardInfo[] = [
+    {
+      userFullName: "John Doe",
+      userCardExpiration: new Date(2029, 1),
+      userCardNumber: "1234 5678 910",
+      noAccount: "3737657598213561",
+      accountType: "Gold",
+      balance: 100000000,
+    },
+    {
+      userFullName: "Adilla Wulandari",
+      userCardExpiration: new Date(2028, 10),
+      userCardNumber: "1234 5678 910",
+      noAccount: "3737657598233361",
+      accountType: "Bronze",
+      balance: 100000000,
+    },
+    {
+      userFullName: "Adilla Wulandari",
+      userCardExpiration: new Date(2028, 10),
+      userCardNumber: "1234 5678 910",
+      noAccount: "3737657598213532",
+      accountType: "Silver",
+      balance: 100000000,
+    },
+  ];
+
+  const userInfo = {
+    username: "adila24",
+    phoneNumber: "+6281234567890",
+    email: "adila24@gmail.com",
+  };
 
   const handleCardChange = (index: number) => {
     setActiveAccount(index);
@@ -130,14 +130,16 @@ const Profile: React.FC = () => {
             <ScoreCard
               imgFile="income-icon.png"
               title="Pengeluaran"
-              value={34678990}
+              value1={34678990}
             />
           </div>
           <div className="xl:w-1/3 w-full">
             <ScoreCard
               imgFile="balance-icon.png"
               title="Saldo Rekening"
-              value={accounts ? accounts[activeAccount].balance : 0}
+              // value={accounts ? accounts[activeAccount].balance : 0}
+              value1={cards[activeAccount].balance}
+              value2={cards[activeAccount].noAccount}
               isVisible={false}
             />
           </div>
@@ -145,7 +147,7 @@ const Profile: React.FC = () => {
             <ScoreCard
               imgFile="expense-icon.png"
               title="Pemasukan"
-              value={14678990}
+              value1={14678990}
             />
           </div>
         </div>
