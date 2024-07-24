@@ -3,7 +3,7 @@ export const loginUser = async (username: string, password: string): Promise<str
         if (localStorage.getItem("activeSession") === "true") {
             throw new Error("Ada sesi aktif di tab lain. Silakan tutup tab tersebut terlebih dahulu.");
         }
-        const response = await fetch("https://cautious-noelyn-ridho-71c54445.koyeb.app/api/v1/auth/login", {
+        const response = await fetch("https://simplebank-stg.koyeb.app/api/v1/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

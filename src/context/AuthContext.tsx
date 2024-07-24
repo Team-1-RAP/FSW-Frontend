@@ -41,44 +41,44 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return decoded.exp;
   }, []);
 
-    const handleSetToken = useCallback(
-        (token: string | null) => {
-            if (token) {
-                sessionStorage.setItem("token", token);
-                const expiryTime = decodeToken(token);
-                const currentTime = Date.now() / 1000;
-                setIsAuthenticated(expiryTime > currentTime);
-            } else {
-                sessionStorage.removeItem("token");
-                setIsAuthenticated(false);
-            }
-            setToken(token);
-        },
-        [decodeToken]
-    );
-
-    const logout = useCallback(() => {
+  const handleSetToken = useCallback(
+    (token: string | null) => {
+      if (token) {
+        sessionStorage.setItem("token", token);
+        const expiryTime = decodeToken(token);
+        const currentTime = Date.now() / 1000;
+        setIsAuthenticated(expiryTime > currentTime);
+      } else {
         sessionStorage.removeItem("token");
-        setToken(null);
-        setFullname(null);
         setIsAuthenticated(false);
-    }, []);
+      }
+      setToken(token);
+    },
+    [decodeToken]
+  );
 
-    useEffect(() => {
-        const token = sessionStorage.getItem("token");
-        if (token) {
-            try {
-                const expiryTime = decodeToken(token);
-                const currentTime = Date.now() / 1000;
-                setIsAuthenticated(expiryTime > currentTime);
-            } catch (error) {
-                console.error("Error decoding token:", error);
-                setIsAuthenticated(false);
-            }
-        } else {
-            setIsAuthenticated(false);
-        }
-    }, [decodeToken]);
+  const logout = useCallback(() => {
+    sessionStorage.removeItem("token");
+    setToken(null);
+    setFullname(null);
+    setIsAuthenticated(false);
+  }, []);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      try {
+        const expiryTime = decodeToken(token);
+        const currentTime = Date.now() / 1000;
+        setIsAuthenticated(expiryTime > currentTime);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        setIsAuthenticated(false);
+      }
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, [decodeToken]);
 
   return (
     <AuthContext.Provider
