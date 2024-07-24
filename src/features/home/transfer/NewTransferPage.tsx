@@ -1,8 +1,9 @@
 import DashboardLayout from "../../../components/layouts/DashboardLayout"
-import HouseIcon from "../../../assets/icons/house.png"
+import HouseIcon from "../../../assets/icons/house_dark.png"
 import { ChevronRight, RefreshCw } from "react-feather"
 import BankIcon from "../../../assets/icons/bank.png"
 import RekeningIcon from "../../../assets/icons/rekening.png"
+import { Link } from "react-router-dom"
 
 const NewTransferPage: React.FC = () => {
   return (
@@ -58,7 +59,9 @@ const NewTransferPage: React.FC = () => {
               </div>
             </div>
             <div className="flex justify-end p-[20px] mt-10">
-              <button className="bg-[#549EFF] w-[182px] h-[41px] rounded-[10px] border text-white">Selanjutnya</button>
+              <Link to={"/home/transfer/new/nominal"}>
+                <button className="bg-[#549EFF] w-[182px] h-[41px] rounded-[10px] border text-white">Selanjutnya</button>
+              </Link>
             </div>
           </div>
         </div>

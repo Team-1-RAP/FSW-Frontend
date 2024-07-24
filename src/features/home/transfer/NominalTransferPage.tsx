@@ -1,7 +1,8 @@
 import DashboardLayout from "../../../components/layouts/DashboardLayout"
-import HouseIcon from "../../../assets/icons/house.png"
+import HouseIcon from "../../../assets/icons/house_dark.png"
 import { ChevronRight, Info, RefreshCw } from "react-feather"
 import NominalIcon from "../../../assets/icons/nominal.png"
+import { Link } from "react-router-dom"
 
 const NominalTransferPage: React.FC = () => {
   return (
@@ -70,8 +71,12 @@ const NominalTransferPage: React.FC = () => {
               </div>
             </div>
             <div className="flex justify-end p-[20px] mt-10 gap-5">
-              <button className="bg-white w-[182px] h-[41px] rounded-[10px] border border-[#549EFF] text-[#549EFF]">Kembali</button>
-              <button className="bg-[#549EFF] w-[182px] h-[41px] rounded-[10px] border text-white">Selanjutnya</button>
+              <Link to={"/home/transfer/new"}>
+                <button className="bg-white w-[182px] h-[41px] rounded-[10px] border border-[#549EFF] text-[#549EFF]">Kembali</button>
+              </Link>
+              <Link to={"/home/transfer/new/nominal/confirm"}>
+                <button className="bg-[#549EFF] w-[182px] h-[41px] rounded-[10px] border text-white">Selanjutnya</button>
+              </Link>
             </div>
           </div>
         </div>

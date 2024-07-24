@@ -12,6 +12,9 @@ import { AccountProvider } from "./context/AccountContext"
 import Profile from "./features/profile/Profile"
 import NewTransferPage from "./features/home/transfer/NewTransferPage"
 import NominalTransferPage from "./features/home/transfer/NominalTransferPage"
+import ConfirmTransferPage from "./features/home/transfer/ConfirmTransferPage"
+import BuktiTransferPage from "./features/home/transfer/BuktiTransferPage"
+import TransferPage from "./features/home/transfer/TransferPage"
 
 function App() {
   return (
@@ -37,8 +40,11 @@ function App() {
               </PrivateRoute>
             }
           />
+           <Route path="/home/transfer" element={<TransferPage />} />
           <Route path="/home/transfer/new" element={<NewTransferPage />} />
           <Route path="/home/transfer/new/nominal" element={<NominalTransferPage />} />
+          <Route path="/home/transfer/new/nominal/confirm" element={<ConfirmTransferPage />} />
+          <Route path="/home/transfer/success" element={<BuktiTransferPage />} />
 
           {/* MutasiPage - Private Route */}
           <Route
