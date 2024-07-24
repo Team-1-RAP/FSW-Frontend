@@ -20,7 +20,7 @@ export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const fetchAccounts = async (token: string) => {
     try {
-      const response = await fetch("https://cautious-noelyn-ridho-71c54445.koyeb.app/api/v1/accounts", {
+      const response = await fetch("https://simplebank-stg.koyeb.app/api/v1/accounts", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

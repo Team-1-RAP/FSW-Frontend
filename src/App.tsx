@@ -1,15 +1,17 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
-import LandingPage from "./features/guests/LandingPage";
-import NotFound from "./features/NotFound";
-import HomePage from "./features/home/HomePage";
-import LoginPage from "./features/authentication/LoginPage";
-import MutasiPage from "./features/mutasi/MutasiPage";
-import SettingPage from "./features/setting/SettingPage";
-import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
-import { AuthProvider } from "./context/AuthContext"; // Pastikan untuk mengimpor AuthProvider dari file yang benar
-import { AccountProvider } from "./context/AccountContext";
-import Profile from "./features/profile/Profile";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import "./App.css"
+import LandingPage from "./features/guests/LandingPage"
+import NotFound from "./features/NotFound"
+import HomePage from "./features/home/HomePage"
+import LoginPage from "./features/authentication/LoginPage"
+import MutasiPage from "./features/mutasi/MutasiPage"
+import SettingPage from "./features/setting/SettingPage"
+import PrivateRoute from "./components/fragments/Authentication/PrivateRoute"
+import { AuthProvider } from "./context/AuthContext" // Pastikan untuk mengimpor AuthProvider dari file yang benar
+import { AccountProvider } from "./context/AccountContext"
+import Profile from "./features/profile/Profile"
+import NewTransferPage from "./features/home/transfer/NewTransferPage"
+import NominalTransferPage from "./features/home/transfer/NominalTransferPage"
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path="/home/transfer/new" element={<NewTransferPage />} />
+          <Route path="/home/transfer/new/nominal" element={<NominalTransferPage />} />
 
           {/* MutasiPage - Private Route */}
           <Route
@@ -73,7 +77,7 @@ function App() {
         </Routes>
       </AuthProvider>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
