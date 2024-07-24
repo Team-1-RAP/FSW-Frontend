@@ -25,11 +25,10 @@ const LoginPage: React.FC = () => {
 
     return (
         <div className="relative">
-            <div className="">
-                <img src={bgLogin} alt="" className="absolute left-0 object-cover w-full h-screen md:h-full md:w-fit" />
-            </div>
+            <div className=""></div>
             <div className="flex flex-col w-full md:h-screen md:flex-row">
                 <div className="relative w-full h-screen md:w-1/2">
+                    <img src={bgLogin} alt="" className="absolute left-0 overflow-hidden max-h-screen min-w-[50vw] w-full h-screen md:h-full md:w-full sm:w-[100vw]" />
                     <div className="absolute flex flex-col mb-40 md:items-center md:justify-center left-5 top-4 md:inset-0 ">
                         <div className="md:space-y-10 space-y-16 text-white md:w-[75%] w-full">
                             <p className="text-[59px] mr-8 md:mr-0">
