@@ -26,7 +26,7 @@ const LoginForm: React.FC = () => {
                 navigate("/home");
             } catch (error: unknown) {
                 if (error instanceof Error) {
-                    setErrors({ username: error.message });
+                    setErrors({ password: error.message });
                 }
             }
         },
@@ -36,22 +36,48 @@ const LoginForm: React.FC = () => {
         <form onSubmit={formik.handleSubmit} className="w-11/12 space-y-3 md:w-1/2">
             <div className="relative">
                 <User className="text-[#c4c4c4] absolute left-2 top-3" />
-                <input type="text" placeholder="your account" className="border rounded-md border-[#c4c4c4] py-[10px] pl-[40px] pr-[10px] w-full focus:outline-[#5375EC]" {...formik.getFieldProps("username")} aria-label="Username" />
-                {formik.touched.username && formik.errors.username ? <div className="text-sm text-red-500">{formik.errors.username}</div> : null}
+                <label htmlFor="username" className="sr-only">
+                    Username
+                </label>
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="your account"
+                    className="border rounded-md border-[#c4c4c4] py-[10px] pl-[40px] pr-[10px] w-full focus:outline-[#5375EC]"
+                    {...formik.getFieldProps("username")}
+                    aria-label="Username"
+                    aria-invalid={formik.touched.username && Boolean(formik.errors.username)}
+                    aria-describedby="username-error"
+                />
+                {formik.touched.username && formik.errors.username ? (
+                    <div id="username-error" className="text-sm text-red-500" role="alert">
+                        {formik.errors.username}
+                    </div>
+                ) : null}
             </div>
             <div className="relative">
                 <Lock className="text-[#c4c4c4] absolute left-2 top-3" />
+                <label htmlFor="password" className="sr-only">
+                    Password
+                </label>
                 <input
                     type={showPassword ? "text" : "password"}
+                    id="password"
                     placeholder="password"
                     className="border rounded-md border-[#c4c4c4] py-[10px] px-[40px] w-full focus:outline-[#5375EC]"
                     {...formik.getFieldProps("password")}
                     aria-label="Password"
+                    aria-invalid={formik.touched.password && Boolean(formik.errors.password)}
+                    aria-describedby="password-error"
                 />
                 <div className="absolute cursor-pointer right-4 top-3" onClick={toggleShowPassword}>
                     {showPassword ? <Eye className="text-[#c4c4c4]" /> : <EyeOff className="text-[#c4c4c4]" />}
                 </div>
-                {formik.touched.password && formik.errors.password ? <div className="text-sm text-red-500">{formik.errors.password}</div> : null}
+                {formik.touched.password && formik.errors.password ? (
+                    <div id="password-error" className="text-sm text-red-500" role="alert">
+                        {formik.errors.password}
+                    </div>
+                ) : null}
             </div>
             <p className="flex justify-end text-[#153193]">
                 <span>

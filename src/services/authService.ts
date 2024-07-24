@@ -1,7 +1,7 @@
 export const loginUser = async (username: string, password: string): Promise<string | null> => {
     try {
         if (localStorage.getItem("activeSession") === "true") {
-            throw new Error("Ada sesi aktif di tab lain. Silakan tutup tab tersebut terlebih dahulu.");
+            throw new Error("Ada sesi aktif di tab lain. Silakan tutup terlebih dahulu atau kembali ke tab tersebut.");
         }
         const response = await fetch("https://simplebank-stg.koyeb.app/api/v1/auth/login", {
             method: "POST",
@@ -12,11 +12,10 @@ export const loginUser = async (username: string, password: string): Promise<str
         });
 
         if (!response.ok) {
-            if (response.status === 404) {
-                throw new Error("Username tidak ditemukan!");
-            } else {
-                throw new Error("Username atau Password Salah!");
+            if (response.status === 403) {
+                throw new Error("Percobaan sudah 3 kali gagal, Akun anda terblokir!");
             }
+            throw new Error("Username atau Password Salah!");
         }
 
         const data = await response.json();
@@ -30,7 +29,7 @@ export const loginUser = async (username: string, password: string): Promise<str
             });
             return data.data.accessToken;
         } else {
-            throw new Error("Token tidak ditemukan di data respons");
+            throw new Error("Login Gagal!");
         }
     } catch (error) {
         console.error("Login error:", error);
