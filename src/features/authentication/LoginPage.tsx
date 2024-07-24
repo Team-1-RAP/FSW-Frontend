@@ -45,7 +45,7 @@ const LoginPage: React.FC = () => {
                     </div>
                 </div>
                 <div className="flex flex-col items-center justify-center w-full h-screen md:w-1/2">
-                    <img src={logo} alt="Simple Bank" className="w-[194px] mb-[29px]" />
+                    <img src={logo} alt="Simple Bank Logo" aria-label="Simple Bank Logo" className="w-[194px] mb-[29px]" />
                     <LoginForm />
                 </div>
             </div>
