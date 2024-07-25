@@ -10,6 +10,10 @@ import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext"; // Pastikan untuk mengimpor AuthProvider dari file yang benar
 import { AccountProvider } from "./context/AccountContext";
 import Profile from "./features/profile/Profile";
+import { PengaturanLayout } from "./components/layouts/PengaturanLayout";
+import { Otp } from "./features/resetPin/Otp";
+import { NewPin } from "./features/resetPin/NewPin";
+import { PinChangeSuccess } from "./features/resetPin/PinChangeSuccess";
 
 function App() {
   return (
@@ -23,6 +27,14 @@ function App() {
 
           {/* LoginPage - Public Route */}
           <Route path="/login" element={<LoginPage />} />
+
+          <Route path="/pengaturan" element={<PengaturanLayout />}>
+            <Route path="reset-pin">
+              <Route path="otp" element={<Otp />} />
+              <Route path="new-pin" element={<NewPin />} />
+              <Route path="success" element={<PinChangeSuccess />} />
+            </Route>
+          </Route>
 
           {/* HomePage - Private Route */}
           <Route
