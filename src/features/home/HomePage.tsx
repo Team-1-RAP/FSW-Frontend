@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect} from "react"
 import DashboardLayout from "../../components/layouts/DashboardLayout"
 import ServiceButton from "../../components/elements/home/ServiceButton"
 import { services } from "../../utils/ServiceButtonUtils"
@@ -9,25 +9,22 @@ import ScoreCard from "../../components/fragments/ScoreCard"
 import MutasiItems from "../../components/elements/home/MutasiItems"
 import { mutasiItems } from "../../utils/MutasiItemsUtils"
 import { useAccount } from "../../hooks/useAccount"
+import { useToggle } from "../../hooks/useToggle"
+import { Link } from "react-router-dom"
 
 const HomePage: React.FC = () => {
-  const { accounts, fetchAccounts } = useAccount()
-  const [currentAccountIndex, setCurrentAccountIndex] = useState(0)
-  const [isRefresh, setRefresh] = useState(true)
+  const { accounts, fetchAccounts, activeAccountIndex } = useAccount()
+  const [isRefresh, setRefresh] = useToggle(true);
 
   useEffect(() => {
     const token = sessionStorage.getItem("token")
     if (token && isRefresh) {
       fetchAccounts(token)
-      setRefresh(false);
+      setRefresh();
     }
-  }, [fetchAccounts, isRefresh])
+  }, [fetchAccounts, isRefresh, setRefresh])
 
-  const handleChangeCard = () => {
-    setCurrentAccountIndex((prevIndex) => (accounts ? (prevIndex + 1) % accounts.length : 0))
-  }
-
-  const currentAccount = accounts ? accounts[currentAccountIndex] : null
+  const currentAccount = accounts ? accounts[activeAccountIndex] : null
 
   return (
     <DashboardLayout>
@@ -37,7 +34,7 @@ const HomePage: React.FC = () => {
             <h1 className="text-[22px] text-[#343C6A] font-semibold" aria-label="Rekeningku" role="heading">
               Rekeningku
             </h1>
-            <button className="flex items-center" onClick={handleChangeCard}>
+            <Link className="flex items-center" to='/profile'>
               <p className="text-[#838383] text-[15px] font-semibold">Ganti kartu</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +51,7 @@ const HomePage: React.FC = () => {
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M9 6l6 6l-6 6" />
               </svg>
-            </button>
+            </Link>
           </div>
           <div className="mt-3 grid justify-center">
             {currentAccount && <Card variant="purpleCyan" size="lg" userFullName={currentAccount.fullName} userCardNumber={currentAccount.cardNumber} userCardExpiration={new Date(currentAccount.expDate)} />}

@@ -1,25 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../../components/fragments/Card";
 import ScoreCard from "../../components/fragments/ScoreCard";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { ChevronRight } from "react-feather";
 import { CardSelection } from "../../components/fragments/CardSelection";
-import { CardInfo } from "./types";
+import { useAccount } from "../../hooks/useAccount";
+import { useToggle } from "../../hooks/useToggle";
+import { IAccount } from "../../context/AccountContext";
 // import { useAccount } from "../../hooks/useAccount";
 
 const Profile: React.FC = () => {
   const [isDropdownOpen, setIsDropDownOpen] = useState<boolean>(false);
-  // const { accounts, user, fetchAccounts, fetchUserInfo } = useAccount();
-  const [activeAccount, setActiveAccount] = useState<number>(0);
-  // const [isRefresh, setRefresh] = useState(true);
-  // useEffect(() => {
-  //   const token = sessionStorage.getItem("token");
-  //   if (token && isRefresh) {
-  //     fetchAccounts(token);
-  //     fetchUserInfo(token);
-  //     setRefresh(false);
-  //   }
-  // }, [fetchAccounts, fetchUserInfo, isRefresh]);
+  const { accounts, user, fetchAccounts, fetchUserInfo, activeAccountIndex, setActiveAccountIndex } = useAccount();
+  const [isRefresh, setRefresh] = useToggle(true);
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (token && isRefresh) {
+      fetchAccounts(token);
+      fetchUserInfo(token);
+      setRefresh();
+    }
+  }, [fetchAccounts, fetchUserInfo, isRefresh, setRefresh]);
   // const cards: CardInfo[] =
   //   accounts?.map((account) => {
   //     return {
@@ -32,49 +33,51 @@ const Profile: React.FC = () => {
   //     };
   //   }) ?? [];
 
+  const userInfo = {
+    username: user?.username ?? "",
+    phoneNumber: user?.phoneNumber ?? "",
+    email: user?.email ?? "",
+  };
+
+  // const cards: CardInfo[] = [
+  //   {
+  //     userFullName: "John Doe",
+  //     userCardExpiration: new Date(2029, 1),
+  //     userCardNumber: "1234 5678 910",
+  //     noAccount: "3737657598213561",
+  //     accountType: "Gold",
+  //     balance: 100000000,
+  //   },
+  //   {
+  //     userFullName: "Adilla Wulandari",
+  //     userCardExpiration: new Date(2028, 10),
+  //     userCardNumber: "1234 5678 910",
+  //     noAccount: "3737657598233361",
+  //     accountType: "Bronze",
+  //     balance: 100000000,
+  //   },
+  //   {
+  //     userFullName: "Adilla Wulandari",
+  //     userCardExpiration: new Date(2028, 10),
+  //     userCardNumber: "1234 5678 910",
+  //     noAccount: "3737657598213532",
+  //     accountType: "Silver",
+  //     balance: 100000000,
+  //   },
+  // ];
+
   // const userInfo = {
-  //   username: user?.username ?? "",
-  //   phoneNumber: user?.phoneNumber ?? "",
-  //   email: user?.email ?? "",
+  //   username: "adila24",
+  //   phoneNumber: "+6281234567890",
+  //   email: "adila24@gmail.com",
   // };
 
-  const cards: CardInfo[] = [
-    {
-      userFullName: "John Doe",
-      userCardExpiration: new Date(2029, 1),
-      userCardNumber: "1234 5678 910",
-      noAccount: "3737657598213561",
-      accountType: "Gold",
-      balance: 100000000,
-    },
-    {
-      userFullName: "Adilla Wulandari",
-      userCardExpiration: new Date(2028, 10),
-      userCardNumber: "1234 5678 910",
-      noAccount: "3737657598233361",
-      accountType: "Bronze",
-      balance: 100000000,
-    },
-    {
-      userFullName: "Adilla Wulandari",
-      userCardExpiration: new Date(2028, 10),
-      userCardNumber: "1234 5678 910",
-      noAccount: "3737657598213532",
-      accountType: "Silver",
-      balance: 100000000,
-    },
-  ];
-
-  const userInfo = {
-    username: "adila24",
-    phoneNumber: "+6281234567890",
-    email: "adila24@gmail.com",
-  };
-
   const handleCardChange = (index: number) => {
-    setActiveAccount(index);
+    setActiveAccountIndex(index);
     setIsDropDownOpen(false);
   };
+
+  const activeAccount = accounts ? accounts[activeAccountIndex] : {} as IAccount;
 
   return (
     <DashboardLayout>
@@ -88,7 +91,7 @@ const Profile: React.FC = () => {
           </div>
           <div className="lg:w-3/12 w-1/2 flex justify-end">
             <button
-              className="text-[#838383] text-base z-10"
+              className="text-[#838383] text-base"
               onClick={() => setIsDropDownOpen(!isDropdownOpen)}
             >
               Ganti Kartu
@@ -98,17 +101,17 @@ const Profile: React.FC = () => {
               />
             </button>
           </div>
-          <div className="lg:w-2/12 w-full flex justify-start">
+          <div className="lg:w-2/12 flex justify-start">
             {isDropdownOpen && (
               <div className="absolute">
                 <div className="flex flex-col gap-1 border rounded-lg bg-white p-1.5">
-                  {cards.map((card, index) => (
+                  {accounts?.map((account, index) => (
                     <CardSelection
                       key={index}
-                      accountType={card.accountType}
-                      accountNumber={card.noAccount}
+                      accountType={account.accountType}
+                      accountNumber={account.cardNumber}
                       buttonFunction={() => handleCardChange(index)}
-                      isActive={activeAccount === index}
+                      isActive={activeAccountIndex === index}
                     />
                   ))}
                 </div>
@@ -119,9 +122,9 @@ const Profile: React.FC = () => {
         <div className="mt-11 flex lg:w-100 sm:mx-8">
           <div className="lg:w-1/2 w-full flex justify-center">
             <Card
-              userFullName={cards[activeAccount].userFullName}
-              userCardNumber={cards[activeAccount].userCardNumber}
-              userCardExpiration={cards[activeAccount].userCardExpiration}
+              userFullName={activeAccount.fullName}
+              userCardNumber={activeAccount.cardNumber}
+              userCardExpiration={new Date(activeAccount.expDate)}
             />
           </div>
         </div>
@@ -137,9 +140,9 @@ const Profile: React.FC = () => {
             <ScoreCard
               imgFile="balance-icon.png"
               title="Saldo Rekening"
-              // value={accounts ? accounts[activeAccount].balance : 0}
-              value1={cards[activeAccount].balance}
-              value2={cards[activeAccount].noAccount}
+              // value={accounts ? accounts[activeAccountIndex].balance : 0}
+              value1={activeAccount.balance}
+              value2={activeAccount.noAccount.toString()}
               isVisible={false}
             />
           </div>
@@ -157,30 +160,34 @@ const Profile: React.FC = () => {
               Informasi Kartu Simple Bank
             </p>
             <div className="flex">
-              <span className="w-1/3 text-xl text-[#343C6A]">
+              <span className="sm:w-1/3 w-1/2 text-xl text-[#343C6A]">
                 Jenis Rekening
               </span>
               <span className="text-xl text-[#343C6A]">
-                {cards[activeAccount].accountType}
+                {activeAccount.accountType}
               </span>
             </div>
             <div className="flex">
-              <span className="w-1/3 text-xl text-[#343C6A]">Nama Pemilik</span>
+              <span className="sm:w-1/3 w-1/2 text-xl text-[#343C6A]">
+                Nama Pemilik
+              </span>
               <span className="text-xl text-[#343C6A]">
-                {cards[activeAccount].userFullName}
+                {activeAccount.fullName}
               </span>
             </div>
           </div>
           <div className="bg-white flex flex-col w-full gap-5 py-8 px-10">
             <p className="font-bold text-xl text-[#343C6A]">Informasi Akun</p>
             <div className="flex">
-              <span className="w-1/3 text-xl text-[#343C6A]">Username</span>
+              <span className="sm:w-1/3 w-1/2 text-xl text-[#343C6A]">
+                Username
+              </span>
               <span className="text-xl text-[#343C6A]">
                 {userInfo.username}
               </span>
             </div>
             <div className="flex">
-              <span className="w-1/3 text-xl text-[#343C6A]">
+              <span className="sm:w-1/3 w-1/2 text-xl text-[#343C6A]">
                 Nomor telepon
               </span>
               <span className="text-xl text-[#343C6A]">
@@ -188,7 +195,9 @@ const Profile: React.FC = () => {
               </span>
             </div>
             <div className="flex">
-              <span className="w-1/3 text-xl text-[#343C6A]">Email</span>
+              <span className="sm:w-1/3 w-1/2 text-xl text-[#343C6A]">
+                Email
+              </span>
               <span className="text-xl text-[#343C6A]">{userInfo.email}</span>
             </div>
           </div>

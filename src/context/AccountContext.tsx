@@ -16,6 +16,8 @@ export interface IUserInfo {
 export interface AccountsContextProps {
   accounts: IAccount[] | null;
   setAccounts: (accounts: IAccount[] | null) => void;
+  activeAccountIndex: number;
+  setActiveAccountIndex: (index: number) => void;
   user: IUserInfo | null;
   setUser: (user: IUserInfo | null) => void;
   fetchAccounts: (token: string) => Promise<void>;
@@ -27,12 +29,13 @@ export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [accounts, setAccounts] = useState<IAccount[] | null>(null);
+  const [activeAccountIndex, setActiveAccountIndex] = useState<number>(0);
   const [user, setUser] = useState<IUserInfo | null>(null);
 
   const fetchAccounts = async (token: string) => {
     try {
       const response = await fetch(
-        "https://simplebank-stg.koyeb.app/api/v1/accounts",
+        import.meta.env.VITE_API_BASE_URL + "api/v1/accounts",
         {
           method: "GET",
           headers: {
@@ -62,7 +65,7 @@ export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({
   const fetchUserInfo = async (token: string) => {
     try {
       const response = await fetch(
-        "https://simplebank-stg.koyeb.app/api/v1/profiles",
+        import.meta.env.VITE_API_BASE_URL + "api/v1/profiles",
         {
           method: "GET",
           headers: {
@@ -97,6 +100,8 @@ export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser,
     fetchAccounts,
     fetchUserInfo,
+    activeAccountIndex,
+    setActiveAccountIndex,
   };
   return (
     <AccountContext.Provider value={contextValue}>
