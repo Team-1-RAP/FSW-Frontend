@@ -56,7 +56,7 @@ const HomePage: React.FC = () => {
           <div className="mt-3 grid justify-center">
             {currentAccount && <Card variant="purpleCyan" size="lg" userFullName={currentAccount.fullName} userCardNumber={currentAccount.cardNumber} userCardExpiration={new Date(currentAccount.expDate)} />}
           </div>
-          <div className="mt-4">{currentAccount && <ScoreCard imgFile="balance-icon.png" title="Saldo Rekening" value1={currentAccount.balance} isVisible={false} />}</div>
+          <div className="mt-4">{currentAccount && <ScoreCard imgFile="balance-icon.png" title="Saldo Rekening" value1={currentAccount.balance} value2={currentAccount.noAccount.toString()} isVisible={false} />}</div>
           <div className="mt-4 grid gap-3 shadow-md p-7 rounded-3xl bg-white" aria-label="Mutasi Terbaru" role="log">
             {mutasiItems.map((mutasi) => (
               <MutasiItems key={mutasi.id} id={mutasi.id} icon={mutasi.icon} label={mutasi.label} value={mutasi.value} date={mutasi.date} />
