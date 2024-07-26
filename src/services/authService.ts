@@ -13,12 +13,13 @@ export const loginUser = async (username: string, password: string): Promise<str
 
         if (!response.ok) {
             if (response.status === 403) {
-                throw new Error("Percobaan sudah 3 kali gagal, Akun anda terblokir!");
+                throw { status: 403 };
             }
             throw new Error("Username atau Password Salah!");
         }
 
         const data = await response.json();
+        console.log(data);
 
         if (data?.data?.accessToken) {
             sessionStorage.setItem("token", data.data.accessToken);

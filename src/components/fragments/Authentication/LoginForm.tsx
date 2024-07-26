@@ -1,3 +1,4 @@
+// LoginForm.tsx
 import React from "react";
 import { User, Lock, EyeOff, Eye } from "react-feather";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +9,11 @@ import { useToggle } from "../../../hooks/useToggle";
 import { loginValidationSchema } from "../../../utils/validationSchema";
 import { loginUser } from "../../../services/authService";
 
-const LoginForm: React.FC = () => {
+interface LoginFormProps {
+    onLoginError: (status: number) => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
     const navigate = useNavigate();
     const { setToken } = useAuth();
     const [showPassword, toggleShowPassword] = useToggle(false);
@@ -24,9 +29,14 @@ const LoginForm: React.FC = () => {
                 const data = await loginUser(values.username, values.password);
                 setToken(data);
                 navigate("/home");
-            } catch (error: unknown) {
+            } catch (error) {
                 if (error instanceof Error) {
+                    // Handle general errors
                     setErrors({ password: error.message });
+                } else if (error && typeof error === "object" && "status" in error) {
+                    // Handle status-specific errors
+                    const status = (error as { status: number }).status;
+                    onLoginError(status);
                 }
             }
         },

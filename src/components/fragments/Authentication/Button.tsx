@@ -7,18 +7,9 @@ interface ButtonProps {
     className?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({
-    type = "button",
-    onClick,
-    children,
-    className,
-}) => {
+const Button: React.FC<ButtonProps> = ({ type = "button", onClick, children, className }) => {
     return (
-        <button
-            type={type}
-            onClick={onClick}
-            className={`bg-gradient-to-tr to-[#2AF0FA] from-[#0C32FB] py-[10px] px-[60px] rounded-[12px] text-white text-base border-[#5375EC] border-2 ${className}`}
-        >
+        <button type={type} onClick={onClick} className={`bg-[#0082FA] py-[10px] px-[60px] rounded-[12px] text-white text-base border-[#5375EC] border-2 ${className}`}>
             {children}
         </button>
     );
