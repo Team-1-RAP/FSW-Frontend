@@ -3,13 +3,14 @@ import "./App.css";
 import LandingPage from "./features/guests/LandingPage";
 import NotFound from "./features/NotFound";
 import HomePage from "./features/home/HomePage";
-import LoginPage from "./features/authentication/LoginPage";
 import MutasiPage from "./features/mutasi/MutasiPage";
 import SettingPage from "./features/setting/SettingPage";
 import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext"; // Pastikan untuk mengimpor AuthProvider dari file yang benar
 import { AccountProvider } from "./context/AccountContext";
 import Profile from "./features/profile/Profile";
+import LoginForm from "./features/authentication/LoginForm";
+import AuthLayout from "./components/layouts/AuthLayout";
 
 function App() {
   return (
@@ -21,10 +22,12 @@ function App() {
           {/* LandingPage - Public Route */}
           <Route path="/" element={<LandingPage />} />
 
-          {/* LoginPage - Public Route */}
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={<AuthLayout />}>
+            {/* LoginPage - Public Route */}
+            <Route element={<LoginForm />} />
+          </Route>
 
-          <Route path='/test' element={<Profile />} />
+          <Route path="/test" element={<Profile />} />
 
           {/* HomePage - Private Route */}
           <Route
