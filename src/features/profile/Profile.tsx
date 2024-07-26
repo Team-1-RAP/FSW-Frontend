@@ -1,192 +1,131 @@
 import React, { useEffect, useState } from "react";
 import Card from "../../components/fragments/Card";
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { Navigation, Keyboard } from "swiper/modules";
-import { CardProps } from "./../../components/fragments/Card/types";
 import ScoreCard from "../../components/fragments/ScoreCard";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
-import { Link } from "react-router-dom";
 import { ChevronRight } from "react-feather";
-import * as XLSX from "xlsx";
-
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { BarChart } from "../../components/fragments/Chart";
+import { CardSelection } from "../../components/fragments/CardSelection";
 import { useAccount } from "../../hooks/useAccount";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import { useToggle } from "../../hooks/useToggle";
+import { IAccount } from "../../context/AccountContext";
+// import { useAccount } from "../../hooks/useAccount";
 
 const Profile: React.FC = () => {
-  const { accounts, fetchAccounts } = useAccount();
-  const [activeAccount, setActiveAccount] = useState<number>(0);
-  const [isRefresh, setRefresh] = useState(true);
+  const [isDropdownOpen, setIsDropDownOpen] = useState<boolean>(false);
+  const { accounts, user, fetchAccounts, fetchUserInfo, activeAccountIndex, setActiveAccountIndex } = useAccount();
+  const [isRefresh, setRefresh] = useToggle(true);
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (token && isRefresh) {
       fetchAccounts(token);
-      setRefresh(false);
+      fetchUserInfo(token);
+      setRefresh();
     }
-  }, [fetchAccounts, isRefresh]);
-  const cards: CardProps[] =
-    accounts?.map((account) => {
-      return {
-        variant: "purpleCyan",
-        size: "md",
-        userFullName: account.fullName,
-        userCardExpiration: new Date(account.expDate),
-        userCardNumber: account.cardNumber,
-      };
-    }) ?? [];
+  }, [fetchAccounts, fetchUserInfo, isRefresh, setRefresh]);
+  // const cards: CardInfo[] =
+  //   accounts?.map((account) => {
+  //     return {
+  //       userFullName: account.fullName,
+  //       userCardExpiration: new Date(account.expDate),
+  //       userCardNumber: account.cardNumber,
+  //       noAccount: account.noAccount.toString(),
+  //       accountType: account.accountType,
+  //       balance: account.balance,
+  //     };
+  //   }) ?? [];
 
-  // const cards: CardProps[] = [
+  const userInfo = {
+    username: user?.username ?? "",
+    phoneNumber: user?.phoneNumber ?? "",
+    email: user?.email ?? "",
+  };
+
+  // const cards: CardInfo[] = [
   //   {
-  //     variant: "purpleCyan",
-  //     size: "md",
   //     userFullName: "John Doe",
-  //     userCardExpiration: new Date(),
+  //     userCardExpiration: new Date(2029, 1),
   //     userCardNumber: "1234 5678 910",
+  //     noAccount: "3737657598213561",
+  //     accountType: "Gold",
+  //     balance: 100000000,
   //   },
   //   {
-  //     variant: "blueCyan",
-  //     size: "md",
   //     userFullName: "Adilla Wulandari",
   //     userCardExpiration: new Date(2028, 10),
   //     userCardNumber: "1234 5678 910",
+  //     noAccount: "3737657598233361",
+  //     accountType: "Bronze",
+  //     balance: 100000000,
   //   },
   //   {
-  //     variant: "blueCyan",
-  //     size: "md",
   //     userFullName: "Adilla Wulandari",
   //     userCardExpiration: new Date(2028, 10),
   //     userCardNumber: "1234 5678 910",
+  //     noAccount: "3737657598213532",
+  //     accountType: "Silver",
+  //     balance: 100000000,
   //   },
   // ];
 
-  const data = {
-    labels: ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"],
-    datasets: [
-      {
-        label: "Pemasukan",
-        data: [500, 300, 400, 250],
-        backgroundColor: "#396AFF",
-        borderRadius: Number.MAX_VALUE,
-        categoryPercentage: 0.6,
-        barPercentage: 0.6,
-        borderSkipped: false,
-      },
-      {
-        label: "Pengeluaran",
-        data: [200, 150, 100, 300],
-        backgroundColor: "#FF82AC",
-        borderRadius: Number.MAX_VALUE,
-        categoryPercentage: 0.6,
-        barPercentage: 0.6,
-        borderSkipped: false,
-      },
-    ],
+  // const userInfo = {
+  //   username: "adila24",
+  //   phoneNumber: "+6281234567890",
+  //   email: "adila24@gmail.com",
+  // };
+
+  const handleCardChange = (index: number) => {
+    setActiveAccountIndex(index);
+    setIsDropDownOpen(false);
   };
 
-  const downloadXLS = () => {
-    const wb = XLSX.utils.book_new();
-    const wsName = "Laporan Keuangan";
-
-    const wsData = [
-      ["Hari", "Pemasukan", "Pengeluaran"],
-      ...data.labels.map((label, index) => [
-        label,
-        data.datasets[0].data[index],
-        data.datasets[1].data[index],
-      ]),
-    ];
-
-    const ws = XLSX.utils.aoa_to_sheet(wsData);
-    XLSX.utils.book_append_sheet(wb, ws, wsName);
-    XLSX.writeFile(wb, "laporan-keuangan.xlsx");
-  };
-
-  const handleSlideChange = (swiper: SwiperCore) => {
-    console.log(swiper.realIndex);
-    setActiveAccount(swiper.realIndex);
-  };
-
-  const [selectedMonth, setSelectedMonth] = useState("");
+  const activeAccount = accounts ? accounts[activeAccountIndex] : {} as IAccount;
 
   return (
     <DashboardLayout>
       <div className="w-full flex flex-col">
         <div className="flex mx-8">
           <div
-            className="lg:w-4/12 w-1/2 font-semibold text-xl text-[#343C6A]"
+            className="lg:w-3/12 w-1/2 font-semibold text-xl text-[#343C6A]"
             tabIndex={0}
           >
             Rekeningku
           </div>
-          <div className="lg:w-5/12 w-1/2 flex justify-end">
-            <Link className="text-[#838383] text-base" to="/add-account">
+          <div className="lg:w-3/12 w-1/2 flex justify-end">
+            <button
+              className="text-[#838383] text-base"
+              onClick={() => setIsDropDownOpen(!isDropdownOpen)}
+            >
               Ganti Kartu
               <ChevronRight
                 className="inline-block text-black ms-3"
                 size={12}
               />
-            </Link>
+            </button>
+          </div>
+          <div className="lg:w-2/12 flex justify-start">
+            {isDropdownOpen && (
+              <div className="absolute">
+                <div className="flex flex-col gap-1 border rounded-lg bg-white p-1.5">
+                  {accounts?.map((account, index) => (
+                    <CardSelection
+                      key={index}
+                      accountType={account.accountType}
+                      accountNumber={account.cardNumber}
+                      buttonFunction={() => handleCardChange(index)}
+                      isActive={activeAccountIndex === index}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div className="mt-11 flex lg:w-100 sm:mx-8">
-          <div className="lg:w-3/4 w-full flex">
-            <Swiper
-              modules={[Navigation, Keyboard]}
-              onSlideChange={handleSlideChange}
-              slideToClickedSlide={true}
-              navigation={true}
-              keyboard={{
-                enabled: true,
-              }}
-              loop={true}
-              breakpoints={{
-                0: {
-                  slidesPerView: 1,
-                },
-                1024: {
-                  slidesPerView: cards.length > 1 ? 2 : 1,
-                },
-              }}
-            >
-              {cards.map((card, index) => (
-                <SwiperSlide
-                  key={index}
-                  style={{
-                    transform:
-                      index === activeAccount ? "scale(1)" : "scale(0.8)",                    
-                  }}
-                >
-                  <Card
-                    variant={card.variant}
-                    size={card.size}
-                    userFullName={card.userFullName}
-                    userCardNumber={card.userCardNumber}
-                    userCardExpiration={card.userCardExpiration}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+          <div className="lg:w-1/2 w-full flex justify-center">
+            <Card
+              userFullName={activeAccount.fullName}
+              userCardNumber={activeAccount.cardNumber}
+              userCardExpiration={new Date(activeAccount.expDate)}
+            />
           </div>
         </div>
         <div className="flex xl:flex-row flex-col gap-3 mt-10 mx-8">
@@ -194,15 +133,16 @@ const Profile: React.FC = () => {
             <ScoreCard
               imgFile="income-icon.png"
               title="Pengeluaran"
-              value={34678990}
-              isVisible={true}
+              value1={34678990}
             />
           </div>
           <div className="xl:w-1/3 w-full">
             <ScoreCard
               imgFile="balance-icon.png"
               title="Saldo Rekening"
-              value={accounts ? accounts[activeAccount].balance : 0}
+              // value={accounts ? accounts[activeAccountIndex].balance : 0}
+              value1={activeAccount.balance}
+              value2={activeAccount.noAccount.toString()}
               isVisible={false}
             />
           </div>
@@ -210,61 +150,56 @@ const Profile: React.FC = () => {
             <ScoreCard
               imgFile="expense-icon.png"
               title="Pemasukan"
-              value={14678990}
-              isVisible={true}
+              value1={14678990}
             />
           </div>
         </div>
-        <div className="flex mt-20 sm:mx-8 mx-4">
-          <div className="xl:w-1/2 w-full">
-            <span
-              className="font-semibold text-2xl text-[#343C6A]"
-              tabIndex={0}
-            >
-              Aktivitas keuangan anda
-            </span>
-            <div className="flex items-center mb-4">
-              <div className="w-1/2">
-                <select
-                  id="time"
-                  name="Waktu Sewa"
-                  className="border-2 border-[#1454FB] rounded-lg w-32 h-8 flex items-center focus:border-black"
-                  onChange={(e) => setSelectedMonth(e.target.value)}
-                >
-                  <option value="" hidden>
-                    Pilih Bulan
-                  </option>
-                  <option value="january">Januari</option>
-                  <option value="february">Februari</option>
-                  <option value="march">Maret</option>
-                  <option value="april">April</option>
-                  <option value="may">Mei</option>
-                  <option value="june">Juni</option>
-                  <option value="july">Juli</option>
-                  <option value="august">Agustus</option>
-                  <option value="september">September</option>
-                  <option value="october">Oktober</option>
-                  <option value="november">November</option>
-                  <option value="december">Desember</option>
-                </select>
-              </div>
-              <div className="w-1/2 flex justify-end">
-                <button
-                  type="submit"
-                  className="bg-gradient-to-tr to-[#2AF0FA] from-[#0C32FB] rounded-xl text-white text-xs font-medium w-36 h-9"
-                  onClick={downloadXLS}
-                  aria-label="Unduh chart data ke dalam file excel"
-                >
-                  Unduh .xls
-                </button>
-              </div>
+        <div className="flex flex-col gap-12 my-12 sm:mx-8 mx-4">
+          <div className="bg-white flex flex-col w-full gap-5 py-8 px-10">
+            <p className="font-bold text-xl text-[#343C6A]">
+              Informasi Kartu Simple Bank
+            </p>
+            <div className="flex">
+              <span className="sm:w-1/3 w-1/2 text-xl text-[#343C6A]">
+                Jenis Rekening
+              </span>
+              <span className="text-xl text-[#343C6A]">
+                {activeAccount.accountType}
+              </span>
             </div>
-            <BarChart
-              data={data}
-              ariaLabel={`Bar Chart Aktivitas keuangan ${
-                selectedMonth ? "bulan " + selectedMonth : ""
-              }`}
-            />
+            <div className="flex">
+              <span className="sm:w-1/3 w-1/2 text-xl text-[#343C6A]">
+                Nama Pemilik
+              </span>
+              <span className="text-xl text-[#343C6A]">
+                {activeAccount.fullName}
+              </span>
+            </div>
+          </div>
+          <div className="bg-white flex flex-col w-full gap-5 py-8 px-10">
+            <p className="font-bold text-xl text-[#343C6A]">Informasi Akun</p>
+            <div className="flex">
+              <span className="sm:w-1/3 w-1/2 text-xl text-[#343C6A]">
+                Username
+              </span>
+              <span className="text-xl text-[#343C6A]">
+                {userInfo.username}
+              </span>
+            </div>
+            <div className="flex">
+              <span className="sm:w-1/3 w-1/2 text-xl text-[#343C6A]">
+                Nomor telepon
+              </span>
+              <span className="text-xl text-[#343C6A]">
+                {userInfo.phoneNumber}
+              </span>
+            </div>
+            <div className="flex">
+              <span className="sm:w-1/3 w-1/2 text-xl text-[#343C6A]">
+                Email
+              </span>
+              <span className="text-xl text-[#343C6A]">{userInfo.email}</span>
+            </div>
           </div>
         </div>
       </div>
