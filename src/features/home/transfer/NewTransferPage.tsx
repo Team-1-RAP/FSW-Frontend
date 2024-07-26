@@ -31,8 +31,8 @@ const NewTransferPage: React.FC = () => {
                 <option value="" disabled selected>
                   Pilih Rekening Sumber
                 </option>
-                <option value="rekening1">Rekening 1</option>
-                <option value="rekening2">Rekening 2</option>
+                <option value="rekening1">Gold - 37376565</option>
+                <option value="rekening2">Platinum - 37376560</option>
               </select>
             </div>
             <div className="mb-6">

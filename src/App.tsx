@@ -29,6 +29,8 @@ function App() {
           {/* LoginPage - Public Route */}
           <Route path="/login" element={<LoginPage />} />
 
+          <Route path='/test' element={<Profile />} />
+
           {/* HomePage - Private Route */}
           <Route
             path="/home"
