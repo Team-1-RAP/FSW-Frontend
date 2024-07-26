@@ -4,13 +4,17 @@ import LandingPage from "./features/guests/LandingPage";
 import NotFound from "./features/NotFound";
 import HomePage from "./features/home/HomePage";
 import MutasiPage from "./features/mutasi/MutasiPage";
-import SettingPage from "./features/setting/SettingPage";
 import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext"; // Pastikan untuk mengimpor AuthProvider dari file yang benar
 import { AccountProvider } from "./context/AccountContext";
 import Profile from "./features/profile/Profile";
 import LoginForm from "./features/authentication/LoginForm";
 import AuthLayout from "./components/layouts/AuthLayout";
+import { PengaturanLayout } from "./components/layouts/PengaturanLayout";
+import { Otp } from "./features/setting/resetPin/Otp";
+import { NewPin } from "./features/setting/resetPin/NewPin";
+import { PinChangeSuccess } from "./features/setting/resetPin/PinChangeSuccess";
+
 
 function App() {
   return (
@@ -27,7 +31,7 @@ function App() {
             <Route element={<LoginForm />} />
           </Route>
 
-          <Route path="/test" element={<Profile />} />
+          <Route path='/test' element={<Profile />} />
 
           {/* HomePage - Private Route */}
           <Route
@@ -52,14 +56,14 @@ function App() {
           />
 
           {/* SettingPage - Private Route */}
-          <Route
+          {/* <Route
             path="/pengaturan"
             element={
               <PrivateRoute>
                 <SettingPage />
               </PrivateRoute>
             }
-          />
+          /> */}
 
           {/* Profile - Private Route */}
           <Route
