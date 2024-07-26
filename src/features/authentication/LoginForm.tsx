@@ -33,7 +33,7 @@ const LoginForm: React.FC = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className="w-11/12 space-y-3 md:w-1/2">
+    <form onSubmit={formik.handleSubmit} className="w-11/12 space-y-3 md:w-1/2 mt-7">
       <div className="relative">
         <User className="text-[#c4c4c4] absolute left-2 top-3" />
         <label htmlFor="username" className="sr-only">

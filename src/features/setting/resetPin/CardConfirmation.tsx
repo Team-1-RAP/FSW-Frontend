@@ -1,0 +1,20 @@
+import { useNavigate } from "react-router-dom";
+import {
+  CardInformationForm,
+  ICardInformationForm,
+} from "../../../components/fragments/Authentication/CardInformationForm";
+
+export const CardInformation = () => {
+  const navigate = useNavigate();
+  const onSubmit = (data: ICardInformationForm) => {
+    console.log("Card information submitted");
+    console.log(
+      new Date(
+        parseInt("20" + data.cardExpYear),
+        parseInt(data.cardExpMonth) - 1
+      )
+    );
+    navigate("/pengaturan/reset-pin/birth-date");
+  };
+  return <CardInformationForm onSubmit={onSubmit} />;
+};

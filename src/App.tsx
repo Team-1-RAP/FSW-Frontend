@@ -11,10 +11,19 @@ import Profile from "./features/profile/Profile";
 import LoginForm from "./features/authentication/LoginForm";
 import AuthLayout from "./components/layouts/AuthLayout";
 import { PengaturanLayout } from "./components/layouts/PengaturanLayout";
-import { Otp } from "./features/setting/resetPin/Otp";
 import { NewPin } from "./features/setting/resetPin/NewPin";
 import { PinChangeSuccess } from "./features/setting/resetPin/PinChangeSuccess";
-
+import { PinOtp } from "./features/setting/resetPin/PinOtp";
+import { AuthOtpPassword } from "./features/authentication/resetPassword/AuthOtpPassword";
+import { AuthNewPassword } from "./features/authentication/resetPassword/AuthNewPassword";
+import { AuthPinVerification } from "./features/authentication/resetPassword/AuthPinVerification";
+import { AuthResetPasswordSuccess } from "./features/authentication/resetPassword/AuthResetPasswordSuccess";
+import { AuthEmailVerification } from "./features/authentication/resetPassword/AuthEmailVerification";
+import { AuthBirthDateValidation } from "./features/authentication/resetPassword/AuthBirthDateValidation";
+import { AuthCardValidation } from "./features/authentication/resetPassword/AuthCardValidation";
+import { PinEmailVerification } from "./features/setting/resetPin/PinEmaiVerification";
+import { PinBirthDateValidation } from "./features/setting/resetPin/PinBirthDateValidation";
+import { CardInformation } from "./features/setting/resetPin/CardConfirmation";
 
 function App() {
   return (
@@ -26,12 +35,33 @@ function App() {
           {/* LandingPage - Public Route */}
           <Route path="/" element={<LandingPage />} />
 
+          {/* LoginPage - Public Route */}
           <Route path="/login" element={<AuthLayout />}>
-            {/* LoginPage - Public Route */}
-            <Route element={<LoginForm />} />
+            <Route path="" element={<LoginForm />} />
           </Route>
 
-          <Route path='/test' element={<Profile />} />
+          {/* {Reset Password} */}
+          <Route path="/reset-password" element={<AuthLayout />}>
+            <Route path="" element={<AuthCardValidation />} />
+            <Route path="birth-date" element={<AuthBirthDateValidation />} />
+            <Route path="email" element={<AuthEmailVerification />} />
+            <Route path="otp" element={<AuthOtpPassword />} />
+            <Route path="new-password" element={<AuthNewPassword />} />
+            <Route path="pin-Verification" element={<AuthPinVerification />} />
+            <Route path="success" element={<AuthResetPasswordSuccess />} />
+          </Route>
+
+          {/* Pengaturan - Private Route */}
+          <Route path="/pengaturan" element={<PengaturanLayout />}>
+            <Route path="reset-pin">
+              <Route path="" element={<CardInformation />} />
+              <Route path="birth-date" element={<PinBirthDateValidation />} />
+              <Route path="email" element={<PinEmailVerification />} />
+              <Route path="otp" element={<PinOtp />} />
+              <Route path="new-pin" element={<NewPin />} />
+              <Route path="success" element={<PinChangeSuccess />} />
+            </Route>
+          </Route>
 
           {/* HomePage - Private Route */}
           <Route

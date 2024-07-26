@@ -55,7 +55,7 @@ const AuthLayout: React.FC = () => {
             src={logo}
             alt="Simple Bank Logo"
             aria-label="Simple Bank Logo"
-            className="w-[194px] mb-[29px]"
+            className="w-[175px]"
           />
           <Outlet />
         </div>

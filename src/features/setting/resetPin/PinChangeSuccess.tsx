@@ -2,7 +2,7 @@ import { Check } from "react-feather";
 
 export const PinChangeSuccess = () => {
   return (
-    <div className="text-center w-[340px] flex flex-col items-center gap-4 mb-24">
+    <div className="text-center w-[340px] flex flex-col items-center gap-4">
       <div className="bg-[#055287] p-8 rounded-full">
         <Check className="text-white stroke-[3px]" size={85} />
       </div>
