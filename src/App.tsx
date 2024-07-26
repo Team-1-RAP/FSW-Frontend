@@ -5,15 +5,15 @@ import NotFound from "./features/NotFound";
 import HomePage from "./features/home/HomePage";
 import LoginPage from "./features/authentication/LoginPage";
 import MutasiPage from "./features/mutasi/MutasiPage";
-import SettingPage from "./features/setting/SettingPage";
 import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext"; // Pastikan untuk mengimpor AuthProvider dari file yang benar
 import { AccountProvider } from "./context/AccountContext";
 import Profile from "./features/profile/Profile";
 import { PengaturanLayout } from "./components/layouts/PengaturanLayout";
-import { Otp } from "./features/resetPin/Otp";
-import { NewPin } from "./features/resetPin/NewPin";
-import { PinChangeSuccess } from "./features/resetPin/PinChangeSuccess";
+import { Otp } from "./features/setting/resetPin/Otp";
+import { NewPin } from "./features/setting/resetPin/NewPin";
+import { PinChangeSuccess } from "./features/setting/resetPin/PinChangeSuccess";
+
 
 function App() {
   return (
@@ -59,14 +59,14 @@ function App() {
           />
 
           {/* SettingPage - Private Route */}
-          <Route
+          {/* <Route
             path="/pengaturan"
             element={
               <PrivateRoute>
                 <SettingPage />
               </PrivateRoute>
             }
-          />
+          /> */}
 
           {/* Profile - Private Route */}
           <Route
