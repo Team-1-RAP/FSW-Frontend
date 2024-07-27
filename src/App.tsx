@@ -24,6 +24,7 @@ import { AuthCardValidation } from "./features/authentication/resetPassword/Auth
 import { PinEmailVerification } from "./features/setting/resetPin/PinEmaiVerification";
 import { PinBirthDateValidation } from "./features/setting/resetPin/PinBirthDateValidation";
 import { CardInformation } from "./features/setting/resetPin/CardConfirmation";
+import { Setting } from "./features/setting/Setting";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
 
           {/* Pengaturan - Private Route */}
           <Route path="/pengaturan" element={<PengaturanLayout />}>
+          <Route path="" element={<Setting />} />
             <Route path="reset-pin">
               <Route path="" element={<CardInformation />} />
               <Route path="birth-date" element={<PinBirthDateValidation />} />
