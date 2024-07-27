@@ -135,7 +135,8 @@ export const NewPin = () => {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white rounded-[10px] h-12 mt-10 mx-16 hover:bg-blue-700 focus:bg-blue-900"
+          className="bg-[#0066AE] h-12 rounded-[10px] text-white hover:bg-sky-900 focus:bg-sky-950 px-16"
+          onClick={(e) => e.currentTarget}
         >
           Selanjutnya
         </button>

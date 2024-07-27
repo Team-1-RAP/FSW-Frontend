@@ -45,7 +45,7 @@ export const PinVerificationForm = ({ onSubmit }: PinVerificationFormProps) => {
           control={control}
           name="pin"
           render={({ field }) => (
-            <div className="h-3/4 flex">
+            <div className="h-3/4 flex flex-col">
               <label htmlFor="pin" className="sr-only">
                 PIN
               </label>
@@ -72,7 +72,8 @@ export const PinVerificationForm = ({ onSubmit }: PinVerificationFormProps) => {
         <div className="h-1/4">
           <button
             type="submit"
-            className="bg-blue-500 text-white rounded-[10px] h-12 px-16 hover:bg-blue-700 focus:bg-blue-900"
+            className="bg-[#0066AE] h-12 rounded-[10px] text-white hover:bg-sky-900 focus:bg-sky-950 px-16"
+            onClick={(e) => e.currentTarget}
           >
             Selanjutnya
           </button>

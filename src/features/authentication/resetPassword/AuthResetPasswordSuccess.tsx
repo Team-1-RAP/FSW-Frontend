@@ -11,8 +11,11 @@ export const AuthResetPasswordSuccess = () => {
     >
       <button
         type="button"
-        onClick={() => navigate("/login")}
-        className="bg-[#0079CB] text-white rounded-[10px] h-12 px-16 mt-10 hover:bg-blue-700 focus:bg-blue-900"
+        className="bg-[#0066AE] h-12 mt-10 rounded-[10px] text-white hover:bg-sky-900 focus:bg-sky-950 px-16"
+        onClick={(e) => {
+          e.currentTarget;
+          navigate("/login");
+        }}
       >
         Login
       </button>

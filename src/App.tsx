@@ -43,24 +43,39 @@ function App() {
 
           {/* {Reset Password} */}
           <Route path="/reset-password" element={<AuthLayout />}>
+            {/* {Card Validation Input} */}
             <Route path="" element={<AuthCardValidation />} />
+            {/* {Birth Date Validation} */}
             <Route path="birth-date" element={<AuthBirthDateValidation />} />
+            {/* {Email Verification} */}
             <Route path="email" element={<AuthEmailVerification />} />
+            {/* {OTP Verification} */}
             <Route path="otp" element={<AuthOtpPassword />} />
+            {/* {New Password} */}
             <Route path="new-password" element={<AuthNewPassword />} />
+            {/* {PIN Verification} */}
             <Route path="pin-Verification" element={<AuthPinVerification />} />
+            {/* {Success} */}
             <Route path="success" element={<AuthResetPasswordSuccess />} />
           </Route>
 
           {/* Pengaturan - Private Route */}
           <Route path="/pengaturan" element={<PengaturanLayout />}>
-          <Route path="" element={<Setting />} />
+            {/* {Setting Landing Page} */}
+            <Route path="" element={<Setting />} />
+            {/* {Reset PIN Schema} */}
             <Route path="reset-pin">
+              {/* {Selecting Card To PIN to Change} */}
               <Route path="" element={<CardInformation />} />
+              {/* {Birth Date Validation} */}
               <Route path="birth-date" element={<PinBirthDateValidation />} />
+              {/* {Email Verification} */}
               <Route path="email" element={<PinEmailVerification />} />
+              {/* {OTP Verification} */}
               <Route path="otp" element={<PinOtp />} />
+              {/* {New PIN} */}
               <Route path="new-pin" element={<NewPin />} />
+              {/* {Success} */}
               <Route path="success" element={<PinChangeSuccess />} />
             </Route>
           </Route>
