@@ -32,26 +32,39 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
             setToken(data);
             navigate("/home");
         } catch (error) {
+            let newMessage = "";
             if (error && typeof error === "object" && "status" in error) {
                 const status = (error as { status: number }).status;
                 if (status === 400) {
                     setErrorCount((prevCount) => prevCount + 1);
                     if (errorCount === 0) {
-                        setErrorMessage("Password yang Anda masukkan salah.");
+                        newMessage = "Password yang Anda masukkan salah.";
                     } else if (errorCount === 1) {
-                        setErrorMessage("Password yang Anda masukkan salah. Anda memiliki 1x percobaan sebelum diblok oleh sistem.");
+                        newMessage = "Password yang Anda masukkan salah. Anda memiliki 1x percobaan sebelum diblok oleh sistem.";
                     }
                     setIsAlertVisible(true);
+                    hideAlert();
                 } else {
                     onLoginError(status);
-                    setErrorMessage(`Error: ${status}`);
+                    newMessage = `Error: ${status}`;
                     setIsAlertVisible(true);
+                    hideAlert();
                 }
             } else if (error instanceof Error) {
-                setErrorMessage(error.message);
+                newMessage = error.message;
                 setIsAlertVisible(true);
+                hideAlert();
             }
+            setErrorMessage(newMessage);
         }
+    };
+
+    const isFormValid = formData.username.trim() !== "" && formData.password.trim() !== "";
+
+    const hideAlert = () => {
+        setTimeout(() => {
+            setIsAlertVisible(false);
+        }, 3000);
     };
 
     return (
@@ -70,6 +83,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
                     value={formData.username}
                     onChange={handleChange}
                     aria-label="Username"
+                    required
                 />
             </div>
             <div className="relative">
@@ -86,6 +100,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
                     value={formData.password}
                     onChange={handleChange}
                     aria-label="Password"
+                    required
                 />
                 <div className="absolute cursor-pointer right-4 top-3" onClick={toggleShowPassword}>
                     {showPassword ? <Eye className="text-[#c4c4c4]" /> : <EyeOff className="text-[#c4c4c4]" />}
@@ -99,7 +114,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
             </p>
             <div className="border border-[#6C8FEE] w-full"></div>
             <div className="flex justify-center">
-                <Button type="submit" className="my-4">
+                <Button type="submit" className="my-4" disabled={!isFormValid}>
                     Login
                 </Button>
             </div>
