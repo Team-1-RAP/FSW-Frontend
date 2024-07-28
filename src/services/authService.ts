@@ -24,7 +24,7 @@ export const loginUser = async (username: string, password: string): Promise<str
         if (data?.data?.accessToken) {
             sessionStorage.setItem("token", data.data.accessToken);
             localStorage.setItem("activeSession", "true");
-            window.addEventListener("unload", () => {
+            window.addEventListener("beforeunload", () => {
                 sessionStorage.removeItem("token");
                 localStorage.removeItem("activeSession");
             });

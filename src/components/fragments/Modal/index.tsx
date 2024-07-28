@@ -30,9 +30,11 @@ const Modal: React.FC<ModalProps> = ({ title, description, visible, buttonLabel,
             tabIndex={-1}
             className="fixed inset-0 z-50 flex justify-center items-center w-full h-full overflow-y-auto bg-black bg-opacity-50"
             role="dialog"
+            aria-live="assertive"
+            aria-atomic="true"
+            aria-label={title}
             aria-labelledby="modal-title"
             aria-describedby="modal-description"
-            aria-modal="true"
         >
             <div ref={modalRef} className="relative text-center bg-white rounded-md shadow-lg max-w-[734px] w-full px-32 py-16">
                 <div className="relative flex flex-col gap-[30px] ">
