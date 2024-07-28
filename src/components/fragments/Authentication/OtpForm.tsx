@@ -14,9 +14,10 @@ export type IOtpForm = Yup.InferType<typeof OtpSchema>;
 interface OtpFormProps {
   onSubmit: (data: IOtpForm) => void;
   email: string;
+  errorMessage:string
 }
 
-export const OtpForm = ({ onSubmit, email }: OtpFormProps) => {
+export const OtpForm = ({ onSubmit, email, errorMessage }: OtpFormProps) => {
   const {
     control,
     handleSubmit,
@@ -62,6 +63,7 @@ export const OtpForm = ({ onSubmit, email }: OtpFormProps) => {
                   {errors.otp.message}
                 </span>
               )}
+              {errorMessage && <span className="text-red-500">Pastikan data benar</span>}
             </div>
           )}
         />

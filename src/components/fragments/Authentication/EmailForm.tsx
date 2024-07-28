@@ -10,9 +10,10 @@ export type IEmailForm = Yup.InferType<typeof EmailSchema>;
 
 interface EmailFormProps {
   onSubmit: (data: IEmailForm) => void;
+  errorMessage: string;
 }
 
-export const EmailForm = ({ onSubmit }: EmailFormProps) => {
+export const EmailForm = ({ onSubmit, errorMessage }: EmailFormProps) => {
   const {
     register,
     handleSubmit,
@@ -50,7 +51,7 @@ export const EmailForm = ({ onSubmit }: EmailFormProps) => {
             <span className="text-red-500">{errors.email.message}</span>
           )}
         </div>
-        <div className="h-1/4">
+        <div className="h-1/4 grid place-items-center">
           <button
             type="submit"
             className="bg-[#0066AE] h-12 rounded-[10px] text-white hover:bg-sky-900 focus:bg-sky-950 px-16"
@@ -58,6 +59,7 @@ export const EmailForm = ({ onSubmit }: EmailFormProps) => {
           >
             Selanjutnya
           </button>
+          {errorMessage && <span className="text-red-500">Pastikan data benar</span>}
         </div>
       </form>
     </FormResetPasswordPinTemplate>

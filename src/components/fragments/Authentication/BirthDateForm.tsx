@@ -13,9 +13,10 @@ export type IBirthDateForm = Yup.InferType<typeof BirthDateSchema>;
 
 interface BirthDateFormProps {
   onSubmit: (data: IBirthDateForm) => void;
+  errorMessage: string;
 }
 
-export const BirthDateForm = ({ onSubmit }: BirthDateFormProps) => {
+export const BirthDateForm = ({ onSubmit, errorMessage }: BirthDateFormProps) => {
   const {
     control,
     handleSubmit,
@@ -28,10 +29,11 @@ export const BirthDateForm = ({ onSubmit }: BirthDateFormProps) => {
       year: "",
     },
   });
+
   return (
     <FormResetPasswordPinTemplate
       title="Tanggal Lahir"
-      message="Masukan tanggal lahir untuk mengonfirmasi identitas Anda."
+      message="Masukkan tanggal lahir untuk mengonfirmasi identitas Anda."
     >
       <form
         className="w-full flex flex-col justify-center h-full"
@@ -126,14 +128,14 @@ export const BirthDateForm = ({ onSubmit }: BirthDateFormProps) => {
             )}
           />
         </div>
-        <div className="h-1/4">
+        <div className="h-1/4 grid place-items-center">
           <button
             type="submit"
             className="bg-[#0066AE] h-12 rounded-[10px] text-white hover:bg-sky-900 focus:bg-sky-950 px-16"
-            onClick={(e) => e.currentTarget}
           >
             Selanjutnya
           </button>
+          {errorMessage && <span className="text-red-500">Pastikan data benar</span>}
         </div>
       </form>
     </FormResetPasswordPinTemplate>
