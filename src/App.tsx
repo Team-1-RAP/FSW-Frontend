@@ -10,6 +10,7 @@ import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext"; // Pastikan untuk mengimpor AuthProvider dari file yang benar
 import { AccountProvider } from "./context/AccountContext";
 import Profile from "./features/profile/Profile";
+import { MutationProvider } from "./context/MutationContext";
 
 function App() {
   return (
@@ -30,7 +31,9 @@ function App() {
             element={
               <PrivateRoute>
                 <AccountProvider>
-                  <HomePage />
+                  <MutationProvider>
+                    <HomePage />
+                  </MutationProvider>
                 </AccountProvider>
               </PrivateRoute>
             }
