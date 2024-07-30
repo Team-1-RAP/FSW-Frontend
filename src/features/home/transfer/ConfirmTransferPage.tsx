@@ -78,7 +78,7 @@ const ConfirmTransferPage: React.FC = () => {
                 <button className="bg-white w-[182px] h-[41px] rounded-[10px] border border-[#549EFF] text-[#549EFF]">Kembali</button>
               </Link>
               <Link to={"/home/transfer/success"}>
-                <button className="bg-[#549EFF] w-[182px] h-[41px] rounded-[10px] border text-white">Selanjutnya</button>
+                <button className="bg-[#549EFF] w-[182px] h-[41px] rounded-[10px] border text-white">Transfer</button>
               </Link>
             </div>
           </div>

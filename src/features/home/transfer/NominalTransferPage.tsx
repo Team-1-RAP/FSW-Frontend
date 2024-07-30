@@ -25,18 +25,6 @@ const NominalTransferPage: React.FC = () => {
           <h1 className="font-semibold text-[22px] text-[#343C6A]">Masukkan Nominal Transfer</h1>
           <div className="flex flex-col w-[417px]">
             <div className="mb-6">
-              <label className="block mb-2 text-base font-medium">Rekening Sumber</label>
-              <div className="flex flex-row bg-white border border-[#549EFF] text-[#549EFF] rounded-lg w-[390px] h-full p-2.5 space-x-3">
-                <div className="flex items-center justify-center rounded-full w-[40px] h-[40px] bg-[#9747FF] mt-2">
-                  <p className="text-center text-white font-medium text-base">A</p>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <h1>ADILA WULANDARI</h1>
-                  <p>BCA - 12345678</p>
-                </div>
-              </div>
-            </div>
-            <div className="mb-6">
               <label className="block mb-2 text-base font-medium">Rekening Tujuan</label>
               <div className="flex flex-row bg-white border border-[#549EFF] text-[#549EFF] rounded-lg w-[390px] h-full p-2.5 space-x-3">
                 <div className="flex items-center justify-center rounded-full w-[40px] h-[40px] bg-[#FF47ED] mt-2">
@@ -47,6 +35,16 @@ const NominalTransferPage: React.FC = () => {
                   <p>BCA - 12345678</p>
                 </div>
               </div>
+            </div>
+            <div className="mb-6">
+              <label className="block mb-2 text-base font-medium">Pilih Rekening Sumber</label>
+              <select id="default-select" className="bg-white border border-[#549EFF] text-[#549EFF] text-sm rounded-lg block w-[390px] p-2.5 focus:ring-[#549EFF] focus:border-[#549EFF] focus:outline-none">
+                <option value="" disabled selected>
+                  Pilih Rekening Sumber
+                </option>
+                <option value="rekening1">Gold - 37376565</option>
+                <option value="rekening2">Platinum - 37376560</option>
+              </select>
             </div>
             <div className="mb-6">
               <label className="block mb-2 text-base font-medium">Masukkan Nominal</label>

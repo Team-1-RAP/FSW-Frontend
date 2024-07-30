@@ -26,16 +26,6 @@ const NewTransferPage: React.FC = () => {
           <h1 className="font-semibold text-[22px] text-[#343C6A]">Masukkan Tujuan Transfer</h1>
           <div className="flex flex-col w-[417px]">
             <div className="mb-6">
-              <label className="block mb-2 text-base font-medium">Pilih Rekening Sumber</label>
-              <select id="default-select" className="bg-white border border-[#549EFF] text-[#549EFF] text-sm rounded-lg block w-[390px] p-2.5 focus:ring-[#549EFF] focus:border-[#549EFF] focus:outline-none">
-                <option value="" disabled selected>
-                  Pilih Rekening Sumber
-                </option>
-                <option value="rekening1">Gold - 37376565</option>
-                <option value="rekening2">Platinum - 37376560</option>
-              </select>
-            </div>
-            <div className="mb-6">
               <label className="block mb-2 text-base font-medium">Pilih Bank Tujuan</label>
               <div className="relative">
                 <img src={BankIcon} alt="" width={19} height={19} className="text-[#c4c4c4] absolute left-2 top-3" />
