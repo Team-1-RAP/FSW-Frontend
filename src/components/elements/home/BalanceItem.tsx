@@ -3,7 +3,7 @@ import { useState } from "react";
 export interface BalanceItemProps {
   imgFile: string;
   title: string;
-  value1: string;
+  value1: number;
   value2: number;
   isVisible?: boolean;
 }
@@ -24,8 +24,10 @@ const BalanceItem = ({
 
   const [copied, setCopied] = useState(false);
 
+  const valueAcc = value1.toString();
+
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(value1).then(() => {
+    navigator.clipboard.writeText(valueAcc).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1000);
     });
@@ -54,6 +56,14 @@ const BalanceItem = ({
                   }`}
                 />
               </button>
+              {copied && (
+                <span
+                  className="bg-[#FFBB38] text-white px-2 py-1 rounded text-base"
+                  aria-label="Nomor Rekening Tersalin"
+                >
+                  Copied!
+                </span>
+              )}
             </div>
             <div className="flex items-center justify-between">
               <div

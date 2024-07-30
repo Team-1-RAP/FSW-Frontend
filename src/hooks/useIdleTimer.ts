@@ -1,17 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 const useIdleTimer = (logoutCallback: () => void, timeout: number) => {
-    const timerId = useRef<NodeJS.Timeout | null>(null);
+    const timerId = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    const resetTimer = () => {
+    const resetTimer = useCallback(() => {
         if (timerId.current) {
             clearTimeout(timerId.current);
         }
         timerId.current = setTimeout(logoutCallback, timeout);
-    };
+    }, [logoutCallback, timeout]);
 
     useEffect(() => {
-        const events = ["mousemove", "keydown", "scroll"];
+        const events: Array<keyof WindowEventMap> = ["mousemove", "keydown", "scroll"];
         const handleEvent = () => resetTimer();
 
         events.forEach((event) => window.addEventListener(event, handleEvent));
@@ -24,7 +24,7 @@ const useIdleTimer = (logoutCallback: () => void, timeout: number) => {
             }
             events.forEach((event) => window.removeEventListener(event, handleEvent));
         };
-    }, [logoutCallback, timeout]);
+    }, [resetTimer]);
 
     return resetTimer;
 };

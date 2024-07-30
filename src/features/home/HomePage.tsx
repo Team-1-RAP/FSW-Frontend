@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import ServiceButton from "../../components/elements/home/ServiceButton";
 import { services } from "../../utils/ServiceButtonUtils";
@@ -11,43 +11,35 @@ import { useMutation } from "../../hooks/useMutation";
 import BalanceItem from "../../components/elements/home/BalanceItem";
 import Income from "../../assets/icons/income.png";
 import Outcome from "../../assets/icons/outcome.png";
+import { useToggle } from "../../hooks/useToggle";
+import { Link } from "react-router-dom";
 
 const HomePage: React.FC = () => {
-  const { accounts, fetchAccounts } = useAccount();
+  const { accounts, fetchAccounts, activeAccountIndex } = useAccount();
+  const [isRefresh, setRefresh] = useToggle(true);
   const { mutationAmounts, fetchMutationAmounts } = useMutation();
-  const [currentAccountIndex, setCurrentAccountIndex] = useState(0);
-  const [isRefresh, setRefresh] = useState(true);
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
-
-    if (token) {
-      if (isRefresh) {
-        fetchAccounts(token);
-        if (accounts && accounts.length > 0) {
-          fetchMutationAmounts(token, accounts[currentAccountIndex].noAccount);
-        }
-        setRefresh(false);
+    if (token && isRefresh) {
+      fetchAccounts(token);
+      if (accounts && accounts.length > 0) {
+        fetchMutationAmounts(token, accounts[activeAccountIndex].noAccount);
       }
+      setRefresh();
     }
   }, [
-    accounts,
-    currentAccountIndex,
     fetchAccounts,
-    fetchMutationAmounts,
     isRefresh,
+    setRefresh,
+    accounts,
+    activeAccountIndex,
+    fetchMutationAmounts,
   ]);
 
-  const handleChangeCard = () => {
-    setCurrentAccountIndex((prevIndex) =>
-      accounts ? (prevIndex + 1) % accounts.length : 0
-    );
-    setRefresh(true);
-  };
-
-  const currentAccount = accounts ? accounts[currentAccountIndex] : null;
+  const currentAccount = accounts ? accounts[activeAccountIndex] : null;
   const currentMutationAmount = mutationAmounts
-    ? mutationAmounts[currentAccountIndex]
+    ? mutationAmounts[activeAccountIndex]
     : null;
 
   return (
@@ -62,7 +54,7 @@ const HomePage: React.FC = () => {
             >
               Rekeningku
             </h1>
-            <button className="flex items-center" onClick={handleChangeCard}>
+            <Link className="flex items-center" to="/profile">
               <p className="text-[#838383] text-[15px] font-semibold">
                 Ganti kartu
               </p>
@@ -81,7 +73,7 @@ const HomePage: React.FC = () => {
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M9 6l6 6l-6 6" />
               </svg>
-            </button>
+            </Link>
           </div>
           <div className="mt-3 grid justify-center">
             {currentAccount && (
@@ -106,7 +98,7 @@ const HomePage: React.FC = () => {
             )}
           </div>
           <div
-            className="mt-4 grid gap-3 shadow-md p-7 rounded-3xl bg-white"
+            className="mt-4 sm:mb-10 grid gap-3 shadow-md p-7 rounded-3xl bg-white"
             aria-label="Mutasi Terbaru"
             role="log"
           >
