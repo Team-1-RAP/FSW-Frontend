@@ -1,39 +1,74 @@
-import React from "react";
+import React, { useState } from "react";
 import { User, Lock, EyeOff, Eye } from "react-feather";
 import { useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
 import Button from "./Button";
 import { useAuth } from "../../../hooks/useAuth";
 import { useToggle } from "../../../hooks/useToggle";
-import { loginValidationSchema } from "../../../utils/validationSchema";
 import { loginUser } from "../../../services/authService";
+import Alert from "../Alert";
 
-const LoginForm: React.FC = () => {
+interface LoginFormProps {
+    onLoginError: (status: number) => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
     const navigate = useNavigate();
     const { setToken } = useAuth();
     const [showPassword, toggleShowPassword] = useToggle(false);
+    const [errorCount, setErrorCount] = useState(0);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isAlertVisible, setIsAlertVisible] = useState(false);
+    const [formData, setFormData] = useState({ username: "", password: "" });
 
-    const formik = useFormik({
-        initialValues: {
-            username: "",
-            password: "",
-        },
-        validationSchema: loginValidationSchema,
-        onSubmit: async (values, { setErrors }) => {
-            try {
-                const data = await loginUser(values.username, values.password);
-                setToken(data);
-                navigate("/home");
-            } catch (error: unknown) {
-                if (error instanceof Error) {
-                    setErrors({ password: error.message });
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            const data = await loginUser(formData.username, formData.password);
+            setToken(data);
+            navigate("/home");
+        } catch (error) {
+            let newMessage = "";
+            if (error && typeof error === "object" && "status" in error) {
+                const status = (error as { status: number }).status;
+                if (status === 400) {
+                    setErrorCount((prevCount) => prevCount + 1);
+                    if (errorCount === 0) {
+                        newMessage = "Password yang Anda masukkan salah.";
+                    } else if (errorCount === 1) {
+                        newMessage = "Password yang Anda masukkan salah. Anda memiliki 1x percobaan sebelum diblok oleh sistem.";
+                    }
+                    setIsAlertVisible(true);
+                    hideAlert();
+                } else {
+                    onLoginError(status);
+                    newMessage = `Error: ${status}`;
+                    setIsAlertVisible(true);
+                    hideAlert();
                 }
+            } else if (error instanceof Error) {
+                newMessage = error.message;
+                setIsAlertVisible(true);
+                hideAlert();
             }
-        },
-    });
+            setErrorMessage(newMessage);
+        }
+    };
+
+    const isFormValid = formData.username.trim() !== "" && formData.password.trim() !== "";
+
+    const hideAlert = () => {
+        setTimeout(() => {
+            setIsAlertVisible(false);
+        }, 3000);
+    };
 
     return (
-        <form onSubmit={formik.handleSubmit} className="w-11/12 space-y-3 md:w-1/2">
+        <form onSubmit={handleSubmit} className="w-11/12 space-y-3 md:w-1/2">
             <div className="relative">
                 <User className="text-[#c4c4c4] absolute left-2 top-3" />
                 <label htmlFor="username" className="sr-only">
@@ -42,18 +77,14 @@ const LoginForm: React.FC = () => {
                 <input
                     type="text"
                     id="username"
+                    name="username"
                     placeholder="your account"
                     className="border rounded-md border-[#c4c4c4] py-[10px] pl-[40px] pr-[10px] w-full focus:outline-[#5375EC]"
-                    {...formik.getFieldProps("username")}
+                    value={formData.username}
+                    onChange={handleChange}
                     aria-label="Username"
-                    aria-invalid={formik.touched.username && Boolean(formik.errors.username)}
-                    aria-describedby="username-error"
+                    required
                 />
-                {formik.touched.username && formik.errors.username ? (
-                    <div id="username-error" className="text-sm text-red-500" role="alert">
-                        {formik.errors.username}
-                    </div>
-                ) : null}
             </div>
             <div className="relative">
                 <Lock className="text-[#c4c4c4] absolute left-2 top-3" />
@@ -63,22 +94,19 @@ const LoginForm: React.FC = () => {
                 <input
                     type={showPassword ? "text" : "password"}
                     id="password"
+                    name="password"
                     placeholder="password"
                     className="border rounded-md border-[#c4c4c4] py-[10px] px-[40px] w-full focus:outline-[#5375EC]"
-                    {...formik.getFieldProps("password")}
+                    value={formData.password}
+                    onChange={handleChange}
                     aria-label="Password"
-                    aria-invalid={formik.touched.password && Boolean(formik.errors.password)}
-                    aria-describedby="password-error"
+                    required
                 />
                 <div className="absolute cursor-pointer right-4 top-3" onClick={toggleShowPassword}>
                     {showPassword ? <Eye className="text-[#c4c4c4]" /> : <EyeOff className="text-[#c4c4c4]" />}
                 </div>
-                {formik.touched.password && formik.errors.password ? (
-                    <div id="password-error" className="text-sm text-red-500" role="alert">
-                        {formik.errors.password}
-                    </div>
-                ) : null}
             </div>
+            <Alert message={errorMessage} isVisible={isAlertVisible} />
             <p className="flex justify-end text-[#153193]">
                 <span>
                     forgot your <b>password?</b>
@@ -86,7 +114,7 @@ const LoginForm: React.FC = () => {
             </p>
             <div className="border border-[#6C8FEE] w-full"></div>
             <div className="flex justify-center">
-                <Button type="submit" className="my-4">
+                <Button type="submit" className="my-4" disabled={!isFormValid}>
                     Login
                 </Button>
             </div>
