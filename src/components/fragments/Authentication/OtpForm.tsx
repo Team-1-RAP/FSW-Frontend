@@ -1,15 +1,12 @@
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
-import { FormResetPasswordPinTemplate } from "../../elements/form/FormResetPasswordPinTemplate";
+import { Controller, useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as Yup from "yup"
+import { FormResetPasswordPinTemplate } from "../../elements/form/FormResetPasswordPinTemplate"
 
 const OtpSchema = Yup.object({
-  otp: Yup.string()
-    .required("OTP is required")
-    .min(6, "OTP must be 6 digits")
-    .max(6, "OTP must be 6 digits"),
-});
-export type IOtpForm = Yup.InferType<typeof OtpSchema>;
+  otp: Yup.string().required("OTP is required").min(6, "OTP must be 6 digits").max(6, "OTP must be 6 digits"),
+})
+export type IOtpForm = Yup.InferType<typeof OtpSchema>
 
 interface OtpFormProps {
   onSubmit: (data: IOtpForm) => void;
@@ -27,7 +24,7 @@ export const OtpForm = ({ onSubmit, email, errorMessage }: OtpFormProps) => {
     defaultValues: {
       otp: "",
     },
-  });
+  })
 
   return (
     <FormResetPasswordPinTemplate
@@ -85,5 +82,5 @@ export const OtpForm = ({ onSubmit, email, errorMessage }: OtpFormProps) => {
         </div>
       </form>
     </FormResetPasswordPinTemplate>
-  );
-};
+  )
+}
