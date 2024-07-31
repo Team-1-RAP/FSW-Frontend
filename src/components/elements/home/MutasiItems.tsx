@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface MutasiItemsProps {
   id: string;
@@ -27,14 +28,19 @@ const MutasiItems: React.FC<MutasiItemsProps> = ({
   const formattedValue = new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
-  }).format(Math.abs(numericValue));
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  })
+    .format(Math.abs(numericValue))
+    .replace(/\s/g, "");
 
   // Menentukan warna berdasarkan apakah value positif atau negatif
   const valueClass = numericValue < 0 ? "text-red-500" : "text-green-500";
   const sign = numericValue < 0 ? "-" : "+";
 
   return (
-    <div
+    <Link
+      to="/mutasi"
       id={id}
       className="flex justify-between items-center"
       role="region"
@@ -64,7 +70,7 @@ const MutasiItems: React.FC<MutasiItemsProps> = ({
         {sign}
         {formattedValue}
       </span>
-    </div>
+    </Link>
   );
 };
 
