@@ -4,8 +4,7 @@ import ServiceButton from "../../components/elements/home/ServiceButton";
 import { services } from "../../utils/ServiceButtonUtils";
 import TransactionItem from "../../components/elements/home/TransactionItem";
 import Card from "../../components/fragments/Card";
-import MutasiItems from "../../components/elements/home/MutasiItems";
-import { mutasiItems } from "../../utils/MutasiItemsUtils";
+import MutationItems from "../../components/elements/home/MutationItem";
 import { useAccount } from "../../hooks/useAccount";
 import { useMutation } from "../../hooks/useMutation";
 import BalanceItem from "../../components/elements/home/BalanceItem";
@@ -13,11 +12,21 @@ import Income from "../../assets/icons/income.png";
 import Outcome from "../../assets/icons/outcome.png";
 import { useToggle } from "../../hooks/useToggle";
 import { Link } from "react-router-dom";
+import { UIID } from "../../utils/uiidUtils";
+
+// // DATA DUMMY [Aktifkan jika data API belum tersedia]
+import { separateData } from "../../utils/MutationDataUtils";
 
 const HomePage: React.FC = () => {
   const { accounts, fetchAccounts, activeAccountIndex } = useAccount();
   const [isRefresh, setRefresh] = useToggle(true);
-  const { mutationAmounts, fetchMutationAmounts } = useMutation();
+  const {
+    mutationAmounts,
+    fetchMutationAmounts,
+    // FETCH API [Aktifkan jika data API sudah tersedia]
+    // separateMutations,
+    fetchSeparateMutations,
+  } = useMutation();
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -25,6 +34,10 @@ const HomePage: React.FC = () => {
       fetchAccounts(token);
       if (accounts && accounts.length > 0) {
         fetchMutationAmounts(token, accounts[activeAccountIndex].noAccount);
+        const noAccount = accounts[activeAccountIndex].noAccount.toString();
+        const month = new Date().getMonth() + 1;
+
+        fetchSeparateMutations(token, noAccount, month, 2);
       }
       setRefresh();
     }
@@ -33,8 +46,11 @@ const HomePage: React.FC = () => {
     isRefresh,
     setRefresh,
     accounts,
+    // // FETCH API [Aktifkan jika data API sudah tersedia]
+    // separateMutations,
     activeAccountIndex,
     fetchMutationAmounts,
+    fetchSeparateMutations,
   ]);
 
   const currentAccount = accounts ? accounts[activeAccountIndex] : null;
@@ -102,22 +118,41 @@ const HomePage: React.FC = () => {
             aria-label="Mutasi Terbaru"
             role="log"
           >
-            {mutasiItems.length === 0 ? (
-              <div className="text-center xl:text-[16px] text-[#718EBF]">
-                Belum ada mutasi
-              </div>
-            ) : (
-              mutasiItems.map((mutasi) => (
-                <MutasiItems
-                  key={mutasi.id}
-                  id={mutasi.id}
-                  icon={mutasi.icon}
-                  label={mutasi.label}
-                  value={mutasi.value}
-                  date={mutasi.date}
-                />
-              ))
-            )}
+            {
+              // // FETCH API [Aktifkan jika data API sudah tersedia]
+              // separateMutations.length === 0 ? (
+              //   <div className="text-center xl:text-[16px] text-[#718EBF]">
+              //     Belum ada mutasi
+              //   </div>
+              // ) : (
+              //   separateMutations.map((mutasi) => (
+              //     <MutationItems
+              //       id={UIID()}
+              //       transactionType={mutasi.transactionType}
+              //       mutationType={mutasi.mutationType}
+              //       amount={mutasi.amount}
+              //       date={mutasi.date}
+              //     />
+              //   ))
+              // )
+
+              // // DATA DUMMY [Aktifkan jika data API belum tersedia]
+              separateData.length === 0 ? (
+                <div className="text-center xl:text-[16px] text-[#718EBF]">
+                  Belum ada mutasi
+                </div>
+              ) : (
+                separateData.map((mutasi) => (
+                  <MutationItems
+                    id={UIID()}
+                    transactionType={mutasi.transactionType}
+                    mutationType={mutasi.mutationType}
+                    amount={mutasi.amount}
+                    date={mutasi.date}
+                  />
+                ))
+              )
+            }
           </div>
         </div>
 
