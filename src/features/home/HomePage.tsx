@@ -24,7 +24,7 @@ const HomePage: React.FC = () => {
     if (token && isRefresh) {
       fetchAccounts(token);
       if (accounts && accounts.length > 0) {
-        fetchMutationAmounts(token, accounts[activeAccountIndex].noAccount);
+        fetchMutationAmounts(token, parseInt(accounts[activeAccountIndex].noAccount));
       }
       setRefresh();
     }

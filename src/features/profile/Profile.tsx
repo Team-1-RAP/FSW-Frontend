@@ -7,20 +7,36 @@ import { CardSelection } from "../../components/fragments/CardSelection";
 import { useAccount } from "../../hooks/useAccount";
 import { useToggle } from "../../hooks/useToggle";
 import { IAccount } from "../../context/AccountContext";
+import { useMutation } from "../../hooks/useMutation";
 // import { useAccount } from "../../hooks/useAccount";
 
 const Profile: React.FC = () => {
   const [isDropdownOpen, setIsDropDownOpen] = useState<boolean>(false);
-  const { accounts, user, fetchAccounts, fetchUserInfo, activeAccountIndex, setActiveAccountIndex } = useAccount();
+  const {
+    accounts,
+    user,
+    fetchAccounts,
+    fetchUserInfo,
+    activeAccountIndex,
+    setActiveAccountIndex,
+  } = useAccount();
   const [isRefresh, setRefresh] = useToggle(true);
+  const { mutationAmounts, fetchMutationAmounts } = useMutation();
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (token && isRefresh) {
       fetchAccounts(token);
       fetchUserInfo(token);
+      fetchMutationAmounts;
       setRefresh();
     }
-  }, [fetchAccounts, fetchUserInfo, isRefresh, setRefresh]);
+  }, [
+    fetchAccounts,
+    fetchMutationAmounts,
+    fetchUserInfo,
+    isRefresh,
+    setRefresh,
+  ]);
   // const cards: CardInfo[] =
   //   accounts?.map((account) => {
   //     return {
@@ -77,7 +93,13 @@ const Profile: React.FC = () => {
     setIsDropDownOpen(false);
   };
 
-  const activeAccount = accounts ? accounts[activeAccountIndex] : {} as IAccount;
+  const activeAccount = accounts
+    ? accounts[activeAccountIndex]
+    : ({} as IAccount);
+
+  const currentMutationAmount = mutationAmounts
+    ? mutationAmounts[activeAccountIndex]
+    : null;
 
   return (
     <DashboardLayout>
@@ -133,16 +155,19 @@ const Profile: React.FC = () => {
             <ScoreCard
               imgFile="income-icon.png"
               title="Pengeluaran"
-              value1={34678990}
+              value1={
+                currentMutationAmount
+                  ? currentMutationAmount.spending
+                  : 0
+              }
             />
           </div>
           <div className="xl:w-1/3 w-full">
             <ScoreCard
               imgFile="balance-icon.png"
               title="Saldo Rekening"
-              // value={accounts ? accounts[activeAccountIndex].balance : 0}
               value1={activeAccount.balance}
-              value2={activeAccount.noAccount.toString()}
+              value2={activeAccount.noAccount}
               isVisible={false}
             />
           </div>
@@ -150,7 +175,9 @@ const Profile: React.FC = () => {
             <ScoreCard
               imgFile="expense-icon.png"
               title="Pemasukan"
-              value1={14678990}
+              value1={
+                currentMutationAmount ? currentMutationAmount.income : 0
+              }
             />
           </div>
         </div>

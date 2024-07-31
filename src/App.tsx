@@ -25,7 +25,7 @@ function App() {
           {/* LoginPage - Public Route */}
           <Route path="/login" element={<LoginPage />} />
 
-          <Route path='/test' element={<Profile />} />
+          <Route path="/test" element={<Profile />} />
 
           {/* HomePage - Private Route */}
           <Route
@@ -67,7 +67,9 @@ function App() {
             element={
               <PrivateRoute>
                 <AccountProvider>
-                  <Profile />
+                  <MutationProvider>
+                    <Profile />
+                  </MutationProvider>
                 </AccountProvider>
               </PrivateRoute>
             }
