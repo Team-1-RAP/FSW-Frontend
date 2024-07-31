@@ -1,51 +1,25 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import {
-  EmailForm,
-  IEmailForm,
-} from "../../../components/fragments/Authentication/EmailForm";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom"
+import { EmailForm, IEmailForm } from "../../../components/fragments/Authentication/EmailForm"
+import { useState } from "react"
+import { useResetValidation } from "../../../hooks/useResetValidation"
 
 export const PinEmailVerification = () => {
-  const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
-  const location = useLocation();
-  const atm_card_no = location.state?.atm_card_no;
+  const [errorMessage, setErrorMessage] = useState("")
+  const navigate = useNavigate()
+  const { validationEmail, cardNumber } = useResetValidation()
+
   const onSubmit = async (data: IEmailForm) => {
     try {
-      const response = await fetch(
-        import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION +
-          "reset/password/validation/email",
-        {
-          method: "POST",
-          headers: {
-            accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            atm_card_no: atm_card_no,
-            email: data.email,
-          }),
-        }
-      );
-
-      if (response.ok) {
-        const jsonResponse = await response.json();
-        console.log("Success:", jsonResponse.message);
-        navigate("/pengaturan/change-pin/otp", {
-          state: {
-            atm_card_no: atm_card_no,
-            email: data.email,
-          },
-        });
-      } else {
-        setErrorMessage("Error: " + response.statusText);
+      if (!cardNumber) {
+        throw new Error("ATM card number is missing from context")
       }
+
+      await validationEmail(cardNumber.atm_card_no, data.email)
+      navigate("/pengaturan/reset-pin/otp")
     } catch (error) {
-      const errorMessage =
-        (error as Error).message || "An unknown error occurred";
-      setErrorMessage("Error: " + errorMessage);
+      const errorMessage = (error as Error).message || "An unknown error occurred"
+      setErrorMessage("Error: " + errorMessage)
     }
-    // navigate("/pengaturan/change-pin/otp");
-  };
-  return <EmailForm onSubmit={onSubmit} errorMessage={errorMessage} />;
-};
+  }
+  return <EmailForm onSubmit={onSubmit} errorMessage={errorMessage} />
+}

@@ -1,34 +1,35 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
-import LandingPage from "./features/guests/LandingPage";
-import NotFound from "./features/NotFound";
-import HomePage from "./features/home/HomePage";
-import MutasiPage from "./features/mutasi/MutasiPage";
-import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
-import { AuthProvider } from "./context/AuthContext"; // Pastikan untuk mengimpor AuthProvider dari file yang benar
-import { AccountProvider } from "./context/AccountContext";
-import Profile from "./features/profile/Profile";
-import LoginForm from "./features/authentication/LoginForm";
-import AuthLayout from "./components/layouts/AuthLayout";
-import { PengaturanLayout } from "./components/layouts/PengaturanLayout";
-import { NewPin } from "./features/setting/changePin/NewPin";
-import { PinChangeSuccess } from "./features/setting/changePin/PinChangeSuccess";
-import { PinOtp } from "./features/setting/changePin/PinOtp";
-import { AuthOtpPassword } from "./features/authentication/resetPassword/AuthOtpPassword";
-import { AuthNewPassword } from "./features/authentication/resetPassword/AuthNewPassword";
-import { AuthPinVerification } from "./features/authentication/resetPassword/AuthPinVerification";
-import { AuthResetPasswordSuccess } from "./features/authentication/resetPassword/AuthResetPasswordSuccess";
-import { AuthEmailVerification } from "./features/authentication/resetPassword/AuthEmailVerification";
-import { AuthBirthDateValidation } from "./features/authentication/resetPassword/AuthBirthDateValidation";
-import { AuthCardValidation } from "./features/authentication/resetPassword/AuthCardValidation";
-import { PinEmailVerification } from "./features/setting/changePin/PinEmaiVerification";
-import { PinBirthDateValidation } from "./features/setting/changePin/PinBirthDateValidation";
-import { CardInformation } from "./features/setting/changePin/CardConfirmation";
-import { Setting } from "./features/setting/Setting";
-import { PasswordVerification } from "./features/setting/changePassword/PasswordVerification";
-import { PasswordChangeOtp } from "./features/setting/changePassword/PasswordChangeOtp";
-import { PasswordEmailVerification } from "./features/setting/changePassword/PasswordEmailVerification";
-import { NewPassword } from "./features/setting/changePassword/NewPassword";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import "./App.css"
+import LandingPage from "./features/guests/LandingPage"
+import NotFound from "./features/NotFound"
+import HomePage from "./features/home/HomePage"
+import MutasiPage from "./features/mutasi/MutasiPage"
+import PrivateRoute from "./components/fragments/Authentication/PrivateRoute"
+import { AuthProvider } from "./context/AuthContext" // Pastikan untuk mengimpor AuthProvider dari file yang benar
+import { AccountProvider } from "./context/AccountContext"
+import Profile from "./features/profile/Profile"
+import LoginForm from "./features/authentication/LoginForm"
+import AuthLayout from "./components/layouts/AuthLayout"
+import { PengaturanLayout } from "./components/layouts/PengaturanLayout"
+import { AuthOtpPassword } from "./features/authentication/resetPassword/AuthOtpPassword"
+import { AuthNewPassword } from "./features/authentication/resetPassword/AuthNewPassword"
+import { AuthPinVerification } from "./features/authentication/resetPassword/AuthPinVerification"
+import { AuthResetPasswordSuccess } from "./features/authentication/resetPassword/AuthResetPasswordSuccess"
+import { AuthEmailVerification } from "./features/authentication/resetPassword/AuthEmailVerification"
+import { AuthBirthDateValidation } from "./features/authentication/resetPassword/AuthBirthDateValidation"
+import { AuthCardValidation } from "./features/authentication/resetPassword/AuthCardValidation"
+import { Setting } from "./features/setting/Setting"
+import { ResetValidationProvider } from "./context/ResetValidationContext"
+import { CardInformation } from "./features/setting/changePin/CardConfirmation"
+import { PinBirthDateValidation } from "./features/setting/changePin/PinBirthDateValidation"
+import { PinEmailVerification } from "./features/setting/changePin/PinEmaiVerification"
+import { PinOtp } from "./features/setting/changePin/PinOtp"
+import { NewPin } from "./features/setting/changePin/NewPin"
+import { PinChangeSuccess } from "./features/setting/changePin/PinChangeSuccess"
+import { PasswordVerification } from "./features/setting/changePassword/PasswordVerification"
+import { PasswordEmailVerification } from "./features/setting/changePassword/PasswordEmailVerification"
+import { PasswordChangeOtp } from "./features/setting/changePassword/PasswordChangeOtp"
+import { NewPassword } from "./features/setting/changePassword/NewPassword"
 
 function App() {
   return (
@@ -70,15 +71,50 @@ function App() {
             {/* {Reset PIN Schema} */}
             <Route path="change-pin">
               {/* {Selecting Card To PIN to Change} */}
-              <Route path="" element={<CardInformation />} />
+              <Route
+                path=""
+                element={
+                  <ResetValidationProvider>
+                    <CardInformation />
+                  </ResetValidationProvider>
+                }
+              />
               {/* {Birth Date Validation} */}
-              <Route path="birth-date" element={<PinBirthDateValidation />} />
+              <Route
+                path="birth-date"
+                element={
+                  <ResetValidationProvider>
+                    <PinBirthDateValidation />
+                  </ResetValidationProvider>
+                }
+              />
               {/* {Email Verification} */}
-              <Route path="email" element={<PinEmailVerification />} />
+              <Route
+                path="email"
+                element={
+                  <ResetValidationProvider>
+                    <PinEmailVerification />
+                  </ResetValidationProvider>
+                }
+              />
               {/* {OTP Verification} */}
-              <Route path="otp" element={<PinOtp />} />
+              <Route
+                path="otp"
+                element={
+                  <ResetValidationProvider>
+                    <PinOtp />
+                  </ResetValidationProvider>
+                }
+              />
               {/* {New PIN} */}
-              <Route path="new-pin" element={<NewPin />} />
+              <Route
+                path="new-pin"
+                element={
+                  <ResetValidationProvider>
+                    <NewPin />
+                  </ResetValidationProvider>
+                }
+              />
               {/* {Success} */}
               <Route path="success" element={<PinChangeSuccess />} />
             </Route>
@@ -144,7 +180,7 @@ function App() {
         </Routes>
       </AuthProvider>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App

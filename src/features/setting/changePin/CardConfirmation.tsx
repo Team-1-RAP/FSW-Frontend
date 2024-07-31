@@ -1,42 +1,28 @@
-import { useNavigate } from "react-router-dom";
-import {
-  CardInformationForm,
-  ICardInformationForm,
-} from "../../../components/fragments/Authentication/CardInformationForm";
+import { useNavigate } from "react-router-dom"
+import { CardInformationForm, ICardInformationForm } from "../../../components/fragments/Authentication/CardInformationForm"
+import { useState } from "react"
+import { useResetValidation } from "../../../hooks/useResetValidation"
 
 export const CardInformation = () => {
-  const navigate = useNavigate();
-  const onSubmit = async (data: ICardInformationForm) => {
-    try {
-      const response = await fetch (
-        import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + 'reset/password/validation/card',
-        {
-          method: "POST",
-          headers: {
-            "accept": 'application/json',
-            "Content-Type": 'application/json'
-          },
-          body: JSON.stringify({
-            "atm_card_no": data.cardNumber,
-            "expMonth": data.cardExpMonth,
-            "expYear": "20" + data.cardExpYear
-          })
-        }
-      );
-      if (response.ok) {
-        const jsonResponse = await response.json();
-        console.log('Success:', jsonResponse.message);  
+  const navigate = useNavigate()
+  const { validationCard } = useResetValidation()
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-        navigate("birth-date", { state: { atm_card_no: jsonResponse.data.atm_card_no } });
-      } else {
-        console.error('Error:', response.statusText);
-      }
-  
+  const onSubmit = async (data: ICardInformationForm) => {
+    setErrorMessage(null) // Clear previous errors
+    try {
+      // Context ResetValidation
+      await validationCard(data.cardNumber, data.cardExpMonth, data.cardExpYear)
+      navigate("birth-date")
     } catch (error) {
-      console.error('Error:', error);
+      setErrorMessage(error instanceof Error ? error.message : "An unexpected error occurred.") // Set error message
+      console.error("Error:", error)
     }
-    
-    // navigate("/pengaturan/change-pin/birth-date");
-  };
-  return <CardInformationForm onSubmit={onSubmit} />;
-};
+  }
+
+  return (
+    <div className="flex flex-col items-center">
+      <CardInformationForm onSubmit={onSubmit} errorMessage={errorMessage} />
+    </div>
+  )
+}

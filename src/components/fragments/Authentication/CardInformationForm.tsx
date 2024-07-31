@@ -15,9 +15,10 @@ export type ICardInformationForm = Yup.InferType<typeof CardInformationSchema>
 
 interface CardInformationFormProps {
   onSubmit: (data: ICardInformationForm) => void
+  errorMessage?: string | null
 }
 
-export const CardInformationForm = ({ onSubmit }: CardInformationFormProps) => {
+export const CardInformationForm = ({ onSubmit, errorMessage }: CardInformationFormProps) => {
   const {
     control,
     handleSubmit,
@@ -31,7 +32,6 @@ export const CardInformationForm = ({ onSubmit }: CardInformationFormProps) => {
     },
   })
   const formRef = useRef<HTMLFormElement>(null)
-
   useEffect(() => {
     const formElement = formRef.current
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -55,6 +55,8 @@ export const CardInformationForm = ({ onSubmit }: CardInformationFormProps) => {
     <FormResetPasswordPinTemplate title="Ubah Pin">
       <div className="flex flex-col gap-3 items-center">
         <Card variant="purpleCyan" size="sm" previewHidden={true} />
+        {/* Error */}
+        {errorMessage && <div className="text-red-500 mt-4">Pastikan Data Benar</div>}
         <form ref={formRef} className="flex flex-col">
           <Controller
             name="cardNumber"
@@ -120,11 +122,11 @@ export const CardInformationForm = ({ onSubmit }: CardInformationFormProps) => {
                     id="cardExpYear"
                     type="text"
                     {...field}
-                    placeholder="YY"
+                    placeholder="YYYY"
                     className={`w-full h-12 border-[1px] rounded-[10px] px-4 ${errors.cardExpYear ? "input-error" : "border-[#A09FA4]"}`}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                       const value = event.target.value
-                      if (/^[0-9]*$/.test(value) && value.length <= 2) {
+                      if (/^[0-9]*$/.test(value) && value.length <= 4) {
                         field.onChange(value)
                       }
                     }}
