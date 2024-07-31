@@ -3,6 +3,7 @@ import { CardProps } from "./types.ts";
 import { cva } from "class-variance-authority";
 import classNameMerger from "../../../utils/classNameMerger.ts";
 import { useState } from "react";
+import { formatCardNumber } from "../../../utils/funtions.ts";
 
 const cardVariants = cva("rounded-lg", {
   variants: {
@@ -99,7 +100,9 @@ const Card = ({
           ) : (
             <div className="flex items-center">
               {isNumberVisible ? (
-                <span className="text-xl">{userCardNumber}</span>
+                <span className="text-xl">
+                  {formatCardNumber(userCardNumber ?? "0000000000000000")}
+                </span>
               ) : (
                 <span className="text-2xl" aria-label="Angka Tersembunyi">
                   **********

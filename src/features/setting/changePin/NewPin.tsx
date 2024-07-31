@@ -37,7 +37,7 @@ export const NewPin = () => {
 
   const onSubmit = (data: IResetPinForm) => {
     console.log(data);
-    navigate("/pengaturan/reset-pin/success");
+    navigate("/pengaturan/change-pin/success");
   };
   return (
     <FormResetPasswordPinTemplate

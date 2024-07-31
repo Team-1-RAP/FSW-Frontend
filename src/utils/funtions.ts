@@ -1,6 +1,3 @@
-export const handleNumberOnly = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  const key = e.key;
-  if (!/^\d+$/.test(key) && e.key !== "Backspace" && e.key !== "Delete" && e.key !== "ArrowLeft" && e.key !== "ArrowRight") {
-    e.preventDefault();
-  }
-};
+export function formatCardNumber (cardNumber: string ): string {
+  return cardNumber.replace(/(.{4})/g, '$1 ').slice(0, -1);
+}

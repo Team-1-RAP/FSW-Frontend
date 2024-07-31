@@ -11,9 +11,9 @@ import Profile from "./features/profile/Profile";
 import LoginForm from "./features/authentication/LoginForm";
 import AuthLayout from "./components/layouts/AuthLayout";
 import { PengaturanLayout } from "./components/layouts/PengaturanLayout";
-import { NewPin } from "./features/setting/resetPin/NewPin";
-import { PinChangeSuccess } from "./features/setting/resetPin/PinChangeSuccess";
-import { PinOtp } from "./features/setting/resetPin/PinOtp";
+import { NewPin } from "./features/setting/changePin/NewPin";
+import { PinChangeSuccess } from "./features/setting/changePin/PinChangeSuccess";
+import { PinOtp } from "./features/setting/changePin/PinOtp";
 import { AuthOtpPassword } from "./features/authentication/resetPassword/AuthOtpPassword";
 import { AuthNewPassword } from "./features/authentication/resetPassword/AuthNewPassword";
 import { AuthPinVerification } from "./features/authentication/resetPassword/AuthPinVerification";
@@ -21,10 +21,14 @@ import { AuthResetPasswordSuccess } from "./features/authentication/resetPasswor
 import { AuthEmailVerification } from "./features/authentication/resetPassword/AuthEmailVerification";
 import { AuthBirthDateValidation } from "./features/authentication/resetPassword/AuthBirthDateValidation";
 import { AuthCardValidation } from "./features/authentication/resetPassword/AuthCardValidation";
-import { PinEmailVerification } from "./features/setting/resetPin/PinEmaiVerification";
-import { PinBirthDateValidation } from "./features/setting/resetPin/PinBirthDateValidation";
-import { CardInformation } from "./features/setting/resetPin/CardConfirmation";
+import { PinEmailVerification } from "./features/setting/changePin/PinEmaiVerification";
+import { PinBirthDateValidation } from "./features/setting/changePin/PinBirthDateValidation";
+import { CardInformation } from "./features/setting/changePin/CardConfirmation";
 import { Setting } from "./features/setting/Setting";
+import { PasswordVerification } from "./features/setting/changePassword/PasswordVerification";
+import { PasswordChangeOtp } from "./features/setting/changePassword/PasswordChangeOtp";
+import { PasswordEmailVerification } from "./features/setting/changePassword/PasswordEmailVerification";
+import { NewPassword } from "./features/setting/changePassword/NewPassword";
 
 function App() {
   return (
@@ -64,7 +68,7 @@ function App() {
             {/* {Setting Landing Page} */}
             <Route path="" element={<Setting />} />
             {/* {Reset PIN Schema} */}
-            <Route path="reset-pin">
+            <Route path="change-pin">
               {/* {Selecting Card To PIN to Change} */}
               <Route path="" element={<CardInformation />} />
               {/* {Birth Date Validation} */}
@@ -77,6 +81,17 @@ function App() {
               <Route path="new-pin" element={<NewPin />} />
               {/* {Success} */}
               <Route path="success" element={<PinChangeSuccess />} />
+            </Route>
+            {/* {Change Password Schema} */}
+            <Route path="change-password">
+              {/* {Password Verification} */}
+              <Route path="" element={<PasswordVerification />} />
+              {/* {Email Verification} */}
+              <Route path="email" element={<PasswordEmailVerification />} />
+              {/* {OTP Verification} */}
+              <Route path="otp" element={<PasswordChangeOtp />} />
+              {/* {New Password} */}
+              <Route path="new-password" element={<NewPassword />} />
             </Route>
           </Route>
 

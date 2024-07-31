@@ -11,5 +11,5 @@ export const AuthOtpPassword = () => {
     console.log(data);
     navigate("/reset-password/new-password");
   };
-  return <OtpForm onSubmit={onSubmit} email="randyrundy@gmail.com" />;
+  return <OtpForm onSubmit={onSubmit} email="randyrundy@gmail.com" errorMessage={""} />;
 };

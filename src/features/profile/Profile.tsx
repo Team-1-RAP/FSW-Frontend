@@ -142,7 +142,7 @@ const Profile: React.FC = () => {
               title="Saldo Rekening"
               // value={accounts ? accounts[activeAccountIndex].balance : 0}
               value1={activeAccount.balance}
-              value2={activeAccount.noAccount.toString()}
+              value2={activeAccount.noAccount}
               isVisible={false}
             />
           </div>

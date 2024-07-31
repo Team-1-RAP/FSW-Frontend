@@ -23,7 +23,7 @@ export const Setting = () => {
             className="bg-[#0066AE] h-9 rounded-[10px] w-4/12 text-white hover:bg-sky-900 focus:bg-sky-950"
             onClick={(e) => {
               e.currentTarget.blur();
-              navigate("reset-password");
+              navigate("change-password");
             }}
           >
             Ubah Password
@@ -47,7 +47,7 @@ export const Setting = () => {
             className="bg-[#0066AE] h-9 rounded-[10px] w-4/12 text-white hover:bg-sky-900 focus:bg-sky-950"
             onClick={(e) => {
               e.currentTarget.blur();
-              navigate("reset-pin");
+              navigate("change-pin");
             }}
           >
             Ubah PIN

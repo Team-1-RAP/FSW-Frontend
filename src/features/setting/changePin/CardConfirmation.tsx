@@ -36,7 +36,7 @@ export const CardInformation = () => {
       console.error('Error:', error);
     }
     
-    // navigate("/pengaturan/reset-pin/birth-date");
+    // navigate("/pengaturan/change-pin/birth-date");
   };
   return <CardInformationForm onSubmit={onSubmit} />;
 };

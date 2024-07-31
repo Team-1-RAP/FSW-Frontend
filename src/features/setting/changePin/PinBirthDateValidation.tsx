@@ -1,19 +1,20 @@
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
-  EmailForm,
-  IEmailForm,
-} from "../../../components/fragments/Authentication/EmailForm";
+  BirthDateForm,
+  IBirthDateForm,
+} from "../../../components/fragments/Authentication/BirthDateForm";
 import { useState } from "react";
 
-export const PinEmailVerification = () => {
+export const PinBirthDateValidation = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
   const atm_card_no = location.state?.atm_card_no;
-  const onSubmit = async(data: IEmailForm) => {
+
+  const onSubmit = async (data: IBirthDateForm) => {
     try {
       const response = await fetch (
-        import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + 'reset/password/validation/email',
+        import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + 'reset/password/validation/birthDate',
         {
           method: "POST",
           headers: {
@@ -22,7 +23,7 @@ export const PinEmailVerification = () => {
           },
           body: JSON.stringify({
             "atm_card_no": atm_card_no,
-            "email": data.email
+            "born_date": data.year+'-'+data.month+'-'+data.day
           })
         }
       );
@@ -30,12 +31,7 @@ export const PinEmailVerification = () => {
       if (response.ok) {
         const jsonResponse = await response.json();
         console.log('Success:', jsonResponse.message);
-        navigate("/pengaturan/reset-pin/otp", { 
-          state: { 
-            atm_card_no: atm_card_no,
-            email: data.email
-          }
-        });
+        navigate("/pengaturan/change-pin/email", { state: { atm_card_no: atm_card_no } });
       } else {
         setErrorMessage('Error: ' + response.statusText);
       }
@@ -44,7 +40,7 @@ export const PinEmailVerification = () => {
       const errorMessage = (error as Error).message || 'An unknown error occurred';
       setErrorMessage('Error: ' + errorMessage);
     }
-    // navigate("/pengaturan/reset-pin/otp");
   };
-  return <EmailForm onSubmit={onSubmit} errorMessage={errorMessage} />;
+
+  return <BirthDateForm onSubmit={onSubmit} errorMessage={errorMessage} />;
 };

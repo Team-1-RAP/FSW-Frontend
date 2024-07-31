@@ -8,5 +8,5 @@ export const AuthBirthDateValidation = () => {
     console.log(new Date(parseInt(data.year), parseInt(data.month) - 1, parseInt(data.day)));
     navigate("/reset-password/email");
   };
-  return <BirthDateForm onSubmit={onSubmit} />;
+  return <BirthDateForm onSubmit={onSubmit} errorMessage={""}  />;
 }
