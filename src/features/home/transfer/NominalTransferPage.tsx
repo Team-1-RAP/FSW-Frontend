@@ -72,7 +72,7 @@ const NominalTransferPage: React.FC = () => {
               <Link to={"/home/transfer/new"}>
                 <button className="bg-white w-[182px] h-[41px] rounded-[10px] border border-[#549EFF] text-[#549EFF]">Kembali</button>
               </Link>
-              <Link to={"/home/transfer/new/nominal/confirm"}>
+              <Link to={"/home/transfer/confirm"}>
                 <button className="bg-[#549EFF] w-[182px] h-[41px] rounded-[10px] border text-white">Selanjutnya</button>
               </Link>
             </div>

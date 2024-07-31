@@ -74,7 +74,7 @@ const ConfirmTransferPage: React.FC = () => {
               />
             </div>
             <div className="flex justify-end p-[20px] mt-10 gap-5">
-              <Link to={"/home/transfer/new/nominal"}>
+              <Link to={"/home/transfer/nominal"}>
                 <button className="bg-white w-[182px] h-[41px] rounded-[10px] border border-[#549EFF] text-[#549EFF]">Kembali</button>
               </Link>
               <Link to={"/home/transfer/success"}>

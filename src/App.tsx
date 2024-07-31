@@ -7,7 +7,7 @@ import LoginPage from "./features/authentication/LoginPage"
 import MutasiPage from "./features/mutasi/MutasiPage"
 import SettingPage from "./features/setting/SettingPage"
 import PrivateRoute from "./components/fragments/Authentication/PrivateRoute"
-import { AuthProvider } from "./context/AuthContext" // Pastikan untuk mengimpor AuthProvider dari file yang benar
+import { AuthProvider } from "./context/AuthContext" // Ensure AuthProvider is correctly imported
 import { AccountProvider } from "./context/AccountContext"
 import Profile from "./features/profile/Profile"
 import NewTransferPage from "./features/home/transfer/NewTransferPage"
@@ -20,8 +20,6 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        {" "}
-        {/* Memastikan AuthProvider ditempatkan di sini */}
         <Routes>
           {/* LandingPage - Public Route */}
           <Route path="/" element={<LandingPage />} />
@@ -29,24 +27,29 @@ function App() {
           {/* LoginPage - Public Route */}
           <Route path="/login" element={<LoginPage />} />
 
-          <Route path='/test' element={<Profile />} />
+          <Route path="/test" element={<Profile />} />
 
           {/* HomePage - Private Route */}
-          <Route
-            path="/home"
-            element={
-              <PrivateRoute>
-                <AccountProvider>
-                  <HomePage />
-                </AccountProvider>
-              </PrivateRoute>
-            }
-          />
-           <Route path="/home/transfer" element={<TransferPage />} />
-          <Route path="/home/transfer/new" element={<NewTransferPage />} />
-          <Route path="/home/transfer/new/nominal" element={<NominalTransferPage />} />
-          <Route path="/home/transfer/new/nominal/confirm" element={<ConfirmTransferPage />} />
-          <Route path="/home/transfer/success" element={<BuktiTransferPage />} />
+          <Route path="/home">
+            <Route
+              path=""
+              element={
+                <PrivateRoute>
+                  <AccountProvider>
+                    <HomePage />
+                  </AccountProvider>
+                </PrivateRoute>
+              }
+            />
+            {/* TransferPage*/}
+            <Route path="transfer">
+              <Route path="" element={<TransferPage />} />
+              <Route path="new" element={<NewTransferPage />} />
+              <Route path="nominal" element={<NominalTransferPage />} />
+              <Route path="confirm" element={<ConfirmTransferPage />} />
+              <Route path="success" element={<BuktiTransferPage />} />
+            </Route>
+          </Route>
 
           {/* MutasiPage - Private Route */}
           <Route

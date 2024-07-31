@@ -49,7 +49,7 @@ const NewTransferPage: React.FC = () => {
               </div>
             </div>
             <div className="flex justify-end p-[20px] mt-10">
-              <Link to={"/home/transfer/new/nominal"}>
+              <Link to={"/home/transfer/nominal"}>
                 <button className="bg-[#549EFF] w-[182px] h-[41px] rounded-[10px] border text-white">Selanjutnya</button>
               </Link>
             </div>
