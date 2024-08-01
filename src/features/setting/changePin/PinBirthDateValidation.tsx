@@ -15,7 +15,7 @@ export const PinBirthDateValidation = () => {
       }
 
       await validationBirthDate(cardNumber.atm_card_no, `${data.year}-${data.month}-${data.day}`)
-      navigate("/pengaturan/reset-pin/email")
+      navigate("/pengaturan/change-pin/email")
     } catch (error) {
       const errorMessage = (error as Error).message || "An unknown error occurred"
       setErrorMessage("Error: " + errorMessage)

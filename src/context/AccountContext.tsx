@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { Outlet } from "react-router-dom";
 
 export interface IAccount {
   noAccount: string;
@@ -25,9 +26,7 @@ export interface AccountsContextProps {
 }
 export const AccountContext = createContext<AccountsContextProps | null>(null);
 
-export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const AccountProvider = () => {
   const [accounts, setAccounts] = useState<IAccount[] | null>(null);
   const [activeAccountIndex, setActiveAccountIndex] = useState<number>(0);
   const [user, setUser] = useState<IUserInfo | null>(null);
@@ -105,7 +104,7 @@ export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({
   };
   return (
     <AccountContext.Provider value={contextValue}>
-      {children}
+      <Outlet />
     </AccountContext.Provider>
   );
 };

@@ -1,5 +1,4 @@
 import { Link, Outlet } from "react-router-dom";
-import DashboardLayout from "./DashboardLayout";
 
 export const PengaturanLayout = () => {
   const getLinkClass = (path: string) => {
@@ -11,7 +10,6 @@ export const PengaturanLayout = () => {
       : { text: "h-full text-[#838383]", underline: "" };
   };
   return (
-    <DashboardLayout>
       <div className="w-full">
         <div className="bg-white rounded-lg mx-7 lg:h-[calc(100vh-110px)]">
           <div className="px-6 pt-6 h-scr">
@@ -43,6 +41,5 @@ export const PengaturanLayout = () => {
           </div>
         </div>
       </div>
-    </DashboardLayout>
   );
 };

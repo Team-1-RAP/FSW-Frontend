@@ -1,5 +1,4 @@
 import React, { useEffect} from "react"
-import DashboardLayout from "../../components/layouts/DashboardLayout"
 import ServiceButton from "../../components/elements/home/ServiceButton"
 import { services } from "../../utils/ServiceButtonUtils"
 import TransactionItem from "../../components/elements/home/TransactionItem"
@@ -27,7 +26,6 @@ const HomePage: React.FC = () => {
   const currentAccount = accounts ? accounts[activeAccountIndex] : null
 
   return (
-    <DashboardLayout>
       <div className="flex flex-col lg:flex-row lg:space-x-6 lg:ml-12">
         <div className="lg:w-[415px]">
           <div className="flex justify-between">
@@ -78,7 +76,6 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </div>
-    </DashboardLayout>
   )
 }
 

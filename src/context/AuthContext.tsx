@@ -1,35 +1,36 @@
-import React, { createContext, useState, useEffect, useCallback, ReactNode } from "react";
+import React, { createContext, useState, useEffect, useCallback } from "react";
 import { jwtDecode } from "jwt-decode";
+import { Outlet } from "react-router-dom";
 
 export interface AuthContextProps {
-    token: string | null;
-    setToken: (token: string | null) => void;
-    fullname: string | null;
-    isAuthenticated: boolean;
-    logout: () => void;
+  token: string | null;
+  setToken: (token: string | null) => void;
+  fullname: string | null;
+  isAuthenticated: boolean;
+  logout: () => void;
 }
 
 export interface DecodedToken {
-    full_name: string;
-    exp: number;
+  full_name: string;
+  exp: number;
 }
 
-export interface AuthProviderProps {
-    children: ReactNode;
-}
+export const AuthContext = createContext<AuthContextProps | undefined>(
+  undefined
+);
 
-export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+export const AuthProvider = () => {
+  const [token, setToken] = useState<string | null>(
+    sessionStorage.getItem("token")
+  );
+  const [fullname, setFullname] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    const [token, setToken] = useState<string | null>(sessionStorage.getItem("token"));
-    const [fullname, setFullname] = useState<string | null>(null);
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
-    const decodeToken = useCallback((token: string) => {
-        const decoded: DecodedToken = jwtDecode(token);
-        setFullname(decoded.full_name);
-        return decoded.exp;
-    }, []);
+  const decodeToken = useCallback((token: string) => {
+    const decoded: DecodedToken = jwtDecode(token);
+    setFullname(decoded.full_name);
+    return decoded.exp;
+  }, []);
 
   const handleSetToken = useCallback(
     (token: string | null) => {
@@ -70,17 +71,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }, [decodeToken]);
 
-    return (
-        <AuthContext.Provider
-            value={{
-                token,
-                setToken: handleSetToken,
-                fullname,
-                isAuthenticated,
-                logout,
-            }}
-        >
-            {children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider
+      value={{
+        token,
+        setToken: handleSetToken,
+        fullname,
+        isAuthenticated,
+        logout,
+      }}
+    >
+      <Outlet />
+    </AuthContext.Provider>
+  );
 };

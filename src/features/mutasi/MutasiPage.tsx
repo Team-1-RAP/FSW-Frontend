@@ -1,9 +1,7 @@
 import React from "react";
-import DashboardLayout from "../../components/layouts/DashboardLayout";
 const MutasiPage: React.FC = () => {
   return (
     <>
-      <DashboardLayout>
         <div className="flex flex-col lg:flex-row lg:space-x-6 lg:ml-12">
           <div className="lg:w-1/2">
             <div className="flex justify-between">
@@ -13,7 +11,6 @@ const MutasiPage: React.FC = () => {
             </div>
           </div>
         </div>
-      </DashboardLayout>
     </>
   );
 };

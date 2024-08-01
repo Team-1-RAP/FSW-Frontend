@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from "../../components/fragments/Card";
 import ScoreCard from "../../components/fragments/ScoreCard";
-import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { ChevronRight } from "react-feather";
 import { CardSelection } from "../../components/fragments/CardSelection";
 import { useAccount } from "../../hooks/useAccount";
@@ -80,7 +79,6 @@ const Profile: React.FC = () => {
   const activeAccount = accounts ? accounts[activeAccountIndex] : {} as IAccount;
 
   return (
-    <DashboardLayout>
       <div className="w-full flex flex-col">
         <div className="flex mx-8">
           <div
@@ -203,7 +201,6 @@ const Profile: React.FC = () => {
           </div>
         </div>
       </div>
-    </DashboardLayout>
   );
 };
 
