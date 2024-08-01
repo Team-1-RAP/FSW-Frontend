@@ -4,7 +4,7 @@ import LandingPage from "./features/guests/LandingPage";
 import NotFound from "./features/NotFound";
 import HomePage from "./features/home/HomePage";
 import LoginPage from "./features/authentication/LoginPage";
-import MutasiPage from "./features/mutasi/MutasiPage";
+import MutationPage from "./features/mutation/MutationPage";
 import SettingPage from "./features/setting/SettingPage";
 import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext"; // Pastikan untuk mengimpor AuthProvider dari file yang benar
@@ -25,7 +25,7 @@ function App() {
           {/* LoginPage - Public Route */}
           <Route path="/login" element={<LoginPage />} />
 
-          <Route path='/test' element={<Profile />} />
+          <Route path="/test" element={<Profile />} />
 
           {/* HomePage - Private Route */}
           <Route
@@ -46,7 +46,11 @@ function App() {
             path="/mutasi"
             element={
               <PrivateRoute>
-                <MutasiPage />
+                <AccountProvider>
+                  <MutationProvider>
+                    <MutationPage />
+                  </MutationProvider>
+                </AccountProvider>
               </PrivateRoute>
             }
           />
