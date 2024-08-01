@@ -47,7 +47,7 @@ const MutasiTable: React.FC<MutasiTableProps> = ({ data }) => {
                     item.mutationType === "PEMASUKAN" ? IncomeImg : OutcomeImg
                   }
                   alt={item.mutationType}
-                  className="w-6 h-6"
+                  className="pr-2 mr-4 md:pr-0 md:mr-0 md:w-6 md:h-6"
                 />
               </td>
               <td className="py-4 text-base font-medium">

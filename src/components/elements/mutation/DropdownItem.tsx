@@ -45,7 +45,7 @@ const DropdownItem: React.FC<DropdownProps> = ({
         <ul
           role="listbox"
           aria-labelledby={id}
-          className="absolute left-0 w-2/4 md:w-full border border-[#1454FB] border-t-0 bg-white rounded-b-2xl shadow-md"
+          className="absolute left-0 w-2/4 md:w-full border border-[#1454FB] border-t-0 bg-white rounded-b-2xl shadow-md z-10"
         >
           <li
             role="option"
