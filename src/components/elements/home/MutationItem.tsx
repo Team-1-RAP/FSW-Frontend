@@ -19,7 +19,6 @@ const MutationItems: React.FC<MutationItemsProps> = ({
   transactionType,
   mutationType,
 }) => {
-  // Format tanggal menjadi string yang lebih mudah dibaca
   const formattedDate = formatDate(date);
 
   const formattedValue = new Intl.NumberFormat("id-ID", {
@@ -31,7 +30,7 @@ const MutationItems: React.FC<MutationItemsProps> = ({
     .format(Math.abs(amount))
     .replace(/\s/g, "");
 
-  // Menentukan warna berdasarkan apakah value positif atau negatif
+  // Menentukan kelas warna berdasarkan jenis mutasi
   const valueClass =
     mutationType === "PENGELUARAN" ? "text-red-500" : "text-green-500";
   const sign = mutationType === "PENGELUARAN" ? "-" : "+";
@@ -64,7 +63,7 @@ const MutationItems: React.FC<MutationItemsProps> = ({
             {transactionType}
           </span>
           <span
-            id={`${formatDate}-date`}
+            id={`${transactionType}-date`}
             className="text-[15px] text-[#718EBF]"
           >
             {formattedDate}
@@ -72,7 +71,7 @@ const MutationItems: React.FC<MutationItemsProps> = ({
         </div>
       </div>
       <span
-        id={`${formattedValue}-value`}
+        id={`${transactionType}-value`}
         className={`text-[16px] font-semibold ${valueClass}`}
       >
         {sign}

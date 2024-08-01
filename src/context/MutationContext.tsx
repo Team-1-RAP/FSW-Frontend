@@ -1,8 +1,9 @@
 import { createContext, useState, ReactNode } from "react";
 import {
   IMutation,
-  fetchMutations,
+  IMutationResponse,
   IMutationAmount,
+  fetchMutations,
   fetchMutationAmounts,
   fetchSeparateMutations,
 } from "../services/mutationService";
@@ -17,12 +18,12 @@ export interface MutationsContextProps {
     page: number,
     size?: number,
     type?: string
-  ) => Promise<void>;
+  ) => Promise<IMutationResponse>;
   mutationAmounts: IMutationAmount[];
   setMutationAmounts: (mutationAmount: IMutationAmount[]) => void;
   fetchMutationAmounts: (token: string, noAccount: number) => Promise<void>;
   separateMutations: IMutation[];
-  setSeparateMutations: (mutationAmount: IMutation[]) => void;
+  setSeparateMutations: (mutations: IMutation[]) => void;
   fetchSeparateMutations: (
     token: string,
     noAccount: string,
@@ -46,12 +47,12 @@ export const MutationProvider: React.FC<{ children: ReactNode }> = ({
     token: string,
     noAccount: string,
     month: number,
-    page?: number,
+    page: number,
     size?: number,
     type?: string
   ) => {
     try {
-      const data = await fetchMutations(
+      const data: IMutationResponse = await fetchMutations(
         token,
         noAccount,
         month,
@@ -59,23 +60,12 @@ export const MutationProvider: React.FC<{ children: ReactNode }> = ({
         size,
         type
       );
-      setMutations(data);
-      console.log("Mutations fetched:", data);
+      setMutations(data.pagingData);
+      console.log("Mutations fetched:", data.pagingData);
+      return data;
     } catch (error) {
       console.error("Fetch mutations error:", error);
-    }
-  };
-
-  const fetchMutationAmountsHandler = async (
-    token: string,
-    noAccount: number
-  ) => {
-    try {
-      const data = await fetchMutationAmounts(token, noAccount);
-      setMutationAmounts(data);
-      console.log("Mutation amount fetched:", data);
-    } catch (error) {
-      console.error("Fetch mutations amount error:", error);
+      throw error;
     }
   };
 
@@ -91,6 +81,19 @@ export const MutationProvider: React.FC<{ children: ReactNode }> = ({
       console.log("Separate mutations fetched:", data);
     } catch (error) {
       console.error("Fetch separate mutations error:", error);
+    }
+  };
+
+  const fetchMutationAmountsHandler = async (
+    token: string,
+    noAccount: number
+  ) => {
+    try {
+      const data = await fetchMutationAmounts(token, noAccount);
+      setMutationAmounts(data);
+      console.log("Mutation amount fetched:", data);
+    } catch (error) {
+      console.error("Fetch mutations amount error:", error);
     }
   };
 

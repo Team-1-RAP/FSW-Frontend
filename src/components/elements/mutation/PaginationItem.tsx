@@ -1,4 +1,3 @@
-// src/components/elements/mutasi/Pagination.tsx
 import React from "react";
 import { ChevronLeft, ChevronRight } from "react-feather";
 
@@ -26,11 +25,17 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <div className="flex items-center space-x-0">
+    <div
+      className="flex items-center space-x-0"
+      role="navigation"
+      aria-label="Pagination"
+    >
       <button
         onClick={handlePrevious}
         disabled={currentPage === 1}
         className="text-[#549EFF] disabled:opacity-50"
+        aria-label="Halaman sebelumnya"
+        aria-disabled={currentPage === 1}
       >
         <ChevronLeft />
       </button>
@@ -43,6 +48,8 @@ const Pagination: React.FC<PaginationProps> = ({
               ? "bg-[#549EFF] text-white"
               : "text-[#549EFF]"
           } rounded`}
+          aria-label={`Halaman ${index + 1}`}
+          aria-current={currentPage === index + 1 ? "page" : undefined}
         >
           {index + 1}
         </button>
@@ -51,6 +58,8 @@ const Pagination: React.FC<PaginationProps> = ({
         onClick={handleNext}
         disabled={currentPage === totalPages}
         className="text-[#549EFF] disabled:opacity-50"
+        aria-label="Halaman berikutnya"
+        aria-disabled={currentPage === totalPages}
       >
         <ChevronRight />
       </button>

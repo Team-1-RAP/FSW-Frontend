@@ -28,7 +28,7 @@ const DropdownItem: React.FC<DropdownProps> = ({
   };
 
   return (
-    <div className="relative inline-block w-64">
+    <div className="relative inline-block md:w-64 w-full">
       <button
         id={id}
         aria-haspopup="listbox"

@@ -10,20 +10,35 @@ interface MutasiTableProps {
 
 const MutasiTable: React.FC<MutasiTableProps> = ({ data }) => {
   return (
-    <table className="w-full mx-8 overflow-x-auto">
+    <table className="w-full mx-8 overflow-x-auto" aria-label="Tabel Mutasi">
       <thead>
         <tr className="text-left">
-          <th className="text-[16px] text-[#235697] py-2 font-medium"></th>
-          <th className="text-[16px] text-[#235697] py-2 font-medium">
+          <th
+            className="text-[16px] text-[#235697] py-2 font-medium"
+            aria-label="Icon"
+          ></th>
+          <th
+            className="text-[16px] text-[#235697] py-2 font-medium"
+            aria-label="Jenis Transaksi"
+          >
             Jenis Transaksi
           </th>
-          <th className="text-[16px] text-[#235697] py-2 font-medium">
+          <th
+            className="text-[16px] text-[#235697] py-2 font-medium"
+            aria-label="Tanggal"
+          >
             Tanggal
           </th>
-          <th className="text-[16px] text-[#235697] py-2 font-medium">
+          <th
+            className="text-[16px] text-[#235697] py-2 font-medium"
+            aria-label="Deskripsi"
+          >
             Deskripsi
           </th>
-          <th className="text-[16px] text-[#235697] py-2 font-medium">
+          <th
+            className="text-[16px] text-[#235697] py-2 font-medium"
+            aria-label="Nominal"
+          >
             Nominal
           </th>
         </tr>
@@ -34,6 +49,7 @@ const MutasiTable: React.FC<MutasiTableProps> = ({ data }) => {
             <td
               colSpan={5}
               className="px-2 py-7 text-sm text-[#A09FA4] text-left"
+              aria-label="Belum ada transaksi"
             >
               Belum ada transaksi
             </td>
@@ -48,6 +64,7 @@ const MutasiTable: React.FC<MutasiTableProps> = ({ data }) => {
                   }
                   alt={item.mutationType}
                   className="pr-2 mr-4 md:pr-0 md:mr-0 md:w-6 md:h-6"
+                  aria-hidden="true"
                 />
               </td>
               <td className="py-4 text-base font-medium">

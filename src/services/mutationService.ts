@@ -1,8 +1,3 @@
-export interface IMutationAmount {
-  income: number;
-  spending: number;
-}
-
 export interface IMutation {
   date: string;
   amount: number;
@@ -14,60 +9,52 @@ export interface IMutation {
   type: string;
 }
 
-export const fetchMutationAmounts = async (
-  token: string,
-  noAccount: number
-): Promise<IMutationAmount[]> => {
-  try {
-    const response = await fetch(
-      import.meta.env.VITE_API_BASE_URL +
-        `api/v1/mutations/${noAccount}/amounts`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+export interface IMutationResponse {
+  currentPage: number;
+  totalPage: number;
+  size: number;
+  totalItem: number;
+  pagingData: IMutation[];
+}
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch mutation amount");
-    }
-
-    const data = await response.json();
-
-    if (data.status) {
-      return data.data;
-    } else {
-      throw new Error(data.message || "Failed to fetch mutation amount");
-    }
-  } catch (error) {
-    console.error("Fetch mutations amount error:", error);
-    throw error;
-  }
-};
+export interface IMutationAmount {
+  income: number;
+  spending: number;
+}
 
 export const fetchMutations = async (
   token: string,
   noAccount: string,
   month: number,
-  page?: number,
+  page: number,
   size?: number,
   type?: string
-): Promise<IMutation[]> => {
+): Promise<IMutationResponse> => {
   try {
-    const response = await fetch(
+    const url = new URL(
       import.meta.env.VITE_API_BASE_URL +
-        `api/v1/mutations/${noAccount}?month=${month}&type=${type}&page=${page}&size=${size}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
+        `api/v1/mutations/${noAccount}?month=${month}`
     );
+
+    if (page) {
+      url.searchParams.append("page", page.toString());
+    }
+
+    if (size) {
+      url.searchParams.append("size", size.toString());
+    }
+
+    if (type) {
+      url.searchParams.append("type", type.toString());
+    }
+
+    const response = await fetch(url.toString(), {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
       throw new Error("Failed to fetch mutations");
@@ -76,7 +63,7 @@ export const fetchMutations = async (
     const data = await response.json();
 
     if (data.status) {
-      return data.data;
+      return data.data as IMutationResponse;
     } else {
       throw new Error(data.message || "Failed to fetch mutations");
     }
@@ -112,12 +99,46 @@ export const fetchSeparateMutations = async (
     const data = await response.json();
 
     if (data.status) {
-      return data.data;
+      return data.data.pagingData;
     } else {
       throw new Error(data.message || "Failed to fetch mutations");
     }
   } catch (error) {
     console.error("Fetch mutations error:", error);
+    throw error;
+  }
+};
+
+export const fetchMutationAmounts = async (
+  token: string,
+  noAccount: number
+): Promise<IMutationAmount[]> => {
+  try {
+    const response = await fetch(
+      import.meta.env.VITE_API_BASE_URL +
+        `api/v1/mutations/${noAccount}/amounts`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch mutation amount");
+    }
+
+    const data = await response.json();
+
+    if (data.status) {
+      return data.data;
+    } else {
+      throw new Error(data.message || "Failed to fetch mutation amount");
+    }
+  } catch (error) {
+    console.error("Fetch mutations amount error:", error);
     throw error;
   }
 };
