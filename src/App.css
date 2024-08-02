@@ -44,3 +44,12 @@
         font-family: "Poppins", system-ui, sans-serif;
     }
 }
+
+.input-error,
+.input-error:focus,
+.input-error::placeholder {
+    border-color: red;
+    color: red;
+    outline: none; /* Remove default focus outline */
+  }
+
