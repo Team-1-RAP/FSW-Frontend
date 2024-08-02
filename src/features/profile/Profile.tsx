@@ -7,31 +7,35 @@ import { CardSelection } from "../../components/fragments/CardSelection";
 import { useAccount } from "../../hooks/useAccount";
 import { useToggle } from "../../hooks/useToggle";
 import { IAccount } from "../../context/AccountContext";
-// import { useAccount } from "../../hooks/useAccount";
+import { useMutation } from "../../hooks/useMutation";
 
 const Profile: React.FC = () => {
   const [isDropdownOpen, setIsDropDownOpen] = useState<boolean>(false);
-  const { accounts, user, fetchAccounts, fetchUserInfo, activeAccountIndex, setActiveAccountIndex } = useAccount();
+  const {
+    accounts,
+    user,
+    fetchAccounts,
+    fetchUserInfo,
+    activeAccountIndex,
+    setActiveAccountIndex,
+  } = useAccount();
   const [isRefresh, setRefresh] = useToggle(true);
+  const { mutationAmounts, fetchMutationAmounts } = useMutation();
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (token && isRefresh) {
       fetchAccounts(token);
       fetchUserInfo(token);
+      fetchMutationAmounts;
       setRefresh();
     }
-  }, [fetchAccounts, fetchUserInfo, isRefresh, setRefresh]);
-  // const cards: CardInfo[] =
-  //   accounts?.map((account) => {
-  //     return {
-  //       userFullName: account.fullName,
-  //       userCardExpiration: new Date(account.expDate),
-  //       userCardNumber: account.cardNumber,
-  //       noAccount: account.noAccount.toString(),
-  //       accountType: account.accountType,
-  //       balance: account.balance,
-  //     };
-  //   }) ?? [];
+  }, [
+    fetchAccounts,
+    fetchMutationAmounts,
+    fetchUserInfo,
+    isRefresh,
+    setRefresh,
+  ]);
 
   const userInfo = {
     username: user?.username ?? "",
@@ -39,45 +43,18 @@ const Profile: React.FC = () => {
     email: user?.email ?? "",
   };
 
-  // const cards: CardInfo[] = [
-  //   {
-  //     userFullName: "John Doe",
-  //     userCardExpiration: new Date(2029, 1),
-  //     userCardNumber: "1234 5678 910",
-  //     noAccount: "3737657598213561",
-  //     accountType: "Gold",
-  //     balance: 100000000,
-  //   },
-  //   {
-  //     userFullName: "Adilla Wulandari",
-  //     userCardExpiration: new Date(2028, 10),
-  //     userCardNumber: "1234 5678 910",
-  //     noAccount: "3737657598233361",
-  //     accountType: "Bronze",
-  //     balance: 100000000,
-  //   },
-  //   {
-  //     userFullName: "Adilla Wulandari",
-  //     userCardExpiration: new Date(2028, 10),
-  //     userCardNumber: "1234 5678 910",
-  //     noAccount: "3737657598213532",
-  //     accountType: "Silver",
-  //     balance: 100000000,
-  //   },
-  // ];
-
-  // const userInfo = {
-  //   username: "adila24",
-  //   phoneNumber: "+6281234567890",
-  //   email: "adila24@gmail.com",
-  // };
-
   const handleCardChange = (index: number) => {
     setActiveAccountIndex(index);
     setIsDropDownOpen(false);
   };
 
-  const activeAccount = accounts ? accounts[activeAccountIndex] : {} as IAccount;
+  const activeAccount = accounts
+    ? accounts[activeAccountIndex]
+    : ({} as IAccount);
+
+  const currentMutationAmount = mutationAmounts
+    ? mutationAmounts[activeAccountIndex]
+    : null;
 
   return (
     <DashboardLayout>
@@ -133,16 +110,19 @@ const Profile: React.FC = () => {
             <ScoreCard
               imgFile="income-icon.png"
               title="Pengeluaran"
-              value1={34678990}
+              value1={
+                currentMutationAmount
+                  ? currentMutationAmount.spending
+                  : 0
+              }
             />
           </div>
           <div className="xl:w-1/3 w-full">
             <ScoreCard
               imgFile="balance-icon.png"
               title="Saldo Rekening"
-              // value={accounts ? accounts[activeAccountIndex].balance : 0}
               value1={activeAccount.balance}
-              value2={activeAccount.noAccount.toString()}
+              value2={activeAccount.noAccount}
               isVisible={false}
             />
           </div>
@@ -150,7 +130,9 @@ const Profile: React.FC = () => {
             <ScoreCard
               imgFile="expense-icon.png"
               title="Pemasukan"
-              value1={14678990}
+              value1={
+                currentMutationAmount ? currentMutationAmount.income : 0
+              }
             />
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 
 export interface IAccount {
-  noAccount: number;
+  noAccount: string;
   fullName: string;
   accountType: string;
   cardNumber: string;

@@ -71,7 +71,9 @@ function App() {
             element={
               <PrivateRoute>
                 <AccountProvider>
-                  <Profile />
+                  <MutationProvider>
+                    <Profile />
+                  </MutationProvider>
                 </AccountProvider>
               </PrivateRoute>
             }

@@ -95,7 +95,7 @@ const Card = ({
         <div className={marginText}>
           <div className="flex items-center">
             {isNumberVisible ? (
-              <span className="text-xl">{userCardNumber}</span>
+              <span className="text-xl">{userCardNumber.replace(/(.{4})/g, '$1 ').slice(0, -1)}</span>
             ) : (
               <span className="text-2xl" aria-label="Angka Tersembunyi">**********</span>
             )}

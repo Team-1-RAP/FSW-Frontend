@@ -3,7 +3,7 @@ import { useState } from "react";
 export interface BalanceItemProps {
   imgFile: string;
   title: string;
-  value1: number;
+  value1: string;
   value2: number;
   isVisible?: boolean;
 }
