@@ -4,6 +4,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useToggle } from "../../../hooks/useToggle";
 import { Eye, EyeOff } from "react-feather";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useChangePassword } from "../../../hooks/useChangePassword";
 
 const PasswordVerificationSchema = Yup.object({
   password: Yup.string().required("Password is required"),
@@ -25,9 +28,30 @@ export const PasswordVerification = () => {
     },
   });
   const [show, setShow] = useToggle(false);
+  const navigate = useNavigate();
+  const [isRefresh, setIsRefresh] = useToggle(true);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const { validationCurrentPassword, isCurrentPasswordValid } =
+    useChangePassword();
 
-  const onSubmit = (data: IPasswordVerificationForm) => {
-    console.log(data);
+  useEffect(() => {
+    if (isCurrentPasswordValid && isRefresh) {
+      console.log("Password is valid");
+      setIsRefresh;
+      navigate("email");
+    }
+  }, [isCurrentPasswordValid, navigate, isRefresh, setIsRefresh]);
+
+  const onSubmit = async (data: IPasswordVerificationForm) => {
+    setErrorMessage("");
+    try {
+      await validationCurrentPassword(data.password);
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error ? error.message : "An unexpected error occurred."
+      );
+      console.error("Error: ", error);
+    }
   };
   return (
     <FormResetPasswordPinTemplate
@@ -77,6 +101,11 @@ export const PasswordVerification = () => {
           >
             Selanjutnya
           </button>
+          <div>
+            {errorMessage && (
+              <span className="text-red-500">Pastikan data benar</span>
+            )}
+          </div>
         </div>
       </form>
     </FormResetPasswordPinTemplate>

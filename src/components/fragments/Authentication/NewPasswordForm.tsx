@@ -18,9 +18,13 @@ export type IResetPasswordForm = Yup.InferType<typeof ResetPasswordSchema>;
 
 interface NewPasswordFormProps {
   onSubmit: (data: IResetPasswordForm) => void;
+  errorMessage: string;
 }
 
-export const NewPasswordForm = ({ onSubmit }: NewPasswordFormProps) => {
+export const NewPasswordForm = ({
+  onSubmit,
+  errorMessage,
+}: NewPasswordFormProps) => {
   const {
     register,
     handleSubmit,
@@ -113,6 +117,11 @@ export const NewPasswordForm = ({ onSubmit }: NewPasswordFormProps) => {
           >
             Selanjutnya
           </button>
+          <div>
+            {errorMessage && (
+              <span className="text-red-500">Pastikan data benar</span>
+            )}
+          </div>
         </div>
       </form>
     </FormResetPasswordPinTemplate>

@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import "./App.css";
 import LandingPage from "./features/guests/LandingPage";
 import NotFound from "./features/NotFound";
 import MutasiPage from "./features/mutasi/MutasiPage";
@@ -31,6 +30,7 @@ import PrivateRoute from "./components/fragments/Authentication/PrivateRoute";
 import { AccountProvider } from "./context/AccountContext";
 import DashboardLayout from "./components/layouts/DashboardLayout";
 import HomePage from "./features/home/HomePage";
+import { ChangePasswordValidationProvider } from "./context/ChangePasswordValidationContext";
 
 const router = createBrowserRouter([
   {
@@ -149,6 +149,7 @@ const router = createBrowserRouter([
                       },
                       {
                         path: "change-password",
+                        element: <ChangePasswordValidationProvider />,
                         children: [
                           {
                             path: "",

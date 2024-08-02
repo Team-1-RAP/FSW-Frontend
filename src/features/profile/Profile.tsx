@@ -6,7 +6,6 @@ import { CardSelection } from "../../components/fragments/CardSelection";
 import { useAccount } from "../../hooks/useAccount";
 import { useToggle } from "../../hooks/useToggle";
 import { IAccount } from "../../context/AccountContext";
-// import { useAccount } from "../../hooks/useAccount";
 
 const Profile: React.FC = () => {
   const [isDropdownOpen, setIsDropDownOpen] = useState<boolean>(false);
@@ -20,56 +19,12 @@ const Profile: React.FC = () => {
       setRefresh();
     }
   }, [fetchAccounts, fetchUserInfo, isRefresh, setRefresh]);
-  // const cards: CardInfo[] =
-  //   accounts?.map((account) => {
-  //     return {
-  //       userFullName: account.fullName,
-  //       userCardExpiration: new Date(account.expDate),
-  //       userCardNumber: account.cardNumber,
-  //       noAccount: account.noAccount.toString(),
-  //       accountType: account.accountType,
-  //       balance: account.balance,
-  //     };
-  //   }) ?? [];
 
   const userInfo = {
     username: user?.username ?? "",
     phoneNumber: user?.phoneNumber ?? "",
     email: user?.email ?? "",
   };
-
-  // const cards: CardInfo[] = [
-  //   {
-  //     userFullName: "John Doe",
-  //     userCardExpiration: new Date(2029, 1),
-  //     userCardNumber: "1234 5678 910",
-  //     noAccount: "3737657598213561",
-  //     accountType: "Gold",
-  //     balance: 100000000,
-  //   },
-  //   {
-  //     userFullName: "Adilla Wulandari",
-  //     userCardExpiration: new Date(2028, 10),
-  //     userCardNumber: "1234 5678 910",
-  //     noAccount: "3737657598233361",
-  //     accountType: "Bronze",
-  //     balance: 100000000,
-  //   },
-  //   {
-  //     userFullName: "Adilla Wulandari",
-  //     userCardExpiration: new Date(2028, 10),
-  //     userCardNumber: "1234 5678 910",
-  //     noAccount: "3737657598213532",
-  //     accountType: "Silver",
-  //     balance: 100000000,
-  //   },
-  // ];
-
-  // const userInfo = {
-  //   username: "adila24",
-  //   phoneNumber: "+6281234567890",
-  //   email: "adila24@gmail.com",
-  // };
 
   const handleCardChange = (index: number) => {
     setActiveAccountIndex(index);

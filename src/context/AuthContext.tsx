@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useCallback } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 import { jwtDecode } from "jwt-decode";
 import { Outlet } from "react-router-dom";
 
@@ -21,7 +21,7 @@ export const AuthContext = createContext<AuthContextProps | undefined>(
 
 export const AuthProvider = () => {
   const [token, setToken] = useState<string | null>(
-    sessionStorage.getItem("token")
+    localStorage.getItem("token")
   );
   const [fullname, setFullname] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -35,12 +35,12 @@ export const AuthProvider = () => {
   const handleSetToken = useCallback(
     (token: string | null) => {
       if (token) {
-        sessionStorage.setItem("token", token);
+        localStorage.setItem("token", token);
         const expiryTime = decodeToken(token);
         const currentTime = Date.now() / 1000;
         setIsAuthenticated(expiryTime > currentTime);
       } else {
-        sessionStorage.removeItem("token");
+        localStorage.removeItem("token");
         setIsAuthenticated(false);
       }
       setToken(token);
@@ -49,14 +49,14 @@ export const AuthProvider = () => {
   );
 
   const logout = useCallback(() => {
-    sessionStorage.removeItem("token");
+    localStorage.removeItem("token");
     setToken(null);
     setFullname(null);
     setIsAuthenticated(false);
   }, []);
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
     if (token) {
       try {
         const expiryTime = decodeToken(token);
