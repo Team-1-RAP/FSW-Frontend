@@ -55,38 +55,43 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/reset-password",
-        element: <AuthLayout />,
+        element: <ResetValidationProvider />,
         children: [
           {
-            path: "",
-            element: <AuthCardValidation />,
+            path: "/reset-password",
+            element: <AuthLayout />,
+            children: [
+              {
+                path: "",
+                element: <AuthCardValidation />,
+              },
+              {
+                path: "birth-date",
+                element: <AuthBirthDateValidation />,
+              },
+              {
+                path: "email",
+                element: <AuthEmailVerification />,
+              },
+              {
+                path: "otp",
+                element: <AuthOtpPassword />,
+              },
+              {
+                path: "new-password",
+                element: <AuthNewPassword />,
+              },
+              {
+                path: "pin-verification",
+                element: <AuthPinVerification />,
+              },
+              {
+                path: "success",
+                element: <AuthResetPasswordSuccess />,
+              },
+            ],
           },
-          {
-            path: "birth-date",
-            element: <AuthBirthDateValidation />,
-          },
-          {
-            path: "email",
-            element: <AuthEmailVerification />,
-          },
-          {
-            path: "otp",
-            element: <AuthOtpPassword />,
-          },
-          {
-            path: "new-password",
-            element: <AuthNewPassword />,
-          },
-          {
-            path: "pin-verification",
-            element: <AuthPinVerification />,
-          },
-          {
-            path: "success",
-            element: <AuthResetPasswordSuccess />,
-          },
-        ],
+        ]
       },
       {
         element: <PrivateRoute />,
