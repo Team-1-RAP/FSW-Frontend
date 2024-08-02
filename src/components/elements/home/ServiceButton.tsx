@@ -18,7 +18,7 @@ const ServiceButton: React.FC<ServiceButtonProps> = ({
     <Link
       to={link}
       id={id}
-      className="w-[130px] xl:w-[165px] xl:h-[100px] h-[134px]  xl:mt-4 flex flex-col items-center justify-start cursor-pointer no-underline"
+      className="w-[130px] xl:w-[165px] xl:h-[100px] h-[134px] xl:mt-4 flex flex-col items-center justify-start cursor-pointer no-underline"
       aria-label={label}
     >
       <div
