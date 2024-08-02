@@ -111,7 +111,11 @@ function App() {
                         path="/mutasi"
                         element={
                             <PrivateRoute>
-                                <MutasiPage />
+                                <AccountProvider>
+                                    <MutationProvider>
+                                        <MutationPage />
+                                    </MutationProvider>
+                                </AccountProvider>
                             </PrivateRoute>
                         }
                     />
@@ -121,7 +125,11 @@ function App() {
                         path="/pengaturan"
                         element={
                             <PrivateRoute>
-                                <SettingPage />
+                                <AccountProvider>
+                                    <MutationProvider>
+                                        <SettingPage />
+                                    </MutationProvider>
+                                </AccountProvider>
                             </PrivateRoute>
                         }
                     />
@@ -132,7 +140,9 @@ function App() {
                         element={
                             <PrivateRoute>
                                 <AccountProvider>
-                                    <Profile />
+                                    <MutationProvider>
+                                        <Profile />
+                                    </MutationProvider>
                                 </AccountProvider>
                             </PrivateRoute>
                         }

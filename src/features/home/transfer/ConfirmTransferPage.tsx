@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import DashboardLayout from "../../../components/layouts/DashboardLayout";
 import HouseIcon from "../../../assets/icons/house_dark.png";
 import { ChevronRight, RefreshCw } from "react-feather";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { submitTransfer } from "../../../services/confirmTransferService";
 import { validatePin } from "../../../utils/validation";
+import Alert from "../../../components/fragments/Alert";
+import Modal from "../../../components/fragments/Modal";
 
 const ConfirmTransferPage: React.FC = () => {
     const token = sessionStorage.getItem("token");
@@ -16,12 +18,27 @@ const ConfirmTransferPage: React.FC = () => {
     const [pin, setPin] = useState<string>("");
     const [alertMessage, setAlertMessage] = useState<string | null>(null);
     const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
+    const [isModalVisible, setIsModalVisible] = useState<boolean>(false); // tambahkan state untuk modal
 
     const handlePinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPin(e.target.value);
+        const value = e.target.value;
+        if (/^\d*$/.test(value)) {
+            setPin(value);
+        }
     };
 
+    const handleBackClick = () => {
+        navigate(-1)
+    };
+
+    const handleCloseModal = useCallback(() => setIsModalVisible(false), []);
+    const handleButtonClick = useCallback(() => {
+        navigate("/ubah-pin");
+        handleCloseModal();
+    }, [navigate, handleCloseModal]);
+
     const handleSubmit = async () => {
+        // Validate PIN
         const pinError = validatePin(pin);
         if (pinError) {
             setAlertMessage(pinError);
@@ -30,18 +47,20 @@ const ConfirmTransferPage: React.FC = () => {
             return;
         }
 
+        // Prepare transfer data
         const transferData = {
-            accountNo: selectedAccount.noAccount,
-            recipientAccountNo: accountNumber,
-            recipientBankName: bankName,
+            accountNo: selectedAccount?.noAccount ?? "",
+            recipientAccountNo: accountNumber ?? "",
+            recipientBankName: bankName ?? "",
             amount,
             pin,
-            description: note,
-            senderFullName: selectedAccount.fullName,
+            description: note ?? "",
+            senderFullName: selectedAccount?.fullName ?? "",
         };
 
+        // Submit transfer
         if (token) {
-            await submitTransfer(transferData, token, navigate, setAlertMessage, setIsAlertVisible);
+            await submitTransfer(transferData, token, navigate, setAlertMessage, setIsAlertVisible, setIsModalVisible);
         } else {
             setAlertMessage("Token tidak tersedia.");
             setIsAlertVisible(true);
@@ -55,7 +74,7 @@ const ConfirmTransferPage: React.FC = () => {
                 {/* Navigation */}
                 <div className="flex flex-col ml-8 gap-5">
                     <div className="flex flex-row space-x-2 mt-5">
-                        <img src={HouseIcon} alt="" width={24} height={24} />
+                        <img src={HouseIcon} alt="Home" width={24} height={24} />
                         <p className="font-normal text-[#235697] text-sm mt-1">Beranda</p>
                         <ChevronRight className="text-[#235697]" />
                         <RefreshCw className="text-[#235697]" />
@@ -76,9 +95,9 @@ const ConfirmTransferPage: React.FC = () => {
                                         <p className="text-center text-white font-medium text-base">A</p>
                                     </div>
                                     <div className="flex flex-col gap-1">
-                                        <h1>{selectedAccount.fullName}</h1>
+                                        <h1>{selectedAccount?.fullName}</h1>
                                         <p>
-                                            {bankName} - {selectedAccount.noAccount}
+                                            {bankName} - {selectedAccount?.noAccount}
                                         </p>
                                     </div>
                                 </div>
@@ -118,26 +137,37 @@ const ConfirmTransferPage: React.FC = () => {
                             <label className="block mb-2 text-base font-medium">Pin Transaksi</label>
                             <input
                                 type="password"
-                                placeholder="Masukkan Pin"
+                                inputMode="numeric"
+                                pattern="\d*"
+                                placeholder="Masukkan PIN"
                                 value={pin}
                                 onChange={handlePinChange}
+                                maxLength={6}
                                 className="bg-white border border-[#549EFF] text-[#549EFF] placeholder-[#549EFF] text-sm rounded-lg block w-[390px] p-2.5 focus:ring-[#549EFF] focus:border-[#549EFF] focus:outline-none"
                             />
                         </div>
+                        <Alert message={alertMessage} isVisible={isAlertVisible} />
                         <div className="flex justify-end p-[20px] mt-10 gap-5">
-                            <Link to={"/home/transfer/new/nominal"}>
-                                <button className="bg-white w-[182px] h-[41px] rounded-[10px] border border-[#549EFF] text-[#549EFF]">Kembali</button>
-                            </Link>
+                            <button onClick={handleBackClick} className="bg-white w-[182px] h-[41px] rounded-[10px] border border-[#549EFF] text-[#549EFF]">
+                                Kembali
+                            </button>
                             <button onClick={handleSubmit} className="bg-[#549EFF] w-[182px] h-[41px] rounded-[10px] border text-white">
                                 Transfer
                             </button>
                         </div>
                     </div>
                 </div>
-
-                {/* Alert */}
-                {isAlertVisible && <div className="fixed bottom-5 right-5 bg-red-500 text-white p-3 rounded-lg shadow-lg">{alertMessage}</div>}
             </div>
+
+            <Modal
+                visible={isModalVisible}
+                title="PIN sedang terblokir"
+                description="Yuk, ubah PIN transaksi Anda terlebih dahulu untuk dapat kembali melakakukan transaksi "
+                buttonLabel="Ubah PIN"
+                onButtonClick={handleButtonClick}
+                onClose={handleCloseModal}
+                ariaDescribedBy="password-blocked-error"
+            />
         </DashboardLayout>
     );
 };

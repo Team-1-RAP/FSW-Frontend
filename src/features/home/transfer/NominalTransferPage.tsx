@@ -3,8 +3,9 @@ import DashboardLayout from "../../../components/layouts/DashboardLayout";
 import HouseIcon from "../../../assets/icons/house_dark.png";
 import { ChevronRight, Info, RefreshCw } from "react-feather";
 import NominalIcon from "../../../assets/icons/nominal.png";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AccountContext } from "../../../context/AccountContext";
+import Alert from "../../../components/fragments/Alert";
 
 const NominalTransferPage: React.FC = () => {
     const location = useLocation();
@@ -38,6 +39,10 @@ const NominalTransferPage: React.FC = () => {
         if (/^\d*\.?\d{0,2}$/.test(sanitizedValue)) {
             setAmount(sanitizedValue);
         }
+    };
+
+    const handleBackClick = () => {
+        navigate(-1); // Go back to the previous page
     };
 
     const handleNoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -183,16 +188,15 @@ const NominalTransferPage: React.FC = () => {
                                 />
                             </div>
                         </div>
+                        <Alert message={alertMessage} isVisible={isAlertVisible} />
                         <div className="flex justify-end p-[20px] mt-10 gap-5">
-                            <Link to={"/home/transfer/new/nominal"}>
-                                <button className="bg-white w-[182px] h-[41px] rounded-[10px] border border-[#549EFF] text-[#549EFF]">Kembali</button>
-                            </Link>
+                            <button onClick={handleBackClick} className="bg-white w-[182px] h-[41px] rounded-[10px] border border-[#549EFF] text-[#549EFF]">
+                                Kembali
+                            </button>
                             <button onClick={handleSubmit} className="bg-[#549EFF] w-[182px] h-[41px] rounded-[10px] border text-white">
                                 Lanjutkan
                             </button>
                         </div>
-                        {/* Alert */}
-                        {isAlertVisible && <div className="mt-4 bg-red-500 text-white p-3 rounded-lg shadow-lg">{alertMessage}</div>}
                     </div>
                 </div>
             </div>

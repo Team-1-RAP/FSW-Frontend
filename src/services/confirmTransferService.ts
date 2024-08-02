@@ -1,5 +1,3 @@
-// src/services/transferService.ts
-
 interface TransferData {
     accountNo: string;
     recipientAccountNo: string;
@@ -23,7 +21,7 @@ type NavigateFunction = (path: string, state?: object) => void;
 type SetAlertFunction = (message: string | null) => void;
 type SetIsAlertVisibleFunction = (visible: boolean) => void;
 
-export const submitTransfer = async (transferData: TransferData, token: string, navigate: NavigateFunction, setAlert: SetAlertFunction, setIsAlertVisible: SetIsAlertVisibleFunction) => {
+export const submitTransfer = async (transferData: TransferData, token: string, navigate: NavigateFunction, setAlert: SetAlertFunction, setIsAlertVisible: SetIsAlertVisibleFunction, setIsModalVisible: (visible: boolean) => void) => {
     try {
         const response = await fetch("https://simplebank-stg.koyeb.app/api/v1/bank-transfers", {
             method: "POST",
@@ -33,6 +31,11 @@ export const submitTransfer = async (transferData: TransferData, token: string, 
             },
             body: JSON.stringify(transferData),
         });
+
+        if (response.status === 403) {
+            setIsModalVisible(true);
+            return;
+        }
 
         if (response.ok) {
             const { data }: { data: TransferResponse } = await response.json();

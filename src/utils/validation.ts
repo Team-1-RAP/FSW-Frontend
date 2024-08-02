@@ -18,5 +18,10 @@ export const validatePin = (pin: string): string | null => {
     if (pin.length !== 6) {
         return "Pin harus terdiri dari 6 digit.";
     }
+
+    if (!/^\d{6}$/.test(pin)) {
+        return "Pin harus terdiri dari angka saja.";
+    }
+
     return null;
 };

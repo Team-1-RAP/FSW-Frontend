@@ -2,14 +2,14 @@ import React from "react";
 import { AlertProps } from "./type";
 
 const Alert: React.FC<AlertProps> = ({ message, isVisible }) => {
-    if (!isVisible) {
+    if (!isVisible || !message) {
         return null;
     }
 
     return (
         <div
             id="toast-simple"
-            className="flex items-center w-full max-w-[390px] p-4 space-x-4 text-white bg-[#CB3A31] divide-gray-200 rounded-lg shadow dark:text-white dark:bg-[#CB3A31]"
+            className="flex items-center w-full max-w-[390px] mt-2 p-4 space-x-4 text-white bg-[#CB3A31] divide-gray-200 rounded-lg shadow dark:text-white dark:bg-[#CB3A31]"
             role="alert"
             aria-live="assertive"
             aria-atomic="true"

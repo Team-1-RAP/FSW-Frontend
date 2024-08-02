@@ -66,10 +66,10 @@ const NewTransferPage: React.FC = () => {
                                 <img src={RekeningIcon} alt="" width={19} height={19} className="text-[#c4c4c4] absolute left-2 top-3" />
                                 <input
                                     type="text"
-                                    placeholder="12345678"
+                                    placeholder=""
                                     value={accountNumber}
                                     onChange={handleAccountNumberChange}
-                                    onWheel={(e) => (e.target as HTMLInputElement).blur()} // Prevent scroll on input
+                                    onWheel={(e) => (e.target as HTMLInputElement).blur()}
                                     className="bg-white border border-[#549EFF] text-[#549EFF] placeholder-[#549EFF] text-sm rounded-lg block w-[390px] p-2.5 focus:ring-[#549EFF] focus:border-[#549EFF] focus:outline-none py-[10px] pl-[40px] pr-[10px]"
                                 />
                             </div>
