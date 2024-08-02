@@ -1,4 +1,3 @@
-import { formatCardNumber } from "../../../utils/funtions";
 import { CardSelectionProps } from "./types";
 
 export const CardSelection = ({
@@ -28,7 +27,7 @@ export const CardSelection = ({
           </div>
           <div className="flex flex-col items-start justify-center gap-1.5">
             <span className="font-bold">{accountType}</span>
-            <span>Rek. {formatCardNumber(accountNumber)}</span>
+            <span>Rek. {accountNumber}</span>
           </div>
         </div>
       </button>

@@ -36,7 +36,11 @@ const BalanceItem = ({
   return (
     <div>
       <div>
-        <div className="flex items-center bg-white p-4 rounded-3xl shadow-md">
+        <div
+          id="Balance-Item"
+          className="flex items-center bg-white p-4 rounded-3xl shadow-md"
+          aria-label="Saldo Rekening"
+        >
           <img src={`/assets/images/${imgFile}`} alt="Balance" width="75px" />
           <div className="ms-4 flex-1">
             <p className="text-[#718EBF] text-base" tabIndex={0}>

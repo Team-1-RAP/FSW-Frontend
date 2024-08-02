@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import LandingPage from "./features/guests/LandingPage";
 import NotFound from "./features/NotFound";
-import MutasiPage from "./features/mutasi/MutasiPage";
 import Profile from "./features/profile/Profile";
 import AuthLayout from "./components/layouts/AuthLayout";
 import { AuthProvider } from "./context/AuthContext";
@@ -32,6 +31,7 @@ import HomePage from "./features/home/HomePage";
 import { ChangePasswordValidationProvider } from "./context/ChangePasswordValidationContext";
 import { MutationProvider } from "./context/MutationContext";
 import LoginPage from "./features/authentication/LoginPage";
+import MutasiPage from "./features/mutation/MutationPage";
 
 const router = createBrowserRouter([
   {
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
         element: <ResetValidationProvider />,
         children: [
           {
-            path: "/reset-password",
+            path: "/ubah-password",
             element: <AuthLayout />,
             children: [
               {

@@ -16,7 +16,7 @@ export const AuthBirthDateValidation = () => {
       }
       console.log(cardNumber.atm_card_no, `${data.year}-${data.month}-${data.day}`)
       await validationBirthDate(cardNumber.atm_card_no, `${data.year}-${data.month}-${data.day}`)
-      navigate("/reset-password/email")
+      navigate("../email")
     } catch (error) {
       const errorMessage = (error as Error).message || "An unknown error occurred"
       setErrorMessage("Error: " + errorMessage)

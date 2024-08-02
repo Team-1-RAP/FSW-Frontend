@@ -39,7 +39,9 @@ const ScoreCard = ({
                 className="flex flex-row items-center cursor-pointer"
                 onClick={handleCopy}
               >
-                <p className="text-[#718EBF]">Rek. {value2}</p>
+                <p className="text-[#718EBF] text-base" tabIndex={0}>
+                  No Rek. <span className="font-medium">{value2}</span>
+                </p>
                 <Copy className="w-3 h-3 text-[#718EBF] ms-2" />
               </div>
             )}
