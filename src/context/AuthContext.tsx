@@ -21,7 +21,7 @@ export const AuthContext = createContext<AuthContextProps | undefined>(
 
 export const AuthProvider = () => {
   const [token, setToken] = useState<string | null>(
-    localStorage.getItem("token")
+    sessionStorage.getItem("token")
   );
   const [fullname, setFullname] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -29,18 +29,19 @@ export const AuthProvider = () => {
   const decodeToken = useCallback((token: string) => {
     const decoded: DecodedToken = jwtDecode(token);
     setFullname(decoded.full_name);
+    console.log(decoded);
     return decoded.exp;
   }, []);
 
   const handleSetToken = useCallback(
     (token: string | null) => {
       if (token) {
-        localStorage.setItem("token", token);
+        sessionStorage.setItem("token", token);
         const expiryTime = decodeToken(token);
         const currentTime = Date.now() / 1000;
         setIsAuthenticated(expiryTime > currentTime);
       } else {
-        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
         setIsAuthenticated(false);
       }
       setToken(token);
@@ -49,14 +50,14 @@ export const AuthProvider = () => {
   );
 
   const logout = useCallback(() => {
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     setToken(null);
     setFullname(null);
     setIsAuthenticated(false);
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if (token) {
       try {
         const expiryTime = decodeToken(token);

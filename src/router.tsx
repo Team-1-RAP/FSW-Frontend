@@ -3,7 +3,6 @@ import LandingPage from "./features/guests/LandingPage";
 import NotFound from "./features/NotFound";
 import MutasiPage from "./features/mutasi/MutasiPage";
 import Profile from "./features/profile/Profile";
-import LoginForm from "./features/authentication/LoginForm";
 import AuthLayout from "./components/layouts/AuthLayout";
 import { AuthProvider } from "./context/AuthContext";
 import { PengaturanLayout } from "./components/layouts/PengaturanLayout";
@@ -31,6 +30,8 @@ import { AccountProvider } from "./context/AccountContext";
 import DashboardLayout from "./components/layouts/DashboardLayout";
 import HomePage from "./features/home/HomePage";
 import { ChangePasswordValidationProvider } from "./context/ChangePasswordValidationContext";
+import { MutationProvider } from "./context/MutationContext";
+import LoginPage from "./features/authentication/LoginPage";
 
 const router = createBrowserRouter([
   {
@@ -50,7 +51,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "",
-            element: <LoginForm />,
+            element: <LoginPage />,
           },
         ],
       },
@@ -91,7 +92,7 @@ const router = createBrowserRouter([
               },
             ],
           },
-        ]
+        ],
       },
       {
         element: <PrivateRoute />,
@@ -103,16 +104,21 @@ const router = createBrowserRouter([
                 element: <DashboardLayout />,
                 children: [
                   {
-                    path: "/home",
-                    element: <HomePage />,
-                  },
-                  {
-                    path: "/mutasi",
-                    element: <MutasiPage />,
-                  },
-                  {
-                    path: "/profile",
-                    element: <Profile />,
+                    element: <MutationProvider />,
+                    children: [
+                      {
+                        path: "/home",
+                        element: <HomePage />,
+                      },
+                      {
+                        path: "/mutasi",
+                        element: <MutasiPage />,
+                      },
+                      {
+                        path: "/profile",
+                        element: <Profile />,
+                      },
+                    ],
                   },
                   {
                     path: "/pengaturan",
