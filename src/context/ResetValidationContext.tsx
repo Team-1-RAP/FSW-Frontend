@@ -15,6 +15,8 @@ export interface ResetValidationContextProps {
   setEmail: (email: string | null) => void
   validationOtp: (atm_card_no: string, otp: string) => Promise<void>
   resetPin: (atm_card_no: string, pin: string, confirmPin: string) => Promise<void>
+  resetPassword:(atm_card_no: string, password:string, confirmPassword:string) => Promise<void>
+  pinValidation:(atm_card_no: string, pin:string) => Promise<void>
 }
 
 // Create context
@@ -143,6 +145,53 @@ export const ResetValidationProvider: React.FC<{ children: React.ReactNode }> = 
       throw error
     }
   }
+  const resetPassword = async (atm_card_no: string, password: string, confirmPassword: string) => {
+    try {
+      const response = await fetch(import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "reset/password/validation/changePassword", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          atm_card_no,
+          password,
+          confirmPassword,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Error resetting Password")
+      }
+    } catch (error) {
+      console.error("Error resetting Password:", error)
+      throw error
+    }
+  }
+
+  const pinValidation = async (atm_card_no: string, pin: string) => {
+    try {
+      const response = await fetch(import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "reset/password/validation/pin", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          atm_card_no,
+          pin
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Error resetting Password")
+      }
+    } catch (error) {
+      console.error("Error resetting Password:", error)
+      throw error
+    }
+  }
+
   const contextValue = {
     cardNumber,
     setCardNumber,
@@ -153,6 +202,8 @@ export const ResetValidationProvider: React.FC<{ children: React.ReactNode }> = 
     setEmail,
     validationOtp,
     resetPin,
+    resetPassword,
+    pinValidation
   }
 
   return <ResetValidationContext.Provider value={contextValue}>{children}</ResetValidationContext.Provider>

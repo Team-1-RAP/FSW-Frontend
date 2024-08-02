@@ -47,7 +47,11 @@ function App() {
           </Route>
 
           {/* {Reset Password} */}
-          <Route path="/reset-password" element={<AuthLayout />}>
+          <Route path="/reset-password" element={
+            <ResetValidationProvider>
+              <AuthLayout />
+             </ResetValidationProvider>
+            }>
             {/* {Card Validation Input} */}
             <Route path="" element={<AuthCardValidation />} />
             {/* {Birth Date Validation} */}

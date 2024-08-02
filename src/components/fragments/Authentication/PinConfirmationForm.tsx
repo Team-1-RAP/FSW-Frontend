@@ -1,7 +1,6 @@
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
 import { FormResetPasswordPinTemplate } from "../../elements/form/FormResetPasswordPinTemplate";
 
 const PinVerificationSchema = Yup.object({
@@ -15,9 +14,10 @@ export type IPinVerificationForm = Yup.InferType<typeof PinVerificationSchema>;
 
 interface PinVerificationFormProps {
   onSubmit: (data: IPinVerificationForm) => void;
+  errorMessage: string;
 }
 
-export const PinVerificationForm = ({ onSubmit }: PinVerificationFormProps) => {
+export const PinVerificationForm = ({ onSubmit,  errorMessage}: PinVerificationFormProps) => {
   const {
     control,
     handleSubmit,
@@ -28,12 +28,6 @@ export const PinVerificationForm = ({ onSubmit }: PinVerificationFormProps) => {
       pin: "",
     },
   });
-  const navigation = useNavigate();
-
-  onSubmit = (data: IPinVerificationForm) => {
-    console.log(data);
-    navigation("/reset-password/success");
-  };
 
   return (
     <FormResetPasswordPinTemplate title="Masukan PIN">
@@ -69,7 +63,7 @@ export const PinVerificationForm = ({ onSubmit }: PinVerificationFormProps) => {
             </div>
           )}
         />
-        <div className="h-1/4">
+        <div className="h-1/4 grid place-items-center">
           <button
             type="submit"
             className="bg-[#0066AE] h-12 rounded-[10px] text-white hover:bg-sky-900 focus:bg-sky-950 px-16"
@@ -77,6 +71,7 @@ export const PinVerificationForm = ({ onSubmit }: PinVerificationFormProps) => {
           >
             Selanjutnya
           </button>
+          {errorMessage && <span className="text-red-500">Pastikan data benar</span>}
         </div>
       </form>
     </FormResetPasswordPinTemplate>

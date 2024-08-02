@@ -45,7 +45,7 @@ export const EmailForm = ({ onSubmit, errorMessage }: EmailFormProps) => {
             className={`w-full h-12 border-[1px] rounded-[10px] px-4 ${
               errors.email ? "input-error" : "border-[#A09FA4]"
             }`}
-            placeholder="Kode OTP"
+            placeholder="Email"
           />
           {errors.email && (
             <span className="text-red-500">{errors.email.message}</span>
