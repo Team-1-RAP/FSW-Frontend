@@ -118,9 +118,7 @@ export const NewPasswordForm = ({
             Selanjutnya
           </button>
           <div>
-            {errorMessage && (
-              <span className="text-red-500">Pastikan data benar</span>
-            )}
+          {errorMessage && <span className="text-red-500">Pastikan password sesuai</span>}
           </div>
         </div>
       </form>

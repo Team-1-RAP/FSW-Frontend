@@ -1,6 +1,6 @@
 import React from "react";
 import { User, Lock, EyeOff, Eye } from "react-feather";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import Button from "../../components/fragments/Authentication/Button";
 import { useAuth } from "../../hooks/useAuth";
@@ -100,7 +100,7 @@ const LoginForm: React.FC = () => {
       </div>
       <p className="flex justify-end text-[#153193]">
         <span>
-          forgot your <b>password?</b>
+          forgot your <b><Link to="/reset-password">password?</Link></b>
         </span>
       </p>
       <div className="border border-[#6C8FEE] w-full"></div>

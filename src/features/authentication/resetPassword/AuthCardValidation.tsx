@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import { useResetValidation } from "../../../hooks/useResetValidation"
+import { useState } from "react"
 import {
   CardInformationForm,
   ICardInformationForm,
@@ -6,12 +8,19 @@ import {
 
 export const AuthCardValidation = () => {
   const navigate = useNavigate();
-  const onSubmit = (data: ICardInformationForm) => {
-    console.log("Card information submitted");
-    console.log(
-      new Date(parseInt("20" + data.cardExpYear), parseInt(data.cardExpMonth) - 1)
-    );
-    navigate("/reset-password/birth-date");
-  };
-  return <CardInformationForm onSubmit={onSubmit} />;
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const { validationCard } = useResetValidation()
+
+  const onSubmit = async (data: ICardInformationForm) => {
+    setErrorMessage(null) // Clear previous errors
+    try {
+      // Context ResetValidation
+      await validationCard(data.cardNumber, data.cardExpMonth, data.cardExpYear)
+      navigate("birth-date")
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : "An unexpected error occurred.") // Set error message
+      console.error("Error:", error)
+    }
+  }
+  return <CardInformationForm onSubmit={onSubmit} errorMessage={errorMessage} />;
 };
