@@ -50,6 +50,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const logout = useCallback(() => {
         sessionStorage.removeItem("token");
+        localStorage.removeItem("activeSession");
         setToken(null);
         setFullname(null);
         setIsAuthenticated(false);

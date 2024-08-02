@@ -11,79 +11,139 @@ import { AuthProvider } from "./context/AuthContext"; // Pastikan untuk mengimpo
 import { AccountProvider } from "./context/AccountContext";
 import Profile from "./features/profile/Profile";
 import { MutationProvider } from "./context/MutationContext";
+import BuktiTransferPage from "./features/home/transfer/BuktiTransferPage";
+import ConfirmTransferPage from "./features/home/transfer/ConfirmTransferPage";
+import NewTransferPage from "./features/home/transfer/NewTransferPage";
+import NominalTransferPage from "./features/home/transfer/NominalTransferPage";
+import TransferPage from "./features/home/transfer/TransferPage";
 
 function App() {
-  return (
-    <Router>
-      <AuthProvider>
-        {" "}
-        {/* Memastikan AuthProvider ditempatkan di sini */}
-        <Routes>
-          {/* LandingPage - Public Route */}
-          <Route path="/" element={<LandingPage />} />
+    return (
+        <Router>
+            <AuthProvider>
+                {" "}
+                {/* Memastikan AuthProvider ditempatkan di sini */}
+                <Routes>
+                    {/* LandingPage - Public Route */}
+                    <Route path="/" element={<LandingPage />} />
 
-          {/* LoginPage - Public Route */}
-          <Route path="/login" element={<LoginPage />} />
+                    {/* LoginPage - Public Route */}
+                    <Route path="/login" element={<LoginPage />} />
 
-          <Route path='/test' element={<Profile />} />
+                    <Route path="/test" element={<Profile />} />
 
-          {/* HomePage - Private Route */}
-          <Route
-            path="/home"
-            element={
-              <PrivateRoute>
-                <AccountProvider>
-                  <MutationProvider>
-                    <HomePage />
-                  </MutationProvider>
-                </AccountProvider>
-              </PrivateRoute>
-            }
-          />
-           <Route path="/home/transfer" element={<TransferPage />} />
-          <Route path="/home/transfer/new" element={<NewTransferPage />} />
-          <Route path="/home/transfer/new/nominal" element={<NominalTransferPage />} />
-          <Route path="/home/transfer/new/nominal/confirm" element={<ConfirmTransferPage />} />
-          <Route path="/home/transfer/success" element={<BuktiTransferPage />} />
+                    {/* HomePage - Private Route */}
+                    <Route
+                        path="/home"
+                        element={
+                            <PrivateRoute>
+                                <AccountProvider>
+                                    <MutationProvider>
+                                        <HomePage />
+                                    </MutationProvider>
+                                </AccountProvider>
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/transfer"
+                        element={
+                            <PrivateRoute>
+                                <AccountProvider>
+                                    <MutationProvider>
+                                        <TransferPage />
+                                    </MutationProvider>
+                                </AccountProvider>
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="home/transfer/new"
+                        element={
+                            <PrivateRoute>
+                                <AccountProvider>
+                                    <MutationProvider>
+                                        <NewTransferPage />
+                                    </MutationProvider>
+                                </AccountProvider>
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/home/transfer/nominal"
+                        element={
+                            <PrivateRoute>
+                                <AccountProvider>
+                                    <MutationProvider>
+                                        <NominalTransferPage />
+                                    </MutationProvider>
+                                </AccountProvider>
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/home/transfer/confirm"
+                        element={
+                            <PrivateRoute>
+                                <AccountProvider>
+                                    <MutationProvider>
+                                        <ConfirmTransferPage />
+                                    </MutationProvider>
+                                </AccountProvider>
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/home/transfer/success"
+                        element={
+                            <PrivateRoute>
+                                <AccountProvider>
+                                    <MutationProvider>
+                                        <BuktiTransferPage />
+                                    </MutationProvider>
+                                </AccountProvider>
+                            </PrivateRoute>
+                        }
+                    />
 
-          {/* MutasiPage - Private Route */}
-          <Route
-            path="/mutasi"
-            element={
-              <PrivateRoute>
-                <MutasiPage />
-              </PrivateRoute>
-            }
-          />
+                    {/* MutasiPage - Private Route */}
+                    <Route
+                        path="/mutasi"
+                        element={
+                            <PrivateRoute>
+                                <MutasiPage />
+                            </PrivateRoute>
+                        }
+                    />
 
-          {/* SettingPage - Private Route */}
-          <Route
-            path="/pengaturan"
-            element={
-              <PrivateRoute>
-                <SettingPage />
-              </PrivateRoute>
-            }
-          />
+                    {/* SettingPage - Private Route */}
+                    <Route
+                        path="/pengaturan"
+                        element={
+                            <PrivateRoute>
+                                <SettingPage />
+                            </PrivateRoute>
+                        }
+                    />
 
-          {/* Profile - Private Route */}
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute>
-                <AccountProvider>
-                  <Profile />
-                </AccountProvider>
-              </PrivateRoute>
-            }
-          />
+                    {/* Profile - Private Route */}
+                    <Route
+                        path="/profile"
+                        element={
+                            <PrivateRoute>
+                                <AccountProvider>
+                                    <Profile />
+                                </AccountProvider>
+                            </PrivateRoute>
+                        }
+                    />
 
-          {/* NotFound - Fallback Route */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </AuthProvider>
-    </Router>
-  )
+                    {/* NotFound - Fallback Route */}
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+            </AuthProvider>
+        </Router>
+    );
 }
 
-export default App
+export default App;

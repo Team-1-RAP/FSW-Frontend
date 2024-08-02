@@ -1,14 +1,17 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { ModalProps } from "./type";
 
 const Modal: React.FC<ModalProps> = ({ title, description, visible, buttonLabel, onButtonClick, onClose }) => {
     const modalRef = useRef<HTMLDivElement>(null);
 
-    const handleOutsideClick = (e: MouseEvent) => {
-        if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-            onClose();
-        }
-    };
+    const handleOutsideClick = useCallback(
+        (e: MouseEvent) => {
+            if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+                onClose();
+            }
+        },
+        [onClose]
+    );
 
     useEffect(() => {
         if (visible) {
@@ -20,7 +23,7 @@ const Modal: React.FC<ModalProps> = ({ title, description, visible, buttonLabel,
         return () => {
             document.removeEventListener("mousedown", handleOutsideClick);
         };
-    }, [visible]);
+    }, [visible, handleOutsideClick]);
 
     if (!visible) return null;
 
