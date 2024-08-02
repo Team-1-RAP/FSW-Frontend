@@ -43,7 +43,7 @@ export const NewPin = () => {
         throw new Error("ATM card number is missing from context")
       }
       await resetPin(cardNumber.atm_card_no, data.pin, data.confirmPin)
-      navigate("/pengaturan/reset-pin/success")
+      navigate("../success")
     } catch (error) {
       console.error("Error resetting PIN:", error)
     }

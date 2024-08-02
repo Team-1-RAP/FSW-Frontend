@@ -165,7 +165,7 @@ export const ResetValidationProvider = () => {
   ) => {
     try {
       const response = await fetch(
-        import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "reset/password",
+        import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "reset/pin/validation/changePin",
         {
           method: "POST",
           headers: {

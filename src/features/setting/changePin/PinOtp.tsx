@@ -15,7 +15,7 @@ export const PinOtp = () => {
       }
 
       await validationOtp(cardNumber.atm_card_no, data.otp)
-      navigate("/pengaturan/reset-pin/new-pin")
+      navigate("../new-pin")
     } catch (error) {
       const errorMessage = (error as Error).message || "An unknown error occurred"
       setErrorMessage("Error: " + errorMessage)
