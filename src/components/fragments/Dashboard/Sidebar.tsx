@@ -10,7 +10,7 @@ const SideBar: React.FC<SidebarProps> = ({ isAsideOpen, closeAside }) => {
   const location = useLocation();
 
   const getLinkClass = (path: string) => {
-    return location.pathname === path
+    return location.pathname.includes(path)
       ? "mt-4 flex h-16 space-x-2 flex-row items-center rounded hover:bg-[#CFD4ED] text-[#235697]"
       : "mt-4 flex h-16 space-x-2 flex-row items-center rounded hover:bg-[#CFD4ED] text-[#838383]";
   };

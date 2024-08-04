@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { Outlet } from "react-router-dom";
 
 export interface IAccount {
     noAccount: string;
@@ -25,10 +26,10 @@ export interface AccountsContextProps {
 }
 export const AccountContext = createContext<AccountsContextProps | null>(null);
 
-export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [accounts, setAccounts] = useState<IAccount[] | null>(null);
-    const [activeAccountIndex, setActiveAccountIndex] = useState<number>(0);
-    const [user, setUser] = useState<IUserInfo | null>(null);
+export const AccountProvider = () => {
+  const [accounts, setAccounts] = useState<IAccount[] | null>(null);
+  const [activeAccountIndex, setActiveAccountIndex] = useState<number>(0);
+  const [user, setUser] = useState<IUserInfo | null>(null);
 
     const fetchAccounts = async (token: string) => {
         try {
@@ -84,15 +85,19 @@ export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     };
 
-    const contextValue: AccountsContextProps = {
-        accounts,
-        setAccounts,
-        user,
-        setUser,
-        fetchAccounts,
-        fetchUserInfo,
-        activeAccountIndex,
-        setActiveAccountIndex,
-    };
-    return <AccountContext.Provider value={contextValue}>{children}</AccountContext.Provider>;
+  const contextValue: AccountsContextProps = {
+    accounts,
+    setAccounts,
+    user,
+    setUser,
+    fetchAccounts,
+    fetchUserInfo,
+    activeAccountIndex,
+    setActiveAccountIndex,
+  };
+  return (
+    <AccountContext.Provider value={contextValue}>
+      <Outlet />
+    </AccountContext.Provider>
+  );
 };

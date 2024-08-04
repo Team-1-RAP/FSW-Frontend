@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import DashboardLayout from "../../components/layouts/DashboardLayout";
 import DropdownItem from "../../components/elements/mutation/DropdownItem";
 import {
   months,
@@ -104,71 +103,69 @@ const MutasiPage: React.FC = () => {
   ]);
 
   return (
-    <DashboardLayout>
-      <div className="w-full px-4 md:m-6">
-        <div className="bg-white md:py-5 rounded-2xl">
-          <h1
-            className="text-[22px] font-semibold text-[#343C6A] ml-10 mt-10 mb-10"
-            aria-label="Mutasi Rekening"
-          >
-            Mutasi Rekening
-          </h1>
-          <div className="flex flex-col ml-10 mr-10 space-y-4 md:flex-row md:space-y-0">
-            <div className="flex flex-col space-y-3 md:space-y-0 md:space-x-2 md:flex-row md:mr-auto">
-              <DropdownItem
-                id="month-dropdown"
-                options={months}
-                label="Pilih Bulan"
-                onChange={handleMonthChange}
-                aria-label="Dropdown pilih bulan"
-              />
-              <DropdownItem
-                id="transaction-type-dropdown"
-                options={transactionTypes}
-                label="Tipe Transaksi"
-                onChange={handleTransactionTypeChange}
-                aria-label="Dropdown tipe transaksi"
-              />
-            </div>
-            <div className="md:ml-auto">
-              <DropdownItem
-                id="show-data-dropdown"
-                options={dataOptions}
-                label="Tampilkan Data"
-                onChange={handleDataOptionChange}
-                aria-label="Dropdown tampilkan data"
-              />
-            </div>
+    <div className="w-full px-4 md:m-6">
+      <div className="bg-white md:py-5 rounded-2xl">
+        <h1
+          className="text-[22px] font-semibold text-[#343C6A] ml-10 mt-10 mb-10"
+          aria-label="Mutasi Rekening"
+        >
+          Mutasi Rekening
+        </h1>
+        <div className="flex flex-col ml-10 mr-10 space-y-4 md:flex-row md:space-y-0">
+          <div className="flex flex-col space-y-3 md:space-y-0 md:space-x-2 md:flex-row md:mr-auto">
+            <DropdownItem
+              id="month-dropdown"
+              options={months}
+              label="Pilih Bulan"
+              onChange={handleMonthChange}
+              aria-label="Dropdown pilih bulan"
+            />
+            <DropdownItem
+              id="transaction-type-dropdown"
+              options={transactionTypes}
+              label="Tipe Transaksi"
+              onChange={handleTransactionTypeChange}
+              aria-label="Dropdown tipe transaksi"
+            />
           </div>
-          <div className="mt-5">
-            {isLoading ? (
-              <div
-                className="flex justify-center items-center h-32"
-                aria-live="polite"
-              >
-                <Loader
-                  className="animate-spin text-[#549EFF]"
-                  size={24}
-                  aria-label="Memuat data"
-                />
-              </div>
-            ) : (
-              <div className="overflow-x-auto md:overflow-x-hidden">
-                <MutationTable data={mutations} />
-              </div>
-            )}
+          <div className="md:ml-auto">
+            <DropdownItem
+              id="show-data-dropdown"
+              options={dataOptions}
+              label="Tampilkan Data"
+              onChange={handleDataOptionChange}
+              aria-label="Dropdown tampilkan data"
+            />
           </div>
         </div>
-        <div className="flex justify-end mt-5 mb-10">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-            aria-label="Navigasi Paginasi"
-          />
+        <div className="mt-5">
+          {isLoading ? (
+            <div
+              className="flex justify-center items-center h-32"
+              aria-live="polite"
+            >
+              <Loader
+                className="animate-spin text-[#549EFF]"
+                size={24}
+                aria-label="Memuat data"
+              />
+            </div>
+          ) : (
+            <div className="overflow-x-auto md:overflow-x-hidden">
+              <MutationTable data={mutations} />
+            </div>
+          )}
         </div>
       </div>
-    </DashboardLayout>
+      <div className="flex justify-end mt-5 mb-10">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+          aria-label="Navigasi Paginasi"
+        />
+      </div>
+    </div>
   );
 };
 

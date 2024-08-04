@@ -55,3 +55,12 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
     appearance: textfield;
 }
+
+.input-error,
+.input-error:focus,
+.input-error::placeholder {
+    border-color: red;
+    color: red;
+    outline: none; /* Remove default focus outline */
+  }
+

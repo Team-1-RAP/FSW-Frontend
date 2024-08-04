@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState} from "react";
 import {
   IMutation,
   IMutationResponse,
@@ -7,6 +7,7 @@ import {
   fetchMutationAmounts,
   fetchSeparateMutations,
 } from "../services/mutationService";
+import { Outlet } from "react-router-dom";
 
 export interface MutationsContextProps {
   mutations: IMutation[];
@@ -36,9 +37,7 @@ export const MutationContext = createContext<MutationsContextProps | null>(
   null
 );
 
-export const MutationProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const MutationProvider = () => {
   const [mutations, setMutations] = useState<IMutation[]>([]);
   const [mutationAmounts, setMutationAmounts] = useState<IMutationAmount[]>([]);
   const [separateMutations, setSeparateMutations] = useState<IMutation[]>([]);
@@ -111,7 +110,7 @@ export const MutationProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <MutationContext.Provider value={contextValue}>
-      {children}
+      <Outlet />
     </MutationContext.Provider>
   );
 };
