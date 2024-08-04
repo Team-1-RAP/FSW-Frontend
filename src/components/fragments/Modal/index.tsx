@@ -1,14 +1,18 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { ModalProps } from "./type";
+import WarningIcon from "../../../assets/icons/Warning.png";
 
 const Modal: React.FC<ModalProps> = ({ title, description, visible, buttonLabel, onButtonClick, onClose }) => {
     const modalRef = useRef<HTMLDivElement>(null);
 
-    const handleOutsideClick = (e: MouseEvent) => {
-        if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-            onClose();
-        }
-    };
+    const handleOutsideClick = useCallback(
+        (e: MouseEvent) => {
+            if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+                onClose();
+            }
+        },
+        [onClose]
+    );
 
     useEffect(() => {
         if (visible) {
@@ -20,7 +24,7 @@ const Modal: React.FC<ModalProps> = ({ title, description, visible, buttonLabel,
         return () => {
             document.removeEventListener("mousedown", handleOutsideClick);
         };
-    }, [visible]);
+    }, [visible, handleOutsideClick]);
 
     if (!visible) return null;
 
@@ -38,7 +42,7 @@ const Modal: React.FC<ModalProps> = ({ title, description, visible, buttonLabel,
         >
             <div ref={modalRef} className="relative text-center bg-white rounded-md shadow-lg max-w-[734px] w-full px-32 py-16">
                 <div className="relative flex flex-col gap-[30px] ">
-                    <img src="src/assets/icons/Warning.png" alt="warning alert" className="mx-auto mb-4 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20" />
+                    <img src={WarningIcon} alt="warning alert" className="mx-auto mb-4 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20" />
                     <h3 id="modal-title" className="text-[20px] font-bold text-black">
                         {title}
                     </h3>

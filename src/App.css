@@ -44,6 +44,17 @@
         font-family: "Poppins", system-ui, sans-serif;
     }
 }
+/* Remove the spinner in Chrome, Safari, Edge */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Remove the spinner in Firefox */
+input[type="number"] {
+    appearance: textfield;
+}
 
 .input-error,
 .input-error:focus,

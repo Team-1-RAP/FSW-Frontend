@@ -1,4 +1,4 @@
 export interface AlertProps {
-    message: string;
+    message: string | null;
     isVisible: boolean;
 }
