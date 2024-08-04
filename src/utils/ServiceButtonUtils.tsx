@@ -25,7 +25,7 @@ export const services: ServiceButtonUtils[] = [
     id: "Transfer-Services",
     icon: Transfer,
     label: "Transfer",
-    link: "/home/transfer",
+    link: "/transfer",
   },
   {
     id: "Top-Up-E-Wallet-Services",
