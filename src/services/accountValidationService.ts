@@ -33,7 +33,7 @@ export const validateAndFetchAccountData = async (accountNumber: string, token: 
     setError(null);
 
     try {
-        const response = await fetch("http://35.208.108.76/v1/transfer/validation/bank", {
+        const response = await fetch(import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "transfer/validation/bank", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export const validateAndFetchAccountData = async (accountNumber: string, token: 
             const { fullname, account_no } = recipient_account;
             const { name } = bank_destination;
 
-            navigate("/home/transfer/nominal", {
+            navigate("/transfer/nominal", {
                 state: {
                     accountNumber: account_no,
                     accountName: fullname,

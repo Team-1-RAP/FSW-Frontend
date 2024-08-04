@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import DashboardLayout from "../../../components/layouts/DashboardLayout";
 import HouseIcon from "../../../assets/icons/house_dark.png";
 import { ChevronRight, RefreshCw } from "react-feather";
 import BankIcon from "../../../assets/icons/bank.png";
@@ -32,7 +31,6 @@ const NewTransferPage: React.FC = () => {
     };
 
     return (
-        <DashboardLayout>
             <div className="w-full lg:w-11/12 h-auto bg-white rounded-[20px] lg:ml-12 mt-10 lg:mt-0 lg:mb-10">
                 <div className="flex flex-col ml-8 gap-5">
                     <div className="flex flex-row space-x-2 mt-5">
@@ -83,7 +81,6 @@ const NewTransferPage: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </DashboardLayout>
     );
 };
 
