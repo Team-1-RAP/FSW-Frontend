@@ -26,7 +26,7 @@ const AuthLayout: React.FC = () => {
     <div className="relative">
       <div className=""></div>
       <div className="flex flex-col w-full md:h-screen md:flex-row">
-        <div className="relative w-full h-screen md:w-1/2">
+        <div className="relative w-full h-screen md:w-1/2 md:sticky top-0">
           <img
             src={bgLogin}
             alt=""
@@ -50,7 +50,7 @@ const AuthLayout: React.FC = () => {
             <p>Copyright © 2024 - Simple Bank</p>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center w-full h-screen md:w-1/2">
+        <div className="flex flex-col items-center justify-center w-full h-screen md:w-1/2 overflow-auto py-20">
           <img
             src={logo}
             alt="Simple Bank Logo"

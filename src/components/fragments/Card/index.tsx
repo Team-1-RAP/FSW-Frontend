@@ -12,7 +12,7 @@ const cardVariants = cva("rounded-lg", {
         "bg-gradient-to-tr from-blue-700 from-20% via-cyan-400 via-70% to-cyan-300 p-7 shadow-md text-white",
     },
     size: {
-      sm: "w-[305px] h-48",
+      sm: "w-[340px] h-52",
       md: "w-[350px] h-56",
       lg: "w-[415px] h-64",
     },
@@ -94,7 +94,7 @@ const Card = ({
         </div>
         <div className={marginText}>
           {previewHidden ? (
-            <div className="mt-20"></div>
+            <div className="mt-[88px]"></div>
           ) : (
             <div className="flex items-center">
               {isNumberVisible ? (
