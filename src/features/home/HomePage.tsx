@@ -30,7 +30,10 @@ const HomePage: React.FC = () => {
       setIsLoading(true);
       fetchAccounts(token);
       if (accounts && accounts.length > 0) {
-        fetchMutationAmounts(token, parseInt(accounts[activeAccountIndex].noAccount));
+        fetchMutationAmounts(
+          token,
+          parseInt(accounts[activeAccountIndex].noAccount)
+        );
 
         const noAccount = accounts[activeAccountIndex].noAccount;
         const month = new Date().getMonth() + 1;
@@ -47,99 +50,102 @@ const HomePage: React.FC = () => {
     setRefresh,
     accounts,
     activeAccountIndex,
+    mutationAmounts,
     fetchMutationAmounts,
     separateMutations,
     fetchSeparateMutations,
   ]);
 
   const currentAccount = accounts ? accounts[activeAccountIndex] : null;
-  const currentMutationAmount = mutationAmounts
-    ? mutationAmounts[activeAccountIndex]
-    : null;
+  const currentMutationAmount = mutationAmounts[activeAccountIndex] ||
+    mutationAmounts || {
+      income: 0,
+      spending: 0,
+    };
 
   return (
-      <div className="flex flex-col xl:flex-row xl:space-x-6 xl:ml-12">
-        <div className="xl:w-[415px]">
-          <div className="flex justify-between">
-            <h1
-              className="text-[22px] text-[#343C6A] font-semibold"
-              aria-label="Rekeningku"
-              role="heading"
-            >
-              Rekeningku
-            </h1>
-            <Link className="flex items-center" to="/profile">
-              <p className="text-[#838383] text-[15px] font-semibold">
-                Ganti kartu
-              </p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="15"
-                height="15"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#235697"
-                strokeWidth="1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="ms-3 icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M9 6l6 6l-6 6" />
-              </svg>
-            </Link>
-          </div>
-          <div className="mt-3 grid justify-center">
-            {currentAccount && (
-              <Card
-                variant="purpleCyan"
-                size="lg"
-                userFullName={currentAccount.fullName}
-                userCardNumber={currentAccount.cardNumber}
-                userCardExpiration={new Date(currentAccount.expDate)}
-              />
-            )}
-          </div>
-          <div className="mt-4">
-            {currentAccount && (
-              <BalanceItem
-                imgFile="balance-icon.png"
-                title="Saldo Rekening"
-                value1={currentAccount.noAccount}
-                value2={currentAccount.balance}
-                isVisible={false}
-              />
-            )}
-          </div>
-          <div
-            className="mt-4 sm:mb-10 grid gap-3 shadow-md p-7 rounded-3xl bg-white"
-            aria-label="Mutasi Terbaru"
-            role="log"
+    <div className="flex flex-col xl:flex-row xl:space-x-6 xl:ml-12">
+      <div className="xl:w-[415px]">
+        <div className="flex justify-between">
+          <h1
+            className="text-[22px] text-[#343C6A] font-semibold"
+            aria-label="Rekeningku"
+            role="heading"
           >
-            {isLoading ? (
-              <div className="flex justify-center items-center h-32">
-                <Loader className="animate-spin text-[#549EFF]" size={24} />
-              </div>
-            ) : separateMutations.length === 0 ? (
-              <Link
-                to="/mutasi"
-                className="text-center xl:text-[16px] text-[#718EBF]"
-              >
-                Belum ada mutasi dibulan ini
-              </Link>
-            ) : (
-              separateMutations.map((mutasi) => (
-                <MutationItems
-                  id="mutation-item"
-                  transactionType={mutasi.transactionType}
-                  mutationType={mutasi.mutationType}
-                  amount={mutasi.amount}
-                  date={mutasi.date}
-                />
-              ))
-            )}
-          </div>
+            Rekeningku
+          </h1>
+          <Link className="flex items-center" to="/profile">
+            <p className="text-[#838383] text-[15px] font-semibold">
+              Ganti kartu
+            </p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#235697"
+              strokeWidth="1"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="ms-3 icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M9 6l6 6l-6 6" />
+            </svg>
+          </Link>
         </div>
+        <div className="mt-3 grid justify-center">
+          {currentAccount && (
+            <Card
+              variant="purpleCyan"
+              size="lg"
+              userFullName={currentAccount.fullName}
+              userCardNumber={currentAccount.cardNumber}
+              userCardExpiration={new Date(currentAccount.expDate)}
+            />
+          )}
+        </div>
+        <div className="mt-4">
+          {currentAccount && (
+            <BalanceItem
+              imgFile="balance-icon.png"
+              title="Saldo Rekening"
+              value1={currentAccount.noAccount}
+              value2={currentAccount.balance}
+              isVisible={false}
+            />
+          )}
+        </div>
+        <div
+          className="mt-4 sm:mb-10 grid gap-3 shadow-md p-7 rounded-3xl bg-white"
+          aria-label="Mutasi Terbaru"
+          role="log"
+        >
+          {isLoading ? (
+            <div className="flex justify-center items-center h-32">
+              <Loader className="animate-spin text-[#549EFF]" size={24} />
+            </div>
+          ) : separateMutations.length === 0 ? (
+            <Link
+              to="/mutasi"
+              className="text-center xl:text-[16px] text-[#718EBF]"
+            >
+              Belum ada mutasi dibulan ini
+            </Link>
+          ) : (
+            separateMutations.map((mutasi) => (
+              <MutationItems
+                id="mutation-item"
+                transactionType={mutasi.transactionType}
+                mutationType={mutasi.mutationType}
+                amount={mutasi.amount}
+                date={mutasi.date}
+              />
+            ))
+          )}
+        </div>
+      </div>
 
       <div className="space-y-6 mt-4 xl:space-y-0 xl:mt-0">
         <div className="flex flex-wrap xl:flex-row gap-4 lg:gap-7 xl:gap-4">
@@ -147,7 +153,7 @@ const HomePage: React.FC = () => {
             key="income-transaction"
             icon={Income}
             label="Pemasukan"
-            value={currentMutationAmount ? currentMutationAmount.income : 0}
+            value={currentMutationAmount.income}
             color="E7EDFF"
           />
 
@@ -155,7 +161,7 @@ const HomePage: React.FC = () => {
             key="expense-transaction"
             icon={Outcome}
             label="Pengeluaran"
-            value={currentMutationAmount ? currentMutationAmount.spending : 0}
+            value={currentMutationAmount.spending}
             color="FFE0EB"
           />
         </div>
