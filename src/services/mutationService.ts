@@ -112,7 +112,7 @@ export const fetchSeparateMutations = async (
 export const fetchMutationAmounts = async (
   token: string,
   noAccount: number
-): Promise<IMutationAmount[]> => {
+): Promise<IMutationAmount> => {
   try {
     const response = await fetch(
       import.meta.env.VITE_API_BASE_URL +
@@ -133,7 +133,7 @@ export const fetchMutationAmounts = async (
     const data = await response.json();
 
     if (data.status) {
-      return data.data;
+      return data.data as IMutationAmount;
     } else {
       throw new Error(data.message || "Failed to fetch mutation amount");
     }
