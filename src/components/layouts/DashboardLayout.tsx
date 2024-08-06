@@ -1,30 +1,30 @@
-import { useState } from "react"
-import Navbar from "../fragments/Dashboard/Navbar"
-import SideBar from "../fragments/Dashboard/Sidebar"
+import { useState } from "react";
+import Navbar from "../fragments/Dashboard/Navbar";
+import SideBar from "../fragments/Dashboard/Sidebar";
+import { Outlet } from "react-router-dom";
 
-interface DashboardLayoutProps {
-  children: React.ReactNode
-}
-const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
-  const [isAsideOpen, setIsAsideOpen] = useState(false)
+const DashboardLayout = () => {
+  const [isAsideOpen, setIsAsideOpen] = useState(false);
   const toggleAside = () => {
-    setIsAsideOpen(!isAsideOpen)
-  }
+    setIsAsideOpen(!isAsideOpen);
+  };
   const closeAside = () => {
-    setIsAsideOpen(false)
-  }
+    setIsAsideOpen(false);
+  };
   return (
     <div className="flex h-screen">
       {/* Navbar */}
       <Navbar toggleAside={toggleAside} />
-      <div className="flex flex-row flex-grow w-full mt-40 md:mt-20">
+      <div className="flex flex-row flex-grow w-full mt-40 lg:mt-20">
         {/* Sidebar */}
         <SideBar isAsideOpen={isAsideOpen} closeAside={closeAside} />
         {/* Main */}
-        <main className="flex flex-grow ml-[10px] lg:ml-[240px] pt-5 lg:pt-10">{children}</main>
+        <main className="lg:mx-auto lg:flex flex-grow lg:ml-[200px] pt-5 lg:pt-7 bg-gray-50 h-[fit-content] px-[5%] lg:px-0">
+          <Outlet />
+        </main>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;
