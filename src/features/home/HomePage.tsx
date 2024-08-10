@@ -23,45 +23,52 @@ const HomePage: React.FC = () => {
     fetchSeparateMutations,
   } = useMutation();
   const [isLoading, setIsLoading] = useState(false);
+  const [dataFetched, setDataFetched] = useState(false);
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (token && isRefresh) {
       setIsLoading(true);
-      fetchAccounts(token);
-      if (accounts && accounts.length > 0) {
-        fetchMutationAmounts(
-          token,
-          parseInt(accounts[activeAccountIndex].noAccount)
-        );
-
-        const noAccount = accounts[activeAccountIndex].noAccount;
-        const month = new Date().getMonth() + 1;
-
-        fetchSeparateMutations(token, noAccount, month, 2);
-
+      fetchAccounts(token).then(() => {
         setIsLoading(false);
-      }
-      setRefresh();
+        setRefresh();
+      });
     }
+  }, [fetchAccounts, isRefresh, setRefresh]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = sessionStorage.getItem("token");
+      if (token && accounts && accounts.length > 0 && !dataFetched) {
+        setIsLoading(true);
+        try {
+          await fetchMutationAmounts(
+            token,
+            parseInt(accounts[activeAccountIndex].noAccount)
+          );
+          const noAccount = accounts[activeAccountIndex].noAccount;
+          const month = new Date().getMonth() + 1;
+          await fetchSeparateMutations(token, noAccount, month, 2);
+          setDataFetched(true); // Mark as data fetched
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchData();
   }, [
-    fetchAccounts,
-    isRefresh,
-    setRefresh,
     accounts,
     activeAccountIndex,
-    mutationAmounts,
     fetchMutationAmounts,
-    separateMutations,
     fetchSeparateMutations,
+    dataFetched,
   ]);
-
   const currentAccount = accounts ? accounts[activeAccountIndex] : null;
-  const currentMutationAmount = mutationAmounts[activeAccountIndex] ||
-    mutationAmounts || {
-      income: 0,
-      spending: 0,
-    };
+  const currentMutationAmount = mutationAmounts[0] || {
+    income: 0,
+    spending: 0,
+  };
 
   return (
     <div className="flex flex-col xl:flex-row xl:space-x-6 xl:ml-12">
