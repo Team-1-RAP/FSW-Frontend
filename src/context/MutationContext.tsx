@@ -1,4 +1,4 @@
-import { createContext, useState} from "react";
+import { createContext, useState } from "react";
 import {
   IMutation,
   IMutationResponse,
@@ -89,7 +89,7 @@ export const MutationProvider = () => {
   ) => {
     try {
       const data = await fetchMutationAmounts(token, noAccount);
-      setMutationAmounts(data);
+      setMutationAmounts([data]);
       console.log("Mutation amount fetched:", data);
     } catch (error) {
       console.error("Fetch mutations amount error:", error);
