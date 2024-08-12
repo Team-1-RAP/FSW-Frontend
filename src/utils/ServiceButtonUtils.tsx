@@ -1,25 +1,25 @@
-import HandWithdraw from "../assets/icons/handwithdraw.png"
-import Transfer from "../assets/icons/transfer.png"
-import Wallet from "../assets/icons/wallet.png"
-import Receipt from "../assets/icons/receipt.png"
-import LineChart from "../assets/icons/linechart.png"
-import HandShake from "../assets/icons/handshake.png"
-import Dollar from "../assets/icons/dollar.png"
-import More from "../assets/icons/more.png"
+import QRIS from "../assets/icons/qris.png";
+import Transfer from "../assets/icons/transfer.png";
+import Wallet from "../assets/icons/wallet.png";
+import Receipt from "../assets/icons/receipt.png";
+import LineChart from "../assets/icons/linechart.png";
+import HandShake from "../assets/icons/handshake.png";
+import Dollar from "../assets/icons/dollar.png";
+import More from "../assets/icons/more.png";
 
 export interface ServiceButtonUtils {
-  id: string
-  icon: string
-  label: string
-  link: string
+  id: string;
+  icon: string;
+  label: string;
+  link: string;
 }
 
 export const services: ServiceButtonUtils[] = [
   {
-    id: "Tarik-Tunai-Services",
-    icon: HandWithdraw,
-    label: "Tarik Tunai",
-    link: "/tarik-tunai",
+    id: "QRIS-Services",
+    icon: QRIS,
+    label: "QRIS",
+    link: "/QRIS",
   },
   {
     id: "Transfer-Services",
@@ -63,4 +63,4 @@ export const services: ServiceButtonUtils[] = [
     label: "Lainnya",
     link: "/lainnya",
   },
-]
+];
