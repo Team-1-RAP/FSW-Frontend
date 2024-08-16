@@ -2,11 +2,14 @@ import { Controller, useForm } from "react-hook-form";
 import { FormResetPasswordPinTemplate } from "../../elements/form/FormResetPasswordPinTemplate";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Button from "./Button";
 
 const BirthDateSchema = Yup.object({
   day: Yup.string().required("Day is required"),
   month: Yup.string().required("Month is required"),
-  year: Yup.string().required("Year is required").min(4, "Year must be 4 digits"),
+  year: Yup.string()
+    .required("Year is required")
+    .min(4, "Year must be 4 digits"),
 });
 
 export type IBirthDateForm = Yup.InferType<typeof BirthDateSchema>;
@@ -16,7 +19,10 @@ interface BirthDateFormProps {
   errorMessage: string;
 }
 
-export const BirthDateForm = ({ onSubmit, errorMessage }: BirthDateFormProps) => {
+export const BirthDateForm = ({
+  onSubmit,
+  errorMessage,
+}: BirthDateFormProps) => {
   const {
     control,
     handleSubmit,
@@ -44,7 +50,7 @@ export const BirthDateForm = ({ onSubmit, errorMessage }: BirthDateFormProps) =>
             control={control}
             name="day"
             render={({ field }) => (
-              <div className={`${!errors.day && 'mb-4'}`}>
+              <div className={`${!errors.day && "mb-4"}`}>
                 <label htmlFor="day" className="sr-only">
                   Day of Birth
                 </label>
@@ -73,7 +79,7 @@ export const BirthDateForm = ({ onSubmit, errorMessage }: BirthDateFormProps) =>
             control={control}
             name="month"
             render={({ field }) => (
-              <div className={`${!errors.month && 'mb-4'}`}>
+              <div className={`${!errors.month && "mb-4"}`}>
                 <label htmlFor="month" className="sr-only">
                   Month of Birth
                 </label>
@@ -102,7 +108,7 @@ export const BirthDateForm = ({ onSubmit, errorMessage }: BirthDateFormProps) =>
             control={control}
             name="year"
             render={({ field }) => (
-              <div className={`${!errors.year && 'mb-4'}`}>
+              <div className={`${!errors.year && "mb-4"}`}>
                 <label htmlFor="year" className="sr-only">
                   Year of birth
                 </label>
@@ -129,13 +135,12 @@ export const BirthDateForm = ({ onSubmit, errorMessage }: BirthDateFormProps) =>
           />
         </div>
         <div className="h-1/4 grid place-items-center">
-          <button
-            type="submit"
-            className="bg-[#0066AE] h-12 rounded-[10px] text-white hover:bg-sky-900 focus:bg-sky-950 px-16"
-          >
+          <Button type="submit" className="bg-primary">
             Selanjutnya
-          </button>
-          {errorMessage && <span className="text-red-500">Pastikan data benar</span>}
+          </Button>
+          {errorMessage && (
+            <span className="text-red-500">Pastikan data benar</span>
+          )}
         </div>
       </form>
     </FormResetPasswordPinTemplate>
