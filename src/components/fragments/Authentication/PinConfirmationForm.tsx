@@ -2,6 +2,7 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { FormResetPasswordPinTemplate } from "../../elements/form/FormResetPasswordPinTemplate";
+import Button from "./Button";
 
 const PinVerificationSchema = Yup.object({
   pin: Yup.string()
@@ -17,7 +18,10 @@ interface PinVerificationFormProps {
   errorMessage: string;
 }
 
-export const PinVerificationForm = ({ onSubmit,  errorMessage}: PinVerificationFormProps) => {
+export const PinVerificationForm = ({
+  onSubmit,
+  errorMessage,
+}: PinVerificationFormProps) => {
   const {
     control,
     handleSubmit,
@@ -45,7 +49,7 @@ export const PinVerificationForm = ({ onSubmit,  errorMessage}: PinVerificationF
               </label>
               <input
                 id="pin"
-                type="text"
+                type="password"
                 {...field}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   const value = event.target.value;
@@ -64,14 +68,12 @@ export const PinVerificationForm = ({ onSubmit,  errorMessage}: PinVerificationF
           )}
         />
         <div className="h-1/4 grid place-items-center">
-          <button
-            type="submit"
-            className="bg-[#0066AE] h-12 rounded-[10px] text-white hover:bg-sky-900 focus:bg-sky-950 px-16"
-            onClick={(e) => e.currentTarget}
-          >
+          <Button type="submit" className="bg-primary">
             Selanjutnya
-          </button>
-          {errorMessage && <span className="text-red-500">Pastikan data benar</span>}
+          </Button>
+          {errorMessage && (
+            <span className="text-red-500">Pastikan data benar</span>
+          )}
         </div>
       </form>
     </FormResetPasswordPinTemplate>

@@ -7,6 +7,7 @@ import { Eye, EyeOff } from "react-feather";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useChangePassword } from "../../../hooks/useChangePassword";
+import Button from "../../../components/fragments/Authentication/Button";
 
 const PasswordVerificationSchema = Yup.object({
   password: Yup.string().required("Password is required"),
@@ -94,13 +95,9 @@ export const PasswordVerification = () => {
           </>
         </div>
         <div className="h-1/4">
-          <button
-            type="submit"
-            className="bg-[#0066AE] h-12 rounded-[10px] text-white hover:bg-sky-900 focus:bg-sky-950 px-16"
-            onClick={(e) => e.currentTarget}
-          >
+          <Button type="submit" className="bg-primary">
             Selanjutnya
-          </button>
+          </Button>
           <div>
             {errorMessage && (
               <span className="text-red-500">Pastikan data benar</span>
