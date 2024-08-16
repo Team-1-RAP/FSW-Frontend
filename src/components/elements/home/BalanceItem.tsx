@@ -47,7 +47,11 @@ const BalanceItem = ({
               {title}
             </p>
             <div className="flex items-center gap-2 mb-3">
-              <p className="text-[#718EBF] text-base" tabIndex={0}>
+              <p
+                className="text-[#718EBF] text-base"
+                tabIndex={0}
+                aria-label={`Nomor Rekening ${value1}`}
+              >
                 No Rek. <span className="font-medium">{value1}</span>
               </p>
               <button
@@ -63,6 +67,7 @@ const BalanceItem = ({
               {copied && (
                 <span
                   className="bg-[#FFBB38] text-white px-2 py-1 rounded text-base"
+                  aria-live="polite"
                   aria-label="Nomor Rekening Tersalin"
                 >
                   Copied!
@@ -74,7 +79,12 @@ const BalanceItem = ({
                 className="[400px]:text-2xl text-xl font-bold"
                 tabIndex={0}
                 aria-label={
-                  isVisible || isNumberVisible ? undefined : "Angka tersembunyi"
+                  isVisible || isNumberVisible
+                    ? `Nilai Rp${Number(value2).toLocaleString("id-ID", {
+                        currency: "IDR",
+                        minimumFractionDigits: 0,
+                      })}`
+                    : "Angka tersembunyi"
                 }
               >
                 {isVisible || isNumberVisible
