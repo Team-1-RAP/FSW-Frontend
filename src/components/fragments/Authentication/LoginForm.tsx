@@ -59,12 +59,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
         }
     };
 
-    const isFormValid = formData.username.trim() !== "" && formData.password.trim() !== "";
-
     const hideAlert = () => {
         setTimeout(() => {
             setIsAlertVisible(false);
         }, 3000);
+    };
+
+    const handleForgot = () => {
+        navigate("/ubah-password");
+    };
+    const handleRegister = () => {
+        navigate("/registrasi");
     };
 
     return (
@@ -109,15 +114,26 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
             <Alert message={errorMessage} isVisible={isAlertVisible} />
             <p className="flex justify-end text-[#153193]">
                 <span>
-                    forgot your <b>password?</b>
+                    Lupa{" "}
+                    <b onClick={handleForgot} aria-label="ubah password" className="hover:cursor-pointer">
+                        password?
+                    </b>
                 </span>
             </p>
             <div className="border border-[#6C8FEE] w-full"></div>
             <div className="flex justify-center">
-                <Button type="submit" className="my-4" disabled={!isFormValid}>
+                <Button type="submit" className="my-4">
                     Login
                 </Button>
             </div>
+            <p className="flex justify-center text-[#153193]">
+                <span>
+                    Belum punya akun SimpleBank?{" "}
+                    <b onClick={handleRegister} className="hover:cursor-pointer">
+                        Daftar
+                    </b>
+                </span>
+            </p>
         </form>
     );
 };
