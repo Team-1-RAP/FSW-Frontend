@@ -5,8 +5,12 @@ import Button from "../../../components/fragments/Authentication/Button";
 import { QrisContentTemplate } from "./Template/QrisContentTemplate";
 import { useNavigate } from "react-router-dom";
 import { useAccount } from "../../../hooks/useAccount";
+import { useAuth } from "../../../hooks/useAuth";
+import {useState} from "react"
 
 export const QrisTransfer = () => {
+  const [messageFailed, SetMessageFailed] = useState(false)
+  const { token } = useAuth();
   const {
     control,
     handleSubmit,
@@ -21,14 +25,41 @@ export const QrisTransfer = () => {
   });
   const { accounts } = useAccount();
   const navigate = useNavigate();
-  const onSubmit = (data: IQrisTransferForm) => {
-    console.log(data);
-    navigate("display");
-  };
+  const onSubmit = async (data: IQrisTransferForm) => {
+    try {
+      const body = JSON.stringify({
+        amount: data.nominal,
+        pin: data.pin,
+        accountNo: data.sourceAccountNumber,
+      });
+  
+      const response = await fetch(
+        import.meta.env.VITE_API_BASE_URL + "api/v1/qris/generate-qr-code",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: body,
+        }
+      );
+  
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        throw new Error(errorResponse.message || 'Something went wrong');
+      }
+      SetMessageFailed(false)
+      const dataResponse = await response.json();
+      navigate("display", {state: {dataResponse}});
+    } catch (error) {
+      SetMessageFailed(true)
+    }
+  };  
   return (
     <QrisContentTemplate>
       <form
-        className="w-full flex flex-col gap-11 items-center"
+        className="w-full flex flex-col items-center"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex flex-col gap-1 w-full">
@@ -133,9 +164,12 @@ export const QrisTransfer = () => {
             )}
           />
         </div>
-        <Button type={"submit"} className="w-[305px] bg-primary">
+        <Button type={"submit"} className="w-[305px] bg-primary mt-11">
           Selanjutnya
         </Button>
+        {messageFailed && (
+            <span className="text-red-500">Pastikan pin benar</span>
+          )}
       </form>
       <div className="w-full flex flex-col gap-3 bg-[#EFEFEF] border rounded-xl p-3">
         <p className="font-bold text-primary">keterangan</p>

@@ -21,7 +21,7 @@ export const QrisTransactionSuccess = () => {
           melalui fitur QRIS kepada <b>Toko Madura</b>
         </p>
       </div>
-      <Button className="bg-primary" onClick={() => navigate("/home")}>
+      <Button className="bg-primary" onClick={() => navigate("")}>
         Kembali ke home
       </Button>
     </div>
