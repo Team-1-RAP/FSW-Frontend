@@ -34,8 +34,8 @@ export const QrisTransfer = () => {
 
     const onSubmit = async (data: IQrisTransferForm) => {
         const transformedData = {
-            sourceAccountNumber: data.sourceAccountNumber,
-            nominal: parseFloat(data.nominal),
+            accountNo: data.sourceAccountNumber,
+            amount: parseInt(data.nominal),
             pin: data.pin,
         };
 
@@ -44,6 +44,7 @@ export const QrisTransfer = () => {
             console.log(transformedData);
         }
     };
+
     const handleCloseModal = useCallback(() => setIsModalVisible(false), []);
     const handleButtonClick = useCallback(() => {
         navigate("/pengaturan/change-pin");

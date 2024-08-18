@@ -1,6 +1,6 @@
 interface DataCode {
-    sourceAccountNumber: string;
-    nominal: number;
+    accountNo: string;
+    amount: number;
     pin: string;
 }
 
@@ -29,6 +29,7 @@ const handleError = async (response: Response, setAlert: SetAlertFunction, setIs
     switch (response.status) {
         case 403:
             setIsModalVisible(true);
+            resetAttemptCount();
             return;
 
         case 400:
@@ -49,7 +50,7 @@ const handleError = async (response: Response, setAlert: SetAlertFunction, setIs
                 const errorData = await response.json();
                 errorMessage = errorData.message || errorMessage;
             } catch {
-                errorMessage = "Terjadi kesalahan saat melakukan transfer.";
+                errorMessage = "Terjadi kesalahan saat memproses kode bayar.";
             }
             break;
     }
@@ -83,7 +84,8 @@ export const generateCode = async (datacode: DataCode, token: string, navigate: 
         }
 
         const { data } = await response.json();
-        navigate("qris/display", { state: { ...data } });
+        console.log(data);
+        navigate("display", { state: { ...data } });
     } catch (error) {
         const errorMessage = (error as Error).message || "Terjadi kesalahan yang tidak diketahui.";
         setAlert(errorMessage);
