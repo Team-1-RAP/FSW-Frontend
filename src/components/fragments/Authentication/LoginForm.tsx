@@ -15,7 +15,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
     const navigate = useNavigate();
     const { setToken } = useAuth();
     const [showPassword, toggleShowPassword] = useToggle(false);
-    const [errorCount, setErrorCount] = useState(0);
     const [errorMessage, setErrorMessage] = useState("");
     const [isAlertVisible, setIsAlertVisible] = useState(false);
     const [formData, setFormData] = useState({ username: "", password: "" });
@@ -27,21 +26,32 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        const errorCount = parseInt(sessionStorage.getItem("errorCount") || "0", 10);
+
         try {
             const data = await loginUser(formData.username, formData.password);
             setToken(data);
             navigate("/home");
         } catch (error) {
             let newMessage = "";
+            let newErrorCount = errorCount;
+
             if (error && typeof error === "object" && "status" in error) {
                 const status = (error as { status: number }).status;
+
                 if (status === 400) {
-                    setErrorCount((prevCount) => prevCount + 1);
-                    if (errorCount === 0) {
-                        newMessage = "Password yang Anda masukkan salah.";
-                    } else if (errorCount === 1) {
+                    newErrorCount++;
+                    if (newErrorCount === 3) {
+                        onLoginError(403);
+                        setErrorMessage("");
+                        setIsAlertVisible(false);
+                    } else if (newErrorCount === 2) {
                         newMessage = "Password yang Anda masukkan salah. Anda memiliki 1x percobaan sebelum diblok oleh sistem.";
+                    } else {
+                        newMessage = "Password yang Anda masukkan salah.";
                     }
+                    sessionStorage.setItem("errorCount", newErrorCount.toString());
                     setIsAlertVisible(true);
                     hideAlert();
                 } else {
@@ -111,7 +121,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
                     {showPassword ? <Eye className="text-[#c4c4c4]" /> : <EyeOff className="text-[#c4c4c4]" />}
                 </div>
             </div>
-            <Alert message={errorMessage} isVisible={isAlertVisible} />
+            {isAlertVisible && !errorMessage.includes("403") && <Alert message={errorMessage} isVisible={isAlertVisible} />}
             <p className="flex justify-end text-[#153193]">
                 <span>
                     Lupa{" "}
@@ -126,7 +136,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
                     Login
                 </Button>
             </div>
-            <p className="flex justify-center text-[#153193]">
+            <p className="flex justify-center text-[#153193] text-center">
                 <span>
                     Belum punya akun SimpleBank?{" "}
                     <b onClick={handleRegister} className="hover:cursor-pointer">
