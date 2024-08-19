@@ -41,7 +41,7 @@ export const QrisTransfer = () => {
 
         if (token) {
             await generateCode(transformedData, token, navigate, setAlertMessage, setIsAlertVisible, setIsModalVisible);
-            console.log(transformedData);
+            // console.log(transformedData);
         }
     };
 

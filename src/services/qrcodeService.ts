@@ -82,10 +82,8 @@ export const generateCode = async (datacode: DataCode, token: string, navigate: 
             await handleError(response, setAlert, setIsAlertVisible, setIsModalVisible);
             return;
         }
-
-        const { data } = await response.json();
-        console.log(data);
-        navigate("display", { state: { ...data } });
+        const dataResponse = await response.json();
+        navigate("display", { state: { dataResponse} });        
     } catch (error) {
         const errorMessage = (error as Error).message || "Terjadi kesalahan yang tidak diketahui.";
         setAlert(errorMessage);
