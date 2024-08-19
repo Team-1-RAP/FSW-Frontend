@@ -2,7 +2,8 @@ import { useNavigate } from "react-router-dom"
 import { ChevronRight } from "react-feather"
 
 export const Setting = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
 
   return (
     <div className="text-center w-[531px] flex flex-col items-center gap-7">

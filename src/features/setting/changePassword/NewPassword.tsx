@@ -6,6 +6,7 @@ import {
 import { useEffect, useState } from "react";
 import { useToggle } from "../../../hooks/useToggle";
 import { useChangePassword } from "../../../hooks/useChangePassword";
+import { useAuth } from "../../../hooks/useAuth";
 
 export const NewPassword = () => {
   const navigate = useNavigate();
@@ -18,13 +19,17 @@ export const NewPassword = () => {
     isNewPasswordValid,
     changePassword,
   } = useChangePassword();
+  const { logout } = useAuth();
 
   useEffect(() => {
     if (!isEmailValid || !isCurrentPasswordValid || !isRefresh || !isOtpValid) {
       navigate(-1);
     } else if (isNewPasswordValid && isRefresh) {
       setIsRefresh;
-      navigate("/pengaturan");
+      logout();
+      navigate("/login", {
+        state: { notificationMessage: "Password berhasil diubah" },
+      });
     }
   }, [
     isCurrentPasswordValid,
@@ -32,6 +37,7 @@ export const NewPassword = () => {
     isNewPasswordValid,
     isOtpValid,
     isRefresh,
+    logout,
     navigate,
     setIsRefresh,
   ]);
