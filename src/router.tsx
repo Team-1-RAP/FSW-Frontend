@@ -43,7 +43,9 @@ import VerifyEmailPage from "./features/authentication/verifikasiRegister/verify
 import TypeRekeningPage from "./features/authentication/verifikasiRegister/typeRekeningPage"
 import VerifyBiodataPage from "./features/authentication/verifikasiRegister/verifyBiodataPage"
 import UploadDocumentPage from "./features/authentication/verifikasiRegister/uploadDocumentPage"
-import SuccesPage from "./features/authentication/verifikasiRegister/successPage"
+import FinishPage from "./features/authentication/verifikasiRegister/finishPage"
+import NewPinPage from "./features/authentication/verifikasiRegister/newPinPage"
+import SuccessPage from "./features/authentication/verifikasiRegister/successPage"
 
 const router = createBrowserRouter([
   {
@@ -80,7 +82,21 @@ const router = createBrowserRouter([
       },
       {
         path: "selesai",
-        element: <SuccesPage />,
+        element: <FinishPage />,
+      },
+      {
+        path: "new-pin",
+        element: <ResetValidationProvider />,
+        children: [
+          {
+            path: "",
+            element: <NewPinPage />,
+          },
+        ],
+      },
+      {
+        path: "success",
+        element: <SuccessPage />,
       },
     ],
   },
