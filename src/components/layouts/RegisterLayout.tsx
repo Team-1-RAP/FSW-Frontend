@@ -9,7 +9,7 @@ const RegisterLayout = () => {
             ? {
                   text: "text-blue-400",
                   underline:
-                      "border-[1.5px] rounded-t border-blue-700 bg-blue-100",
+                      "border-[2px] rounded-t border-blue-700 bg-blue-100",
               }
             : { text: "text-[#838383]", underline: "" };
     };
@@ -26,7 +26,7 @@ const RegisterLayout = () => {
             <div className="flex-1 bg-gray-50">
                 {/* Header */}
                 <div className="pb-6 mx-4 mt-10 bg-white rounded-lg md:mx-7 md:mt-28">
-                    <div className="px-4 pt-32 md:px-6 md:pt-10">
+                    <div className="px-4 pt-32 pb-2 md:px-6 md:pt-10">
                         <header className="border-b border-[#A09FA4] h-auto pb-2 md:pb-0">
                             {/* Mobile Layout: Stepper with Circles */}
                             <div className="flex justify-center gap-4 md:hidden">
@@ -68,7 +68,7 @@ const RegisterLayout = () => {
                                     className="relative flex items-center justify-center md:justify-start"
                                 >
                                     <div
-                                        className={`text-center md:text-left ${
+                                        className={`text-center md:text-left pb-2 ${
                                             getLinkClass("/register").text
                                         }`}
                                     >
@@ -87,7 +87,7 @@ const RegisterLayout = () => {
                                     className="relative flex items-center justify-center flex-1 md:justify-start"
                                 >
                                     <div
-                                        className={`text-center md:text-left ${
+                                        className={`text-center md:text-left pb-2 ${
                                             getLinkClass(
                                                 "/register/verifikasi-email"
                                             ).text
@@ -110,7 +110,7 @@ const RegisterLayout = () => {
                                     className="relative flex items-center justify-center flex-1 md:justify-start"
                                 >
                                     <div
-                                        className={`text-center md:text-left ${
+                                        className={`text-center md:text-left pb-2 ${
                                             getLinkClass(
                                                 "/register/tipe-rekening"
                                             ).text
@@ -133,7 +133,7 @@ const RegisterLayout = () => {
                                     className="relative flex items-center justify-center flex-1 md:justify-start"
                                 >
                                     <div
-                                        className={`text-center md:text-left ${
+                                        className={`text-center md:text-left pb-2 ${
                                             getLinkClass("/register/data-diri")
                                                 .text
                                         }`}
@@ -154,7 +154,7 @@ const RegisterLayout = () => {
                                     className="relative flex items-center justify-center flex-1 md:justify-start"
                                 >
                                     <div
-                                        className={`text-center md:text-left ${
+                                        className={`text-center md:text-left pb-2 whitespace-nowrap ${
                                             getLinkClass(
                                                 "/register/upload-persyaratan"
                                             ).text
@@ -177,7 +177,7 @@ const RegisterLayout = () => {
                                     className="relative flex items-center justify-center flex-1 md:justify-start"
                                 >
                                     <div
-                                        className={`text-center md:text-left ${
+                                        className={`text-center md:text-left pb-2 ${
                                             getLinkClass("/register/selesai")
                                                 .text
                                         }`}
@@ -196,7 +196,7 @@ const RegisterLayout = () => {
                             </div>
                         </header>
                         {/* Main */}
-                        <main className="flex justify-center mt-6 md:mt-10">
+                        <main className="flex flex-col items-center mt-6 md:mt-10">
                             <Outlet />
                         </main>
                     </div>
