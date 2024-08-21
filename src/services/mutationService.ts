@@ -111,7 +111,7 @@ export const fetchSeparateMutations = async (
 
 export const fetchMutationAmounts = async (
   token: string,
-  noAccount: number
+  noAccount: string
 ): Promise<IMutationAmount> => {
   try {
     const response = await fetch(
