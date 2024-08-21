@@ -64,6 +64,10 @@ input[type="number"] {
     outline: none; /* Remove default focus outline */
   }
 
+  .placeholder-blue::placeholder {
+    color: #549EFF;
+  }
+
   .Toastify__toast-container {
     top: 5%;
     left: 50%;

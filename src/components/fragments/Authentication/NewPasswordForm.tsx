@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useToggle } from "../../../hooks/useToggle";
 import { FormResetPasswordPinTemplate } from "../../elements/form/FormResetPasswordPinTemplate";
+import Button from "./Button";
 
 export const ResetPasswordSchema = Yup.object({
   password: Yup.string()
@@ -168,13 +169,9 @@ export const NewPasswordForm = ({
           </div>
         </div>
         <div className="h-1/4">
-          <button
-            type="submit"
-            className="bg-[#0066AE] h-12 rounded-[10px] text-white hover:bg-sky-900 focus:bg-sky-950 px-16"
-            onClick={(e) => e.currentTarget}
-          >
+          <Button type="submit" className="bg-primary">
             Selanjutnya
-          </button>
+          </Button>
           <div>
             {errorMessage && (
               <span className="text-red-500">Pastikan password sesuai</span>

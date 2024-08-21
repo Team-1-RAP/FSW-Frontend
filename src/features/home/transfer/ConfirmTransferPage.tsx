@@ -17,7 +17,7 @@ const ConfirmTransferPage: React.FC = () => {
     const [pin, setPin] = useState<string>("");
     const [alertMessage, setAlertMessage] = useState<string | null>(null);
     const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
-    const [isModalVisible, setIsModalVisible] = useState<boolean>(false); // tambahkan state untuk modal
+    const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
     const handlePinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;

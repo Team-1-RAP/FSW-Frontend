@@ -37,6 +37,10 @@ import NewTransferPage from "./features/home/transfer/NewTransferPage";
 import NominalTransferPage from "./features/home/transfer/NominalTransferPage";
 import ConfirmTransferPage from "./features/home/transfer/ConfirmTransferPage";
 import BuktiTransferPage from "./features/home/transfer/BuktiTransferPage";
+import { QrisLayout } from "./components/layouts/QrisLayout";
+import { QrisTransfer } from "./features/home/qris/QrisTransfer";
+import { QrisQrCodeDisplay } from "./features/home/qris/QrisQrCodeDisplay";
+import { QrisTransactionSuccess } from "./features/home/qris/QrisTransactionSuccess";
 
 const router = createBrowserRouter([
     {
@@ -151,6 +155,24 @@ const router = createBrowserRouter([
                                         ],
                                     },
                                     {
+                                        path: "/QRIS",
+                                        element: <QrisLayout />,
+                                        children: [
+                                            {
+                                                path: "",
+                                                element: <QrisTransfer />,
+                                            },
+                                            {
+                                                path: "display",
+                                                element: <QrisQrCodeDisplay />,
+                                            },
+                                            {
+                                                path: "success",
+                                                element: <QrisTransactionSuccess />,
+                                            }
+                                        ]
+                                    },
+                                    {
                                         path: "/pengaturan",
                                         element: <PengaturanLayout />,
                                         children: [
@@ -211,9 +233,6 @@ const router = createBrowserRouter([
                                                 ],
                                             },
                                         ],
-                                    },
-                                    {
-                                        path: "/transfer",
                                     },
                                 ],
                             },

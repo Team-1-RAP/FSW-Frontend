@@ -26,6 +26,7 @@
         "react-fast-marquee": "^1.6.5",
         "react-feather": "^2.0.10",
         "react-hook-form": "^7.52.1",
+        "react-qr-code": "^2.0.15",
         "react-router-dom": "^6.24.1",
         "react-toastify": "^10.0.5",
         "swiper": "^11.1.4",

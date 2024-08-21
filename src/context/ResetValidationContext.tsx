@@ -141,7 +141,6 @@ export const ResetValidationProvider = () => {
       throw error;
     }
   };
-
   const validationOtp = async (atm_card_no: string, otp: string) => {
     try {
       const response = await fetch(
