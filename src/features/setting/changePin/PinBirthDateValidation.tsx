@@ -6,7 +6,7 @@ import { useResetValidation } from "../../../hooks/useResetValidation"
 export const PinBirthDateValidation = () => {
   const [errorMessage, setErrorMessage] = useState("")
   const navigate = useNavigate()
-  const { validationBirthDate, cardNumber } = useResetValidation()
+  const { pinValidationBirthDate, cardNumber } = useResetValidation()
 
   const onSubmit = async (data: IBirthDateForm) => {
     try {
@@ -14,7 +14,7 @@ export const PinBirthDateValidation = () => {
         throw new Error("ATM card number is missing from context")
       }
 
-      await validationBirthDate(cardNumber.atm_card_no, `${data.year}-${data.month}-${data.day}`)
+      await pinValidationBirthDate(cardNumber.atm_card_no, `${data.year}-${data.month}-${data.day}`)
       navigate("../email")
     } catch (error) {
       const errorMessage = (error as Error).message || "An unknown error occurred"
