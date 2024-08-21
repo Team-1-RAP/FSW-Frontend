@@ -33,6 +33,7 @@ const handleError = async (response: Response, setAlert: SetAlertFunction, setIs
             return;
 
         case 400:
+            // eslint-disable-next-line no-case-declarations
             const attempts = getAttemptCount();
             if (attempts === 0) {
                 errorMessage = "PIN yang Anda masukkan salah.";

@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from "../../../hooks/useAuth";
 import Button from "../../../components/fragments/Authentication/Button";
 import { Link } from "react-router-dom";
+import Alert from "../../../components/fragments/Alert";
 
 export const QrisQrCodeDisplay = () => {
   const navigate = useNavigate();
@@ -85,7 +86,6 @@ export const QrisQrCodeDisplay = () => {
         className="p-14 bg-[#549EFF] border rounded-xl"
       />
       <div className="text-center">
-        <p>{expired ? "kode kadaluarsa" : "kode akan berakhir pada"}</p>
         <p className="text-primary text-xl font-bold">
         {expired ? (
           <Link to={"/qris"}><Button className="w-[305px] bg-primary mt-5">
@@ -95,6 +95,7 @@ export const QrisQrCodeDisplay = () => {
           formatTime(seconds)
         )}
         </p>
+        <Alert message="Kode QR telah kadaluarsa" isVisible={expired} />
       </div>
     </QrisContentTemplate>
   );
