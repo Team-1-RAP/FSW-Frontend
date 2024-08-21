@@ -82,12 +82,12 @@ const RegisterLayout = () => {
                 </div>
               </header>
             </div>
+            {/* Main */}
+            <main className="flex justify-center mt-6 md:mt-10">
+              <Outlet />
+            </main>
           </div>
         )}
-        {/* Main */}
-        <main className="flex justify-center mt-6 md:mt-10">
-          <Outlet />
-        </main>
       </div>
     </div>
   )
