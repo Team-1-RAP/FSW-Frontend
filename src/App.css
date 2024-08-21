@@ -64,3 +64,7 @@ input[type="number"] {
     outline: none; /* Remove default focus outline */
   }
 
+  .placeholder-blue::placeholder {
+    color: #549EFF;
+  }
+

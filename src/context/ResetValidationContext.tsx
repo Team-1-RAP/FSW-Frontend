@@ -130,7 +130,6 @@ export const ResetValidationProvider = () => {
       throw error;
     }
   };
-
   const validationOtp = async (atm_card_no: string, otp: string) => {
     try {
       const response = await fetch(
@@ -157,7 +156,51 @@ export const ResetValidationProvider = () => {
       throw error;
     }
   };
+  const resetPassword = async (atm_card_no: string, password: string, confirmPassword: string) => {
+    try {
+      const response = await fetch(import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "reset/password/validation/changePassword", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          atm_card_no,
+          password,
+          confirmPassword,
+        }),
+      })
 
+      if (!response.ok) {
+        throw new Error("Error resetting Password")
+      }
+    } catch (error) {
+      console.error("Error resetting Password:", error)
+      throw error
+    }
+  };
+  const pinValidation = async (atm_card_no: string, pin: string) => {
+    try {
+      const response = await fetch(import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "reset/password/validation/pin", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          atm_card_no,
+          pin
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Error resetting Password")
+      }
+    } catch (error) {
+      console.error("Error resetting Password:", error)
+      throw error
+    }
+  }
   const resetPin = async (
     atm_card_no: string,
     pin: string,
@@ -186,52 +229,6 @@ export const ResetValidationProvider = () => {
     } catch (error) {
       console.error("Error resetting PIN:", error);
       throw error;
-    }
-  }
-  const resetPassword = async (atm_card_no: string, password: string, confirmPassword: string) => {
-    try {
-      const response = await fetch(import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "reset/password/validation/changePassword", {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          atm_card_no,
-          password,
-          confirmPassword,
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error("Error resetting Password")
-      }
-    } catch (error) {
-      console.error("Error resetting Password:", error)
-      throw error
-    }
-  };
-
-  const pinValidation = async (atm_card_no: string, pin: string) => {
-    try {
-      const response = await fetch(import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "reset/password/validation/pin", {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          atm_card_no,
-          pin
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error("Error resetting Password")
-      }
-    } catch (error) {
-      console.error("Error resetting Password:", error)
-      throw error
     }
   }
 
