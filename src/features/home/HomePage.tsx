@@ -47,7 +47,7 @@ const HomePage: React.FC = () => {
         try {
           await fetchMutationAmounts(
             token,
-            parseInt(accounts[activeAccountIndex].noAccount)
+            accounts[activeAccountIndex].noAccount
           );
           const noAccount = accounts[activeAccountIndex].noAccount;
           const month = new Date().getMonth() + 1;
