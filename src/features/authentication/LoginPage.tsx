@@ -1,16 +1,17 @@
 import React, { useCallback, useEffect } from "react";
 import LoginForm from "../../components/fragments/Authentication/LoginForm";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import useIdleTimer from "../../hooks/useIdleTimer";
 import Modal from "../../components/fragments/Modal";
 import { useToggle } from "../../hooks/useToggle";
 import { toast, ToastContainer } from "react-toastify";
+import { useNotification } from "../../hooks/useNotification";
 
 const LoginPage: React.FC = () => {
   const { token, logout } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
+  const { notificationMessage, clearNotification } = useNotification();
 
   useEffect(() => {
     const storedToken = sessionStorage.getItem("token");
@@ -41,15 +42,16 @@ const LoginPage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (location.state?.notificationMessage) {
-      toast.success(location.state.notificationMessage, {
+    if (notificationMessage) {
+      toast.success(notificationMessage, {
         position: "top-center",
         theme: "colored",
         hideProgressBar: true,
         className: "w-[424px] min-h-[49px] font-semibold font-sans",
       });
     }
-  }, [location.state]);
+    clearNotification();
+  }, [clearNotification, notificationMessage]);
 
   return (
     <>

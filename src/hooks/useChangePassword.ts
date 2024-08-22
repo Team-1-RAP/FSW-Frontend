@@ -4,7 +4,7 @@ import { ChangePasswordValidationContext, ChangePasswordValidationContextProps }
 export const useChangePassword = (): ChangePasswordValidationContextProps => {
     const context = useContext(ChangePasswordValidationContext)
     if (!context) {
-      throw new Error("useResetValidationContext must be used within a ResetValidationProvider")
+      throw new Error("useChangePasswordContext must be used within a ChangePasswordValidationProvider")
     }
     return context
   }
