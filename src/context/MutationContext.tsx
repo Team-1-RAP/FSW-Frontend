@@ -22,7 +22,7 @@ export interface MutationsContextProps {
   ) => Promise<IMutationResponse>;
   mutationAmounts: IMutationAmount[];
   setMutationAmounts: (mutationAmount: IMutationAmount[]) => void;
-  fetchMutationAmounts: (token: string, noAccount: number) => Promise<void>;
+  fetchMutationAmounts: (token: string, noAccount: string) => Promise<void>;
   separateMutations: IMutation[];
   setSeparateMutations: (mutations: IMutation[]) => void;
   fetchSeparateMutations: (
@@ -85,7 +85,7 @@ export const MutationProvider = () => {
 
   const fetchMutationAmountsHandler = async (
     token: string,
-    noAccount: number
+    noAccount: string
   ) => {
     try {
       const data = await fetchMutationAmounts(token, noAccount);
