@@ -1,7 +1,7 @@
 import { Controller, useForm } from "react-hook-form"
 import { Eye, EyeOff } from "react-feather"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useToggle } from "../../../hooks/useToggle"
 import { FormResetPasswordPinTemplate } from "../../../components/elements/form/FormResetPasswordPinTemplate"
 import * as Yup from "yup"
@@ -35,19 +35,18 @@ const NewPinPage = () => {
   const navigate = useNavigate()
   const [showPin, setShowPin] = useToggle(false)
   const [showConfirmPin, setShowConfirmPin] = useToggle(false)
-  const { resetPin, cardNumber } = useResetValidation()
+  const { newPin } = useResetValidation()
+  const { '*': token } = useParams();
 
   const onSubmit = async (data: IResetPinForm) => {
+    if (token){
     try {
-      if (!cardNumber) {
-        throw new Error("ATM card number is missing from context")
-      }
-      await resetPin(cardNumber.atm_card_no, data.pin, data.confirmPin)
-      navigate("../success")
+      await newPin(data.pin, data.confirmPin, token);
+      navigate("/register/success/")
     } catch (error) {
       console.error("Error resetting PIN:", error)
     }
-  }
+  }}
   return (
     <>
       <div className="mt-40">
