@@ -97,7 +97,7 @@ const router = createBrowserRouter([
                         element: <ResetValidationProvider />,
                         children: [
                             {
-                                path: "",
+                                path: "*",
                                 element: <NewPinPage />,
                             },
                         ],

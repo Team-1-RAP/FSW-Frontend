@@ -1,5 +1,6 @@
 import React from "react"
 import { Check } from "react-feather"
+import {Link} from "react-router-dom"
 
 const SuccessPage: React.FC = () => {
   return (
@@ -10,10 +11,11 @@ const SuccessPage: React.FC = () => {
           <Check className="text-white stroke-[3px]" size={85} />
         </div>
         <p className="font-normal text-base">Anda bisa mengakses layanan SimpleBank melalui aplikasi versi Android dan Website</p>
-
-        <button type="submit" className="bg-[#0066AE] h-12 rounded-xl text-white hover:bg-sky-900 focus:bg-sky-950 px-12 font-bold">
-          Login
-        </button>
+        <Link to={"/login"}>
+          <button type="submit" className="bg-[#0066AE] h-12 rounded-xl text-white hover:bg-sky-900 focus:bg-sky-950 px-12 font-bold">
+            Login
+          </button>
+        </Link>
       </div>
     </>
   )
