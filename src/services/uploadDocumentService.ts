@@ -17,7 +17,7 @@ export const uploadDocuments = async (formData: FormData): Promise<UploadDocumen
             }
         });
 
-        const response = await fetch("https://simplebank.my.id/v1/registration/customer/profile", {
+        const response = await fetch(import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "registration/customer/profile", {
             method: "POST",
             body: formData,
         });

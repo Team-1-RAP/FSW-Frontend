@@ -8,7 +8,7 @@ interface AccountType {
 
 export const fetchAccountTypes = async (): Promise<AccountType[]> => {
     try {
-        const response = await fetch("https://simplebank.my.id/v1/account/type/accountTypes");
+        const response = await fetch(import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "account/type/accountTypes");
         if (!response.ok) throw new Error("Failed to fetch account types");
         const result = await response.json();
         return result.data;
