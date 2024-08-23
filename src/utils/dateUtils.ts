@@ -23,7 +23,7 @@ export const formatDate = (dateString: string): { formattedDate: string; formatt
     };
 
     const formattedDate = date.toLocaleDateString("id-ID", dateOptions);
-    const formattedTime = date.toLocaleTimeString("id-ID", timeOptions).replace(/:/g, ".") + " WIB";
+    const formattedTime = date.toLocaleTimeString("id-ID", timeOptions).replace(/\./g, ":") + " WIB";
 
     return { formattedDate, formattedTime };
 };

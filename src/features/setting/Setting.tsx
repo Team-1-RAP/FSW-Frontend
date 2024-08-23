@@ -26,7 +26,7 @@ export const Setting = () => {
         <ChevronRight />
       </button>
 
-      <h1 className="text-center text-[#838383] mt-10 ">Untuk menjaga keamanan akun Anda Ubah password akun dan PIN transaksi secara berkala</h1>
+      <p className="text-center text-[#838383] mt-10">Untuk menjaga keamanan akun Anda Ubah password akun dan PIN transaksi secara berkala</p>
     </div>
   )
 }

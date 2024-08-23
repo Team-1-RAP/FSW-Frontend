@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { QrisContentTemplate } from "./Template/QrisContentTemplate";
 import QRCode from "react-qr-code";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import Button from "../../../components/fragments/Authentication/Button";
-import { Link } from "react-router-dom";
 import Alert from "../../../components/fragments/Alert";
 
 export const QrisQrCodeDisplay = () => {
@@ -36,7 +35,6 @@ export const QrisQrCodeDisplay = () => {
       status();
       if (remainingSeconds <= 0) {
         clearInterval(intervalId);
-        
       }
     }, 1000);
 
@@ -46,7 +44,9 @@ export const QrisQrCodeDisplay = () => {
   const status = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}api/v1/qris/validate-qr-code/${location.state.dataResponse.data.qrCode}`,
+        `${import.meta.env.VITE_API_BASE_URL}api/v1/qris/validate-qr-code/${
+          location.state.dataResponse.data.qrCode
+        }`,
         {
           method: "GET",
           headers: {
@@ -67,16 +67,17 @@ export const QrisQrCodeDisplay = () => {
     }
   };
 
-
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+    return `${String(minutes).padStart(2, "0")}:${String(
+      remainingSeconds
+    ).padStart(2, "0")}`;
   };
 
   return (
     <QrisContentTemplate>
-      <p className="text-sm text-center w-[290px]">
+      <p className="text-sm text-center w-[290px]" tabIndex={0}>
         Tunjukan kode kepada penjual untuk melakukan pembayaran
       </p>
       <QRCode
@@ -84,16 +85,27 @@ export const QrisQrCodeDisplay = () => {
         fgColor="white"
         bgColor="#549EFF"
         className="p-14 bg-[#549EFF] border rounded-xl"
+        aria-label="QR Code Anda"
+        tabIndex={0}
       />
       <div className="text-center">
         <p className="text-primary text-xl font-bold">
-        {expired ? (
-          <Link to={"/qris"}><Button className="w-[305px] bg-primary mt-5">
-            Kembali
-          </Button></Link>
-        ) : (
-          formatTime(seconds)
-        )}
+          {expired ? (
+            <Button
+              className="w-[305px] bg-primary mt-5"
+              onClick={() => navigate("/qris")}
+            >
+              Kembali
+            </Button>
+          ) : (
+            <span
+              aria-live="polite"
+              aria-label="Sisa Waktu Sebelum QR code kadaluarsa"
+              tabIndex={0}
+            >
+              {formatTime(seconds)}
+            </span>
+          )}
         </p>
         <Alert message="Kode QR telah kadaluarsa" isVisible={expired} />
       </div>

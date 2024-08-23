@@ -74,9 +74,9 @@ const ConfirmTransferPage: React.FC = () => {
             </div>
 
             <div className="flex flex-col ml-8 gap-5 mt-3">
-                <h1 className="font-semibold text-[22px] text-[#343C6A]">Konfirmasi Transfer</h1>
+                <h1 className="font-semibold text-[22px] text-[#343C6A]" tabIndex={0}>Konfirmasi Transfer</h1>
                 <div className="flex flex-col w-[417px]">
-                    <div className="flex flex-col bg-white border border-[#549EFF] w-[390px] h-full rounded-lg p-3">
+                    <div className="flex flex-col bg-white border border-[#549EFF] w-[390px] h-full rounded-lg p-3" aria-label="Detail Transfer" tabIndex={0}>
                         <div className="mb-6">
                             <label className="block mb-2 text-base font-medium text-[#549EFF]">Rekening Sumber</label>
                             <div className="flex flex-row text-[#549EFF] space-x-3">
@@ -84,7 +84,7 @@ const ConfirmTransferPage: React.FC = () => {
                                     <p className="text-center text-white font-medium text-base">A</p>
                                 </div>
                                 <div className="flex flex-col gap-1">
-                                    <h1>{selectedAccount?.fullName}</h1>
+                                    <p>{selectedAccount?.fullName}</p>
                                     <p>
                                         {bankName} - {selectedAccount?.noAccount}
                                     </p>
@@ -98,7 +98,7 @@ const ConfirmTransferPage: React.FC = () => {
                                     <p className="text-center text-white font-medium text-base">A</p>
                                 </div>
                                 <div className="flex flex-col gap-1">
-                                    <h1>{accountName}</h1>
+                                    <p>{accountName}</p>
                                     <p>
                                         {bankName} - {accountNumber}
                                     </p>

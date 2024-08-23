@@ -57,6 +57,10 @@ const Profile: React.FC = () => {
       spending: 0,
     };
 
+    const currentMonth = new Date().toLocaleString("id-ID", {
+      month: "long",
+    });
+
   return (
     <div className="w-full flex flex-col">
       <div className="flex mx-8">
@@ -99,6 +103,7 @@ const Profile: React.FC = () => {
             userFullName={activeAccount.fullName}
             userCardNumber={activeAccount.cardNumber}
             userCardExpiration={new Date(activeAccount.expDate)}
+            size="lg"
           />
         </div>
       </div>
@@ -106,30 +111,33 @@ const Profile: React.FC = () => {
         <div className="xl:w-1/3 w-full">
           <ScoreCard
             imgFile="expense-icon.png"
-            title="Pengeluaran"
+            title={`Pengeluaran Bulan ${currentMonth}`}
             value1={currentMutationAmount ? currentMutationAmount.spending : 0}
+            ariaLabel={`Informasi Total Pengeluaran Bulan ${currentMonth}`}
           />
         </div>
         <div className="xl:w-1/3 w-full">
           <ScoreCard
             imgFile="balance-icon.png"
-            title="Saldo Rekening"
+            title={`Saldo Rekening`}
             value1={activeAccount.balance}
             value2={activeAccount.noAccount}
             isVisible={false}
+            ariaLabel="Informasi Saldo dan Nomor Rekening"
           />
         </div>
         <div className="xl:w-1/3 w-full">
           <ScoreCard
             imgFile="income-icon.png"
-            title="Pemasukan"
+            title={`Pemasukan Bulan ${currentMonth}`}
             value1={currentMutationAmount ? currentMutationAmount.income : 0}
+            ariaLabel={`Informasi Total Pemasukan Bulan ${currentMonth}`}
           />
         </div>
       </div>
       <div className="flex flex-col gap-12 my-12 sm:mx-8 mx-4">
         <div className="bg-white flex flex-col w-full gap-5 py-8 px-10">
-          <p className="font-bold text-xl text-[#343C6A]">
+          <p className="font-bold text-xl text-[#343C6A]" tabIndex={0}>
             Informasi Kartu Simple Bank
           </p>
           <div className="flex">
@@ -150,7 +158,7 @@ const Profile: React.FC = () => {
           </div>
         </div>
         <div className="bg-white flex flex-col w-full gap-5 py-8 px-10">
-          <p className="font-bold text-xl text-[#343C6A]">Informasi Akun</p>
+          <p className="font-bold text-xl text-[#343C6A]" tabIndex={0}>Informasi Akun</p>
           <div className="flex">
             <span className="sm:w-1/3 w-1/2 text-xl text-[#343C6A]">
               Username
@@ -162,7 +170,7 @@ const Profile: React.FC = () => {
               Nomor telepon
             </span>
             <span className="text-xl text-[#343C6A]">
-              {userInfo.phoneNumber}
+              {userInfo.phoneNumber ? userInfo.phoneNumber : "-"}
             </span>
           </div>
           <div className="flex">
