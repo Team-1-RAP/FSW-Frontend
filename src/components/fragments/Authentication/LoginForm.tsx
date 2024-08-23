@@ -27,7 +27,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const errorCount = parseInt(sessionStorage.getItem("errorCount") || "0", 10);
+        const errorCount = parseInt(
+            sessionStorage.getItem("errorCount") || "0",
+            10
+        );
 
         try {
             const data = await loginUser(formData.username, formData.password);
@@ -47,11 +50,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
                         setErrorMessage("");
                         setIsAlertVisible(false);
                     } else if (newErrorCount === 2) {
-                        newMessage = "Password yang Anda masukkan salah. Anda memiliki 1x percobaan sebelum diblok oleh sistem.";
+                        newMessage =
+                            "Password yang Anda masukkan salah. Anda memiliki 1x percobaan sebelum diblok oleh sistem.";
                     } else {
                         newMessage = "Password yang Anda masukkan salah.";
                     }
-                    sessionStorage.setItem("errorCount", newErrorCount.toString());
+                    sessionStorage.setItem(
+                        "errorCount",
+                        newErrorCount.toString()
+                    );
                     setIsAlertVisible(true);
                     hideAlert();
                 } else {
@@ -79,7 +86,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
         navigate("/ubah-password");
     };
     const handleRegister = () => {
-        navigate("/registrasi");
+        navigate("/register");
     };
 
     return (
@@ -117,15 +124,28 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
                     aria-label="Password"
                     required
                 />
-                <div className="absolute cursor-pointer right-4 top-3" onClick={toggleShowPassword}>
-                    {showPassword ? <Eye className="text-[#c4c4c4]" /> : <EyeOff className="text-[#c4c4c4]" />}
+                <div
+                    className="absolute cursor-pointer right-4 top-3"
+                    onClick={toggleShowPassword}
+                >
+                    {showPassword ? (
+                        <Eye className="text-[#c4c4c4]" />
+                    ) : (
+                        <EyeOff className="text-[#c4c4c4]" />
+                    )}
                 </div>
             </div>
-            {isAlertVisible && !errorMessage.includes("403") && <Alert message={errorMessage} isVisible={isAlertVisible} />}
+            {isAlertVisible && !errorMessage.includes("403") && (
+                <Alert message={errorMessage} isVisible={isAlertVisible} />
+            )}
             <p className="flex justify-end text-[#153193]">
                 <span>
                     Lupa{" "}
-                    <b onClick={handleForgot} aria-label="ubah password" className="hover:cursor-pointer">
+                    <b
+                        onClick={handleForgot}
+                        aria-label="ubah password"
+                        className="hover:cursor-pointer"
+                    >
                         password?
                     </b>
                 </span>
@@ -139,7 +159,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
             <p className="flex justify-center text-[#153193] text-center">
                 <span>
                     Belum punya akun SimpleBank?{" "}
-                    <b onClick={handleRegister} className="hover:cursor-pointer">
+                    <b
+                        onClick={handleRegister}
+                        className="hover:cursor-pointer"
+                    >
                         Daftar
                     </b>
                 </span>

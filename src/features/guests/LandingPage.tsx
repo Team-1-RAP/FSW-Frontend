@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import useWindowSize from "../../hooks/useSizeWindows";
 import logo from "../../assets/images/logo.png";
@@ -23,9 +23,9 @@ const LandingPage: React.FC = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleRegisterClick = () => {
-        setIsModalOpen(true);
-    };
+    // const handleRegisterClick = () => {
+    //     setIsModalOpen(true);
+    // };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
@@ -48,13 +48,14 @@ const LandingPage: React.FC = () => {
                     />
                 </div>
                 <div className="flex ml-[-40px] md:ml-0">
-                    <button
-                        className="px-4 py-2 mr-2 text-white rounded-xl bg-[#0079CB] drop-shadow-md w-[120px] h-[40px] md:w-[140px] md:h-[50px]"
-                        onClick={handleRegisterClick}
-                        aria-label="Tombol Register"
-                    >
-                        Register
-                    </button>
+                    <Link to={"/register"}>
+                        <button
+                            className="px-4 py-2 mr-2 text-white rounded-xl bg-[#0079CB] drop-shadow-md w-[120px] h-[40px] md:w-[140px] md:h-[50px]"
+                            aria-label="Tombol Register"
+                        >
+                            Register
+                        </button>
+                    </Link>
                     <button
                         className="px-4 py-2 text-white rounded-xl bg-[#0079CB] drop-shadow-md w-[120px] h-[40px] md:w-[140px] md:h-[50px]"
                         onClick={handleLoginClick}

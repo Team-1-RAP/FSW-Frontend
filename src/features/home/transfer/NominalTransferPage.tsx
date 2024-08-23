@@ -30,11 +30,7 @@ const NominalTransferPage: React.FC = () => {
 
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-
-        // Remove any non-numeric characters except for the decimal point
         const sanitizedValue = value.replace(/[^0-9.]/g, "");
-
-        // Ensure only one decimal point is present
         if (/^\d*\.?\d{0,2}$/.test(sanitizedValue)) {
             setAmount(sanitizedValue);
         }
@@ -166,7 +162,7 @@ const NominalTransferPage: React.FC = () => {
                             <input
                                 type="text"
                                 id="nominal"
-                                // placeholder="nominal transfer"
+                                placeholder="Masukkan Nominal"
                                 value={amount}
                                 onWheel={(e) => (e.target as HTMLInputElement).blur()} // Prevent scrolling
                                 onChange={handleAmountChange}
@@ -183,7 +179,7 @@ const NominalTransferPage: React.FC = () => {
                             <input
                                 id="keterangan"
                                 type="text"
-                                // placeholder="Keterangan Transfer"
+                                placeholder="Keterangan Transfer"
                                 value={note}
                                 onChange={handleNoteChange}
                                 className="bg-white border border-[#549EFF] text-[#549EFF] placeholder-[#549EFF] text-sm rounded-lg block w-[390px] p-2.5 focus:ring-[#549EFF] focus:border-[#549EFF] focus:outline-none py-[10px] pl-[40px] pr-[10px]"
