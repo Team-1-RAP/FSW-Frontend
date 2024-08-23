@@ -127,7 +127,7 @@ const UploadDocumentPage: React.FC = () => {
             const result = await response.json();
             console.log(result.message);
             console.log("Submission successful:", result);
-            navigate("/register/success"); // Navigate to success page on success
+            navigate("/register/selesai"); // Navigate to success page on success
         } catch (error) {
             console.error("Error submitting registration:", error);
         }
