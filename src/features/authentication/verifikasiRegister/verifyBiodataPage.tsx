@@ -63,7 +63,7 @@ const VerifyBiodataPage: React.FC = () => {
             <h1 className="text-[28px] font-medium">Formulir Data Diri</h1>
             <form className="w-full mt-8 space-y-6" onSubmit={handleSubmit}>
                 <FormField id="nama" label="Nama Lengkap" type="text" minLength={5} value={formData.fullname} onChange={(e) => setFormData({ ...formData, fullname: e.target.value.replace(/[^a-zA-Z\s]/g, "") })} />
-                <FormField id="nik" label="NIK" type="text" value={formData.nik} minLength={16} onChange={(e) => setFormData({ ...formData, nik: e.target.value.replace(/\D/g, "") })} />
+                <FormField id="nik" label="NIK" type="text" value={formData.nik} minLength={16} maxLength={16} onChange={(e) => setFormData({ ...formData, nik: e.target.value.replace(/\D/g, "") })} />
                 <div className="space-y-1">
                     <label htmlFor="tanggalLahir" className="block text-xs font-light">
                         Tanggal Lahir

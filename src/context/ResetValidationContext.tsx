@@ -30,7 +30,7 @@ export const ResetValidationProvider = () => {
 
     const newPin = async (pin: string, confirmPin: string, token: string) => {
         try {
-            console.log(pin, confirmPin, token);
+            // console.log(pin, confirmPin, token);
             const response = await fetch(import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "registration/new-pin/" + token, {
                 method: "POST",
                 headers: {
