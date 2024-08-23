@@ -58,8 +58,8 @@ const UploadDocumentPage: React.FC = () => {
             </div>
 
             <FileUpload id="ktp-upload" label="KTP" file={files.ktp} onFileChange={(e) => handleFileChange(e, "ktp")} />
-            <FileUpload id="foto-upload" label="Foto Diri" file={files.foto} onFileChange={(e) => handleFileChange(e, "foto")} />
-            <FileUpload id="ttd-upload" label="Tanda Tangan" file={files.ttd} onFileChange={(e) => handleFileChange(e, "ttd")} />
+            <FileUpload id="photo-upload" label="photo Diri" file={files.photo} onFileChange={(e) => handleFileChange(e, "photo")} />
+            <FileUpload id="signature-upload" label="Tanda Tangan" file={files.signature} onFileChange={(e) => handleFileChange(e, "signature")} />
 
             <ul className="list-disc flex flex-col justify-start items-start text-[#718EBF] text-xs font-light pl-8">
                 <li>File yang diupload berbentuk .jpg atau .jpeg</li>
