@@ -10,26 +10,48 @@ interface AccountPurpose {
 const VerifyBiodataPage: React.FC = () => {
     const navigate = useNavigate();
     const context = useContext(RegisterContext);
-    const [accountPurposes, setAccountPurposes] = useState<AccountPurpose[]>([]);
+    const [accountPurposes, setAccountPurposes] = useState<AccountPurpose[]>(
+        []
+    );
     const [loading, setLoading] = useState<boolean>(true);
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     if (!context) {
         return <div>Loading...</div>;
     }
 
-    const { username, email, otp, accountTypeId, fullname, nik, born_date, address, accountPurpose_id, setFullname, setNik, setBornDate, setAddress, setAccountPurposeId } = context;
+    const {
+        username,
+        email,
+        otp,
+        accountTypeId,
+        fullname,
+        nik,
+        born_date,
+        address,
+        accountPurpose_id,
+        setFullname,
+        setNik,
+        setBornDate,
+        setAddress,
+        setAccountPurposeId,
+    } = context;
 
     // Initialize local state with context values if available
     const [localFullname, setLocalFullname] = useState<string>(fullname || "");
     const [localNik, setLocalNik] = useState<string>(nik || "");
     const [localBornDate, setLocalBornDate] = useState<string>(born_date || "");
     const [localAddress, setLocalAddress] = useState<string>(address || "");
-    const [localAccountPurposeId, setLocalAccountPurposeId] = useState<number | null>(accountPurpose_id || null);
+    const [localAccountPurposeId, setLocalAccountPurposeId] = useState<
+        number | null
+    >(accountPurpose_id || null);
 
     useEffect(() => {
         const fetchAccountPurposes = async () => {
             try {
-                const response = await fetch("https://simplebank.my.id/v1/account/purposes/accountPurposes");
+                const response = await fetch(
+                    "https://simplebank.my.id/v1/account/purposes/accountPurposes"
+                );
                 const result = await response.json();
                 if (result.status) {
                     setAccountPurposes(result.data);
@@ -46,8 +68,34 @@ const VerifyBiodataPage: React.FC = () => {
         fetchAccountPurposes();
     }, []);
 
+    const isOver17YearsOld = (birthDate: string): boolean => {
+        const currentDate = new Date();
+        const birth = new Date(birthDate);
+        const age = currentDate.getFullYear() - birth.getFullYear();
+        const monthDiff = currentDate.getMonth() - birth.getMonth();
+
+        if (
+            monthDiff < 0 ||
+            (monthDiff === 0 && currentDate.getDate() < birth.getDate())
+        ) {
+            return age - 1 >= 17;
+        }
+        return age >= 17;
+    };
+
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
+
+        if (!isOver17YearsOld(localBornDate)) {
+            setErrorMessage(
+                "Anda harus berusia lebih dari 17 tahun untuk mendaftar."
+            );
+            return;
+        }
+
+        // Clear error message if validation passes
+        setErrorMessage("");
+
         // Update context with local state values
         setFullname(localFullname);
         setNik(localNik);
@@ -55,7 +103,17 @@ const VerifyBiodataPage: React.FC = () => {
         setAddress(localAddress);
         setAccountPurposeId(localAccountPurposeId);
 
-        console.log("User Details:", { username, email, otp, accountTypeId, fullname, nik, born_date, address, accountPurpose_id });
+        console.log("User Details:", {
+            username,
+            email,
+            otp,
+            accountTypeId,
+            fullname,
+            nik,
+            born_date,
+            address,
+            accountPurpose_id,
+        });
         navigate("/register/upload-persyaratan");
     };
 
@@ -67,28 +125,67 @@ const VerifyBiodataPage: React.FC = () => {
                     <label htmlFor="nama" className="block text-xs font-light">
                         Nama Lengkap
                     </label>
-                    <input type="text" id="nama" placeholder="Nama Lengkap" value={localFullname} onChange={(e) => setLocalFullname(e.target.value)} className="w-full p-3 border rounded-lg border-[#C4C4C4]" />
+                    <input
+                        type="text"
+                        id="nama"
+                        placeholder="Nama Lengkap"
+                        value={localFullname}
+                        onChange={(e) => setLocalFullname(e.target.value)}
+                        className="w-full p-3 border rounded-lg border-[#C4C4C4]"
+                    />
                 </div>
                 <div className="space-y-1">
                     <label htmlFor="nik" className="block text-xs font-light">
                         NIK
                     </label>
-                    <input type="text" id="nik" placeholder="NIK" value={localNik} onChange={(e) => setLocalNik(e.target.value)} className="w-full p-3 border rounded-lg border-[#C4C4C4]" />
+                    <input
+                        type="text"
+                        id="nik"
+                        placeholder="NIK"
+                        value={localNik}
+                        onChange={(e) => setLocalNik(e.target.value)}
+                        className="w-full p-3 border rounded-lg border-[#C4C4C4]"
+                    />
                 </div>
                 <div className="space-y-1">
-                    <label htmlFor="tanggalLahir" className="block text-xs font-light">
+                    <label
+                        htmlFor="tanggalLahir"
+                        className="block text-xs font-light"
+                    >
                         Tanggal Lahir
                     </label>
-                    <input type="date" id="tanggalLahir" value={localBornDate} onChange={(e) => setLocalBornDate(e.target.value)} className="w-full p-3 border rounded-lg border-[#C4C4C4]" />
+                    <input
+                        type="date"
+                        id="tanggalLahir"
+                        value={localBornDate}
+                        onChange={(e) => setLocalBornDate(e.target.value)}
+                        className="w-full p-3 border rounded-lg border-[#C4C4C4]"
+                    />
                 </div>
+                {errorMessage && (
+                    <p className="text-sm text-red-500">{errorMessage}</p>
+                )}
                 <div className="space-y-1">
-                    <label htmlFor="alamat" className="block text-xs font-light">
+                    <label
+                        htmlFor="alamat"
+                        className="block text-xs font-light"
+                    >
                         Alamat Domisili
                     </label>
-                    <input type="text" id="alamat" placeholder="Alamat Domisili" value={localAddress} onChange={(e) => setLocalAddress(e.target.value)} className="w-full p-3 border rounded-lg border-[#C4C4C4]" />
+                    <input
+                        type="text"
+                        id="alamat"
+                        placeholder="Alamat Domisili"
+                        value={localAddress}
+                        onChange={(e) => setLocalAddress(e.target.value)}
+                        className="w-full p-3 border rounded-lg border-[#C4C4C4]"
+                    />
                 </div>
                 <div className="space-y-1">
-                    <label htmlFor="rekening" className="block text-xs font-light">
+                    <label
+                        htmlFor="rekening"
+                        className="block text-xs font-light"
+                    >
                         Tujuan Membuka Rekening
                     </label>
                     {loading ? (
@@ -97,8 +194,16 @@ const VerifyBiodataPage: React.FC = () => {
                         <select
                             name="rekening"
                             id="rekening"
-                            value={localAccountPurposeId !== null ? localAccountPurposeId : ""}
-                            onChange={(e) => setLocalAccountPurposeId(Number(e.target.value) || null)}
+                            value={
+                                localAccountPurposeId !== null
+                                    ? localAccountPurposeId
+                                    : ""
+                            }
+                            onChange={(e) =>
+                                setLocalAccountPurposeId(
+                                    Number(e.target.value) || null
+                                )
+                            }
                             className="w-full p-3 border rounded-lg border-[#C4C4C4]"
                         >
                             <option value="" disabled hidden>
@@ -113,10 +218,16 @@ const VerifyBiodataPage: React.FC = () => {
                     )}
                 </div>
                 <div className="flex flex-row w-full space-x-4 text-base font-bold">
-                    <Link to="/register/tipe-rekening" className="py-3 border-[#055287] rounded-lg text-[#055287] w-1/2 border text-center">
+                    <Link
+                        to="/register/tipe-rekening"
+                        className="py-3 border-[#055287] rounded-lg text-[#055287] w-1/2 border text-center"
+                    >
                         Kembali
                     </Link>
-                    <button type="submit" className="py-3 bg-[#055287] rounded-lg text-white w-1/2">
+                    <button
+                        type="submit"
+                        className="py-3 bg-[#055287] rounded-lg text-white w-1/2"
+                    >
                         Selanjutnya
                     </button>
                 </div>
