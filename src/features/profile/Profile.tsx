@@ -19,7 +19,9 @@ const Profile: React.FC = () => {
     setActiveAccountIndex,
   } = useAccount();
   const [isRefresh, setRefresh] = useToggle(true);
+  const [isLoading, setIsLoading] = useToggle(false);
   const { mutationAmounts, fetchMutationAmounts } = useMutation();
+  const [isAccountChanged, setIsAccountChanged] = useToggle(false);
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (token && isRefresh) {
@@ -36,6 +38,26 @@ const Profile: React.FC = () => {
     setRefresh,
   ]);
 
+  useEffect(() => {
+    console.log("isAccountChanged", isAccountChanged);
+    console.log("isLoading", isLoading);
+    const fetchData = async () => {
+      if (isAccountChanged) {
+        const token = sessionStorage.getItem("token");
+        if (token) {
+          try {
+            await fetchMutationAmounts(token, activeAccount.noAccount);
+          } finally {
+            setIsLoading();
+            setIsAccountChanged();
+          }
+        }
+      }
+    };
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAccountChanged]);
+
   const userInfo = {
     username: user?.username ?? "",
     phoneNumber: user?.phoneNumber ?? "",
@@ -45,17 +67,13 @@ const Profile: React.FC = () => {
   const handleCardChange = (index: number) => {
     setActiveAccountIndex(index);
     setIsDropDownOpen(false);
+    setIsAccountChanged();
+    setIsLoading();
   };
 
   const activeAccount = accounts
     ? accounts[activeAccountIndex]
     : ({} as IAccount);
-
-  const currentMutationAmount = mutationAmounts[activeAccountIndex] ||
-    mutationAmounts || {
-      income: 0,
-      spending: 0,
-    };
 
   return (
     <div className="w-full flex flex-col">
@@ -107,7 +125,8 @@ const Profile: React.FC = () => {
           <ScoreCard
             imgFile="expense-icon.png"
             title="Pengeluaran"
-            value1={currentMutationAmount ? currentMutationAmount.spending : 0}
+            value1={mutationAmounts[0] ? mutationAmounts[0].spending : 0}
+            isLoading={isLoading}
           />
         </div>
         <div className="xl:w-1/3 w-full">
@@ -123,7 +142,8 @@ const Profile: React.FC = () => {
           <ScoreCard
             imgFile="income-icon.png"
             title="Pemasukan"
-            value1={currentMutationAmount ? currentMutationAmount.income : 0}
+            value1={mutationAmounts[0] ? mutationAmounts[0].income : 0}
+            isLoading={isLoading}
           />
         </div>
       </div>

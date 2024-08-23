@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ScoreCardProps } from "./types";
-import { Copy, Eye, EyeOff } from "react-feather";
+import { Copy, Eye, EyeOff, Loader } from "react-feather";
 import { useToggle } from "../../../hooks/useToggle";
 
 const ScoreCard = ({
@@ -9,6 +9,7 @@ const ScoreCard = ({
   value1,
   value2,
   isVisible = true,
+  isLoading = false,
 }: ScoreCardProps) => {
   const [isNumberVisible, setIsNumberVisible] = useToggle(false);
   const [copied, setCopied] = useState(false);
@@ -50,33 +51,41 @@ const ScoreCard = ({
                 Copied!
               </span>
             )}
-            <div className="flex">
-              <div
-                className="[400px]:text-2xl text-xl font-bold"
-                tabIndex={0}
-                aria-label={
-                  isVisible || isNumberVisible ? undefined : "Angka tersembunyi"
-                }
-              >
-                {isVisible || isNumberVisible
-                  ? `Rp${Number(value1).toLocaleString("id-ID", {
-                      currency: "IDR",
-                    })}`
-                  : `**********`}
+            {isLoading ? (
+              <div className="flex justify-center items-center pt-1">
+                <Loader className="animate-spin text-[#549EFF]" size={24} />
               </div>
-              {isVisible ? null : (
-                <button
-                  onClick={setIsNumberVisible}
-                  className={`ms-6 cursor-pointer flex items-center`}
-                  aria-pressed={isNumberVisible}
-                  aria-label={`Toggle angka ${
-                    isNumberVisible ? "tersembunyi" : "tampil"
-                  }`}
+            ) : (
+              <div className="flex">
+                <div
+                  className="[400px]:text-2xl text-xl font-bold"
+                  tabIndex={0}
+                  aria-label={
+                    isVisible || isNumberVisible
+                      ? undefined
+                      : "Angka tersembunyi"
+                  }
                 >
-                  {isNumberVisible ? <Eye /> : <EyeOff className="w-7 h-7" />}
-                </button>
-              )}
-            </div>
+                  {isVisible || isNumberVisible
+                    ? `Rp${Number(value1).toLocaleString("id-ID", {
+                        currency: "IDR",
+                      })}`
+                    : `**********`}
+                </div>
+                {isVisible ? null : (
+                  <button
+                    onClick={setIsNumberVisible}
+                    className={`ms-6 cursor-pointer flex items-center`}
+                    aria-pressed={isNumberVisible}
+                    aria-label={`Toggle angka ${
+                      isNumberVisible ? "tersembunyi" : "tampil"
+                    }`}
+                  >
+                    {isNumberVisible ? <Eye /> : <EyeOff className="w-7 h-7" />}
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
