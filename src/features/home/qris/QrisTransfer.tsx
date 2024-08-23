@@ -23,7 +23,6 @@ export const QrisTransfer = () => {
         resolver: yupResolver(QrisTransferSchema),
         defaultValues: {
             sourceAccountNumber: "",
-            nominal: "",
             pin: "",
         },
     });
@@ -33,15 +32,18 @@ export const QrisTransfer = () => {
     const token = sessionStorage.getItem("token");
 
     const onSubmit = async (data: IQrisTransferForm) => {
-        const transformedData = {
-            accountNo: data.sourceAccountNumber,
-            amount: parseInt(data.nominal),
-            pin: data.pin,
-        };
-
-        if (token) {
+        if (!token) return;
+        try {
+            const transformedData = {
+                accountNo: data.sourceAccountNumber,
+                amount: data.nominal,
+                pin: data.pin,
+            };
             await generateCode(transformedData, token, navigate, setAlertMessage, setIsAlertVisible, setIsModalVisible);
-            // console.log(transformedData);
+            console.log(transformedData);
+        } catch (error) {
+            setAlertMessage("Terjadi kesalahan, silakan coba lagi.");
+            setIsAlertVisible(true);
         }
     };
 
@@ -87,14 +89,15 @@ export const QrisTransfer = () => {
                                 </label>
                                 <input
                                     id="nominal"
-                                    type="number"
+                                    type="text"
                                     {...field}
                                     placeholder="Masukkan Nominal"
+                                    inputMode="numeric"
+                                    pattern="\d*"
                                     onChange={(event) => {
                                         const value = event.target.value;
-                                        if (/^[0-9]*\.?[0-9]*$/.test(value)) {
-                                            field.onChange(value);
-                                        }
+                                        const sanitizedValue = value.replace(/[^0-9]/g, ""); 
+                                        field.onChange(sanitizedValue); 
                                     }}
                                     className={`border rounded-[10px] h-10 px-3 text-[#549EFF] ${errors.nominal ? "input-error" : "border-[#549EFF] placeholder-blue"}`}
                                 />
@@ -102,6 +105,7 @@ export const QrisTransfer = () => {
                             </>
                         )}
                     />
+
                     <Controller
                         control={control}
                         name="pin"
@@ -111,11 +115,19 @@ export const QrisTransfer = () => {
                                     PIN Transaksi
                                 </label>
                                 <input
-                                    maxLength={6}
                                     id="pin"
                                     type="password"
                                     {...field}
                                     placeholder="Masukkan PIN"
+                                    inputMode="numeric"
+                                    maxLength={6}
+                                    pattern="\d*"
+                                    onChange={(event) => {
+                                        const value = event.target.value;
+                                        if (/^\d*$/.test(value)) {
+                                            field.onChange(value);
+                                        }
+                                    }}
                                     className={`border rounded-[10px] h-10 px-3 text-[#549EFF] ${errors.pin ? "input-error" : "border-[#549EFF] placeholder-blue"}`}
                                 />
                                 {errors.pin && <span className="text-red-500">{errors.pin.message}</span>}
@@ -140,7 +152,7 @@ export const QrisTransfer = () => {
             <Modal
                 visible={isModalVisible}
                 title="PIN sedang terblokir"
-                description="Yuk, ubah PIN transaksi Anda terlebih dahulu untuk dapat kembali melakakukan transaksi "
+                description="Yuk, ubah PIN transaksi Anda terlebih dahulu untuk dapat kembali melakakukan transaksi"
                 buttonLabel="Ubah PIN"
                 onButtonClick={handleButtonClick}
                 onClose={handleCloseModal}
