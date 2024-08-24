@@ -47,14 +47,16 @@ import VerifyEmailPage from "./features/authentication/verifikasiRegister/verify
 import TypeRekeningPage from "./features/authentication/verifikasiRegister/typeRekeningPage";
 import VerifyBiodataPage from "./features/authentication/verifikasiRegister/verifyBiodataPage";
 import UploadDocumentPage from "./features/authentication/verifikasiRegister/uploadDocumentPage";
-import FinishPage from "./features/authentication/verifikasiRegister/finishPage";
 import NewPinPage from "./features/authentication/verifikasiRegister/newPinPage";
 import SuccessPage from "./features/authentication/verifikasiRegister/successPage";
 import { RegisterProvider } from "./context/RegisterContext";
 import NewAccountPage from "./features/home/newAccount/NewAccountPage";
-import Biodata from "./features/home/newAccount/Biodata";
-import FinishNewAccount from "./features/home/newAccount/FinishNewAccount";
+import Biodata from "./features/home/newAccount/BiodataPage";
 import NewAccountLayout from "./components/layouts/NewAccountLayout";
+import EndRegister from "./features/authentication/verifikasiRegister/EndRegister";
+import CreatePinPage from "./features/home/newAccount/CreatePinPage";
+import DonePage from "./features/home/newAccount/DonePage";
+import SuccessNewAccount from "./features/home/newAccount/SuccessNewAccount";
 
 const router = createBrowserRouter([
     {
@@ -94,7 +96,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "selesai",
-                        element: <FinishPage />,
+                        element: <EndRegister />,
                     },
                     {
                         path: "new-pin",
@@ -186,7 +188,15 @@ const router = createBrowserRouter([
                                     },
                                     {
                                         path: "finish",
-                                        element: <FinishNewAccount />,
+                                        element: <SuccessNewAccount />,
+                                    },
+                                    {
+                                        path: "new-pin",
+                                        element: <CreatePinPage />,
+                                    },
+                                    {
+                                        path: "success",
+                                        element: <DonePage />,
                                     },
                                 ],
                             },

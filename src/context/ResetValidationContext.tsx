@@ -17,6 +17,7 @@ export interface ResetValidationContextProps {
     validationOtp: (atm_card_no: string, otp: string) => Promise<void>;
     resetPin: (atm_card_no: string, pin: string, confirmPin: string) => Promise<void>;
     newPin: (pin: string, confirmPin: string, token: string) => Promise<void>;
+    createPin: (pin: string, confirmPin: string, token: string) => Promise<void>;
     resetPassword: (atm_card_no: string, password: string, confirmPassword: string) => Promise<void>;
     pinValidation: (atm_card_no: string, pin: string) => Promise<void>;
 }
@@ -27,6 +28,30 @@ export const ResetValidationContext = createContext<ResetValidationContextProps 
 export const ResetValidationProvider = () => {
     const [cardNumber, setCardNumber] = useState<IAccount | null>(null);
     const [email, setEmail] = useState<string | null>(null);
+
+    const createPin = async (pin: string, confirmPin: string, token: string) => {
+        try {
+            // console.log(pin, confirmPin, token);
+            const response = await fetch(import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "account/new-pin/" + token, {
+                method: "POST",
+                headers: {
+                    accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    pin,
+                    confirmPin,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Error add new PIN");
+            }
+        } catch (error) {
+            console.error("Error add new PIN:", error);
+            throw error;
+        }
+    };
 
     const newPin = async (pin: string, confirmPin: string, token: string) => {
         try {
@@ -228,6 +253,7 @@ export const ResetValidationProvider = () => {
         resetPin,
         resetPassword,
         pinValidation,
+        createPin,
     };
 
     return (

@@ -94,7 +94,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleAside, showGreeting = true, showS
                         </div>
                     )}
                     {showHelpButton && (
-                        <Link to="/pusat-bantuan" className="flex items-center justify-center bg-[#F1F5F9] w-[36px] h-[36px] rounded-full" aria-label="Pusat bantuan">
+                        <Link to="/pusat-bantuan" className="flex items-center justify-center bg-[#F1F5F9] w-[36px] h-[36px] rounded-full mx-4" aria-label="Pusat bantuan">
                             <HelpCircle className="text-[#235697]" />
                         </Link>
                     )}
