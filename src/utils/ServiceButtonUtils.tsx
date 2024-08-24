@@ -43,7 +43,7 @@ export const services: ServiceButtonUtils[] = [
         id: "Tambah-Rekening-Services",
         icon: FileAdd,
         label: "Tambah Rekening",
-        link: "/new-account",
+        link: "/new-account/",
     },
     {
         id: "Simpan-Pinjam-Services",
