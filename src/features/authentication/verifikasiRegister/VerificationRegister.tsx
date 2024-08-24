@@ -1,15 +1,16 @@
 import React from "react";
-import FinishPage from "../../../components/fragments/Pages/FinishPage";
+import Success from "../../../components/fragments/Pages/Success";
 
-const EndRegister: React.FC = () => {
+const VerificationRegister: React.FC = () => {
     return (
-        <FinishPage
-            path="/login"
-            buttonText="Login"
+        <Success
+            path="/"
+            buttonText="Ok, Mengerti"
             title="Permintaan Pembukaan Rekening Berhasil Dikirim"
             message="Saat ini, data Anda sedang kami lakukan verifikasi. Harap tunggu email konfirmasi dari SimpleBank untuk tahapan berikutnya."
+            icon={"clock"}
         />
     );
 };
 
-export default EndRegister;
+export default VerificationRegister;

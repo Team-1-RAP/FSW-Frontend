@@ -62,15 +62,15 @@ const VerifyBiodataPage: React.FC = () => {
         <div className="flex flex-col items-center justify-center w-[340px] mb-10">
             <h1 className="text-[28px] font-medium">Formulir Data Diri</h1>
             <form className="w-full mt-8 space-y-6" onSubmit={handleSubmit}>
-                <FormField id="nama" label="Nama Lengkap" type="text" minLength={5} value={formData.fullname} onChange={(e) => setFormData({ ...formData, fullname: e.target.value.replace(/[^a-zA-Z\s]/g, "") })} />
-                <FormField id="nik" label="NIK" type="text" value={formData.nik} minLength={16} maxLength={16} onChange={(e) => setFormData({ ...formData, nik: e.target.value.replace(/\D/g, "") })} />
+                <FormField id="nama" label="Nama Lengkap" type="text" placeholder="Masukan nama" minLength={5} value={formData.fullname} onChange={(e) => setFormData({ ...formData, fullname: e.target.value.replace(/[^a-zA-Z\s]/g, "") })} />
+                <FormField id="nik" label="NIK" type="text" placeholder="Masukan NIK" value={formData.nik} minLength={16} maxLength={16} onChange={(e) => setFormData({ ...formData, nik: e.target.value.replace(/\D/g, "") })} />
                 <div className="space-y-1">
                     <label htmlFor="tanggalLahir" className="block text-xs font-light">
                         Tanggal Lahir
                     </label>
                     <input type="date" id="tanggalLahir" value={formData.bornDate} onChange={(e) => setFormData({ ...formData, bornDate: e.target.value })} className="w-full p-3 border rounded-lg border-[#C4C4C4]" />
                 </div>
-                <FormField id="alamat" label="Alamat Domisili" type="text" value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} />
+                <FormField id="alamat" label="Alamat Domisili" placeholder="Masukan Alamat" type="text" value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} />
                 <div className="space-y-1">
                     <label htmlFor="rekening" className="block text-xs font-light">
                         Tujuan Membuka Rekening

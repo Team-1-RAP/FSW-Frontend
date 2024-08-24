@@ -48,15 +48,15 @@ import TypeRekeningPage from "./features/authentication/verifikasiRegister/typeR
 import VerifyBiodataPage from "./features/authentication/verifikasiRegister/verifyBiodataPage";
 import UploadDocumentPage from "./features/authentication/verifikasiRegister/uploadDocumentPage";
 import NewPinPage from "./features/authentication/verifikasiRegister/newPinPage";
-import SuccessPage from "./features/authentication/verifikasiRegister/successPage";
 import { RegisterProvider } from "./context/RegisterContext";
 import NewAccountPage from "./features/home/newAccount/NewAccountPage";
 import Biodata from "./features/home/newAccount/BiodataPage";
 import NewAccountLayout from "./components/layouts/NewAccountLayout";
-import EndRegister from "./features/authentication/verifikasiRegister/EndRegister";
 import CreatePinPage from "./features/home/newAccount/CreatePinPage";
 import DonePage from "./features/home/newAccount/DonePage";
 import SuccessNewAccount from "./features/home/newAccount/SuccessNewAccount";
+import VerificationRegister from "./features/authentication/verifikasiRegister/VerificationRegister";
+import CompleteRegister from "./features/authentication/verifikasiRegister/CompleteRegister";
 
 const router = createBrowserRouter([
     {
@@ -96,7 +96,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "selesai",
-                        element: <EndRegister />,
+                        element: <VerificationRegister />,
                     },
                     {
                         path: "new-pin",
@@ -110,7 +110,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "success",
-                        element: <SuccessPage />,
+                        element: <CompleteRegister />,
                     },
                 ],
             },
@@ -129,6 +129,10 @@ const router = createBrowserRouter([
                         element: <CreatePinPage />,
                     },
                 ],
+            },
+            {
+                path: "success",
+                element: <DonePage />,
             },
         ],
     },
@@ -205,10 +209,6 @@ const router = createBrowserRouter([
                                     {
                                         path: "finish",
                                         element: <SuccessNewAccount />,
-                                    },
-                                    {
-                                        path: "success",
-                                        element: <DonePage />,
                                     },
                                 ],
                             },
