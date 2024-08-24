@@ -117,12 +117,18 @@ const router = createBrowserRouter([
         ],
     },
     {
-        path: "/new-acount/new-pin",
-        element: <ResetValidationProvider />,
+        element: <NewAccountLayout />,
+        path: "/new-account",
         children: [
             {
-                path: "*",
-                element: <CreatePinPage />,
+                path: "new-pin",
+                element: <ResetValidationProvider />,
+                children: [
+                    {
+                        path: "*",
+                        element: <CreatePinPage />,
+                    },
+                ],
             },
         ],
     },
