@@ -117,6 +117,16 @@ const router = createBrowserRouter([
         ],
     },
     {
+        path: "/new-acount/new-pin",
+        element: <ResetValidationProvider />,
+        children: [
+            {
+                path: "*",
+                element: <CreatePinPage />,
+            },
+        ],
+    },
+    {
         element: <AuthProvider />,
         children: [
             {
@@ -189,16 +199,6 @@ const router = createBrowserRouter([
                                     {
                                         path: "finish",
                                         element: <SuccessNewAccount />,
-                                    },
-                                    {
-                                        path: "new-pin",
-                                        element: <ResetValidationProvider />,
-                                        children: [
-                                            {
-                                                path: "*",
-                                                element: <CreatePinPage />,
-                                            },
-                                        ],
                                     },
                                     {
                                         path: "success",
