@@ -192,7 +192,13 @@ const router = createBrowserRouter([
                                     },
                                     {
                                         path: "new-pin",
-                                        element: <CreatePinPage />,
+                                        element: <ResetValidationProvider />,
+                                        children: [
+                                            {
+                                                path: "*",
+                                                element: <CreatePinPage />,
+                                            },
+                                        ],
                                     },
                                     {
                                         path: "success",
