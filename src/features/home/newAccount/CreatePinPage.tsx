@@ -5,14 +5,14 @@ import { IResetPinForm } from "../../../utils/validationSchema";
 
 const NewPinPage = () => {
     const navigate = useNavigate();
-    const { newPin } = useResetValidation();
+    const { createPin } = useResetValidation();
     const { "*": token } = useParams();
 
     const handleSubmit = async (data: IResetPinForm) => {
         if (token) {
             try {
-                await newPin(data.pin, data.confirmPin, token);
-                navigate("/register/success/");
+                await createPin(data.pin, data.confirmPin, token);
+                navigate("/new-account/success/");
             } catch (error) {
                 console.error("Error resetting PIN:", error);
             }
