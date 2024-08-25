@@ -14,7 +14,7 @@ export const registerProfile = async (email: string, username: string, password:
         }
 
         const data = await response.json();
-        // console.log(data);
+        console.log(data);
 
         return {
             username: data.data.data_customer.username,

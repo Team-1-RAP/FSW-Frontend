@@ -47,10 +47,16 @@ import VerifyEmailPage from "./features/authentication/verifikasiRegister/verify
 import TypeRekeningPage from "./features/authentication/verifikasiRegister/typeRekeningPage";
 import VerifyBiodataPage from "./features/authentication/verifikasiRegister/verifyBiodataPage";
 import UploadDocumentPage from "./features/authentication/verifikasiRegister/uploadDocumentPage";
-import FinishPage from "./features/authentication/verifikasiRegister/finishPage";
 import NewPinPage from "./features/authentication/verifikasiRegister/newPinPage";
-import SuccessPage from "./features/authentication/verifikasiRegister/successPage";
 import { RegisterProvider } from "./context/RegisterContext";
+import NewAccountPage from "./features/home/newAccount/NewAccountPage";
+import Biodata from "./features/home/newAccount/BiodataPage";
+import NewAccountLayout from "./components/layouts/NewAccountLayout";
+import CreatePinPage from "./features/home/newAccount/CreatePinPage";
+import DonePage from "./features/home/newAccount/DonePage";
+import SuccessNewAccount from "./features/home/newAccount/SuccessNewAccount";
+import VerificationRegister from "./features/authentication/verifikasiRegister/VerificationRegister";
+import CompleteRegister from "./features/authentication/verifikasiRegister/CompleteRegister";
 
 const router = createBrowserRouter([
     {
@@ -90,7 +96,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "selesai",
-                        element: <FinishPage />,
+                        element: <VerificationRegister />,
                     },
                     {
                         path: "new-pin",
@@ -104,9 +110,29 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "success",
-                        element: <SuccessPage />,
+                        element: <CompleteRegister />,
                     },
                 ],
+            },
+        ],
+    },
+    {
+        element: <NewAccountLayout />,
+        path: "/new-account",
+        children: [
+            {
+                path: "new-pin",
+                element: <ResetValidationProvider />,
+                children: [
+                    {
+                        path: "*",
+                        element: <CreatePinPage />,
+                    },
+                ],
+            },
+            {
+                path: "success",
+                element: <DonePage />,
             },
         ],
     },
@@ -169,6 +195,24 @@ const router = createBrowserRouter([
                         element: <AccountProvider />,
                         children: [
                             {
+                                element: <NewAccountLayout />,
+                                path: "/new-account",
+                                children: [
+                                    {
+                                        path: "",
+                                        element: <NewAccountPage />,
+                                    },
+                                    {
+                                        path: "biodata",
+                                        element: <Biodata />,
+                                    },
+                                    {
+                                        path: "finish",
+                                        element: <SuccessNewAccount />,
+                                    },
+                                ],
+                            },
+                            {
                                 element: <DashboardLayout />,
                                 children: [
                                     {
@@ -201,15 +245,11 @@ const router = createBrowserRouter([
                                             },
                                             {
                                                 path: "/transfer/nominal",
-                                                element: (
-                                                    <NominalTransferPage />
-                                                ),
+                                                element: <NominalTransferPage />,
                                             },
                                             {
                                                 path: "/transfer/confirm",
-                                                element: (
-                                                    <ConfirmTransferPage />
-                                                ),
+                                                element: <ConfirmTransferPage />,
                                             },
                                             {
                                                 path: "/transfer/success",
@@ -232,8 +272,8 @@ const router = createBrowserRouter([
                                             {
                                                 path: "success",
                                                 element: <QrisTransactionSuccess />,
-                                            }
-                                        ]
+                                            },
+                                        ],
                                     },
                                     {
                                         path: "/pengaturan",
@@ -245,27 +285,19 @@ const router = createBrowserRouter([
                                             },
                                             {
                                                 path: "change-pin",
-                                                element: (
-                                                    <ResetValidationProvider />
-                                                ),
+                                                element: <ResetValidationProvider />,
                                                 children: [
                                                     {
                                                         path: "",
-                                                        element: (
-                                                            <CardInformation />
-                                                        ),
+                                                        element: <CardInformation />,
                                                     },
                                                     {
                                                         path: "birth-date",
-                                                        element: (
-                                                            <PinBirthDateValidation />
-                                                        ),
+                                                        element: <PinBirthDateValidation />,
                                                     },
                                                     {
                                                         path: "email",
-                                                        element: (
-                                                            <PinEmailVerification />
-                                                        ),
+                                                        element: <PinEmailVerification />,
                                                     },
                                                     {
                                                         path: "otp",
@@ -277,41 +309,29 @@ const router = createBrowserRouter([
                                                     },
                                                     {
                                                         path: "success",
-                                                        element: (
-                                                            <PinChangeSuccess />
-                                                        ),
+                                                        element: <PinChangeSuccess />,
                                                     },
                                                 ],
                                             },
                                             {
                                                 path: "change-password",
-                                                element: (
-                                                    <ChangePasswordValidationProvider />
-                                                ),
+                                                element: <ChangePasswordValidationProvider />,
                                                 children: [
                                                     {
                                                         path: "",
-                                                        element: (
-                                                            <PasswordVerification />
-                                                        ),
+                                                        element: <PasswordVerification />,
                                                     },
                                                     {
                                                         path: "email",
-                                                        element: (
-                                                            <PasswordEmailVerification />
-                                                        ),
+                                                        element: <PasswordEmailVerification />,
                                                     },
                                                     {
                                                         path: "otp",
-                                                        element: (
-                                                            <PasswordChangeOtp />
-                                                        ),
+                                                        element: <PasswordChangeOtp />,
                                                     },
                                                     {
                                                         path: "new-password",
-                                                        element: (
-                                                            <NewPassword />
-                                                        ),
+                                                        element: <NewPassword />,
                                                     },
                                                 ],
                                             },
