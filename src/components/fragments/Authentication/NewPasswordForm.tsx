@@ -9,10 +9,7 @@ import Button from "./Button";
 export const ResetPasswordSchema = Yup.object({
   password: Yup.string()
     .required("Password is required")
-    .min(8, "Password must be at least 8 characters long")
-    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .matches(/\d/, "Password must contain at least one number")
-    .matches(/[@$!%*?&#]/, "Password must contain at least one symbol"),
+    .min(8, "Password must be 8 digits"),
   confirmPassword: Yup.string()
     .required("Confirm Password is required")
     .oneOf([Yup.ref("password")], "Password must match"),
@@ -32,7 +29,6 @@ export const NewPasswordForm = ({
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(ResetPasswordSchema),
@@ -43,13 +39,6 @@ export const NewPasswordForm = ({
   });
   const [show, setShow] = useToggle(false);
   const [showConfirm, setShowConfirm] = useToggle(false);
-
-  const passwordValue = watch("password");
-
-  const isMinLengthValid = passwordValue.length >= 8;
-  const hasUpperCase = /[A-Z]/.test(passwordValue);
-  const hasNumber = /\d/.test(passwordValue);
-  const hasSymbol = /[@$!%*?&#]/.test(passwordValue);
 
   return (
     <FormResetPasswordPinTemplate
@@ -62,7 +51,7 @@ export const NewPasswordForm = ({
         className="flex flex-col w-full h-full"
       >
         <div className="h-3/4 flex flex-col gap-4">
-          <div>
+          <>
             <div className="relative w-full flex items-center">
               <label htmlFor="password" className="sr-only">
                 Password
@@ -86,58 +75,11 @@ export const NewPasswordForm = ({
                 {show ? <Eye /> : <EyeOff />}
               </button>
             </div>
-            <div className="text-start ps-4 text-xs font-light text-[#718EBF]">
-              <p
-                className={
-                  (!isMinLengthValid && errors.password)
-                    ? "text-red-500"
-                    : ""
-                }
-              >
-                {!isMinLengthValid && errors.password && (
-                  <span className="sr-only">Error</span>
-                )}
-                <span>Minimal 8 karakter</span>
-              </p>
-              <p
-                className={
-                  !hasUpperCase && errors.password
-                    ? "text-red-500"
-                    : ""
-                }
-              >
-                {!hasUpperCase && errors.password && (
-                  <span className="sr-only">Error</span>
-                )}
-                <span>Minimal terdapat 1 huruf kapital</span>
-              </p>
-              <p
-                className={
-                  !hasNumber && errors.password
-                    ? "text-red-500"
-                    : ""
-                }
-              >
-                {!hasNumber && errors.password && (
-                  <span className="sr-only">Error</span>
-                )}
-                <span>Minimal terdapat 1 angka</span>
-              </p>
-              <p
-                className={
-                  !hasSymbol && errors.password
-                    ? "text-red-500"
-                    : "text-[#718EBF]"
-                }
-              >
-                {!hasSymbol && errors.password && (
-                  <span className="sr-only">Error</span>
-                )}
-                <span>Minimal terdapat 1 simbol</span>
-              </p>
-            </div>
-          </div>
-          <div>
+            {errors.password && (
+              <span className="text-red-500">{errors.password.message}</span>
+            )}
+          </>
+          <>
             <div className="relative w-full flex items-center">
               <label htmlFor="confirmPassword" className="sr-only">
                 Konfirmasi Password
@@ -162,11 +104,11 @@ export const NewPasswordForm = ({
               </button>
             </div>
             {errors.confirmPassword && (
-              <p className="text-red-500 text-start ps-4">
+              <span className="text-red-500">
                 {errors.confirmPassword.message}
-              </p>
+              </span>
             )}
-          </div>
+          </>
         </div>
         <div className="h-1/4">
           <Button type="submit" className="bg-primary">

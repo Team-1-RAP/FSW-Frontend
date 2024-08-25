@@ -7,9 +7,9 @@ import { useState } from "react";
 import { useResetValidation } from "../../../hooks/useResetValidation";
 
 export const PinOtp = () => {
-  const [errorMessage, setErrorMessage] = useState("")
-  const navigate = useNavigate()
-  const { pinValidationOtp, cardNumber, email } = useResetValidation()
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+  const { validationOtp, cardNumber, email } = useResetValidation();
 
   const onSubmit = async (data: IOtpForm) => {
     try {
@@ -17,8 +17,8 @@ export const PinOtp = () => {
         throw new Error("ATM card number is missing from context");
       }
 
-      await pinValidationOtp(cardNumber.atm_card_no, data.otp)
-      navigate("../new-pin")
+      await validationOtp(cardNumber.atm_card_no, data.otp);
+      navigate("../new-pin");
     } catch (error) {
       const errorMessage =
         (error as Error).message || "An unknown error occurred";

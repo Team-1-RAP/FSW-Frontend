@@ -6,8 +6,6 @@ import {
 import { useEffect, useState } from "react";
 import { useToggle } from "../../../hooks/useToggle";
 import { useChangePassword } from "../../../hooks/useChangePassword";
-import { useAuth } from "../../../hooks/useAuth";
-import { useNotification } from "../../../hooks/useNotification";
 
 export const NewPassword = () => {
   const navigate = useNavigate();
@@ -20,17 +18,13 @@ export const NewPassword = () => {
     isNewPasswordValid,
     changePassword,
   } = useChangePassword();
-  const { logout } = useAuth();
-  const { setNotificationMessage } = useNotification();
 
   useEffect(() => {
     if (!isEmailValid || !isCurrentPasswordValid || !isRefresh || !isOtpValid) {
       navigate(-1);
     } else if (isNewPasswordValid && isRefresh) {
       setIsRefresh;
-      logout();
-      setNotificationMessage("Password Berhasil Diubah");
-      navigate("/login");
+      navigate("/pengaturan");
     }
   }, [
     isCurrentPasswordValid,
@@ -38,10 +32,8 @@ export const NewPassword = () => {
     isNewPasswordValid,
     isOtpValid,
     isRefresh,
-    logout,
     navigate,
     setIsRefresh,
-    setNotificationMessage,
   ]);
   const onSubmit = async (data: IResetPasswordForm) => {
     setErrorMessage("");

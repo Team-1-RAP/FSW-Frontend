@@ -1,13 +1,10 @@
-import { useContext } from "react";
-import { ChangePasswordValidationContext } from "../context/ChangePasswordValidationContext";
-import { ChangePasswordValidationContextProps } from './../context/ChangePasswordValidationContext';
+import { useContext } from "react"
+import { ChangePasswordValidationContext, ChangePasswordValidationContextProps } from "../context/ChangePasswordValidationContext"
 
 export const useChangePassword = (): ChangePasswordValidationContextProps => {
-  const context = useContext(ChangePasswordValidationContext);
-  if (!context) {
-    throw new Error(
-      "useChangePasswordContext must be used within a ChangePasswordValidationProvider"
-    );
+    const context = useContext(ChangePasswordValidationContext)
+    if (!context) {
+      throw new Error("useResetValidationContext must be used within a ResetValidationProvider")
+    }
+    return context
   }
-  return context;
-};

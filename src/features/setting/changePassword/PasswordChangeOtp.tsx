@@ -11,7 +11,7 @@ export const PasswordChangeOtp = () => {
   const navigate = useNavigate();
   const [isRefresh, setIsRefresh] = useToggle(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const { isCurrentPasswordValid, isEmailValid, isOtpValid, validationOtp, email } =
+  const { isCurrentPasswordValid, isEmailValid, isOtpValid, validationOtp } =
     useChangePassword();
   useEffect(() => {
     if (!isEmailValid || !isCurrentPasswordValid || !isRefresh) {
@@ -42,7 +42,7 @@ export const PasswordChangeOtp = () => {
   return (
     <OtpForm
       onSubmit={onSubmit}
-      email={email}
+      email="randyrundy@gmail.com"
       errorMessage={errorMessage}
     />
   );
