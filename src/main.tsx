@@ -1,5 +1,4 @@
 import React from "react";
-import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";

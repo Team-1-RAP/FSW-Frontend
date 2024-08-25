@@ -70,11 +70,11 @@ const BuktiTransferPage: React.FC = () => {
             </div>
 
             <div className="flex flex-col ml-8 gap-5 mt-3">
-                <h1 className="font-semibold text-[22px] text-[#343C6A]" tabIndex={0}>Bukti Transfer</h1>
+                <h1 className="font-semibold text-[22px] text-[#343C6A]">Bukti Transfer</h1>
                 <div className="flex flex-col w-[417px]">
-                    <div className="flex flex-col bg-white border border-[#549EFF] w-[390px] h-full rounded-lg pb-5" aria-label="Bukti Transfer Detail" tabIndex={0}>
+                    <div className="flex flex-col bg-white border border-[#549EFF] w-[390px] h-full rounded-lg pb-5">
                         <div className="flex flex-col p-3 items-center gap-5 pt-8">
-                            <p className="font-semibold text-xl text-[#549EFF]">Transaksi Berhasil</p>
+                            <h1 className="font-semibold text-xl text-[#549EFF]">Transaksi Berhasil</h1>
                             <img src={TransaksiSuccessIcon} width={65} height={65} alt="" />
                             <span className="leading-6 text-[19px] text-center font-bold">Rp{amount?.toLocaleString()}</span>
                             <span className="text-center text-sm font-normal leading-5">

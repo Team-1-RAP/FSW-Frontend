@@ -94,13 +94,11 @@ export const CardInformationForm = ({
                     }
                   }}
                 />
-                <div className="text-start ps-4">
-                  {errors.cardNumber && (
-                    <span className="text-red-500">
-                      {errors.cardNumber.message}
-                    </span>
-                  )}
-                </div>
+                {errors.cardNumber && (
+                  <span className="text-red-500">
+                    {errors.cardNumber.message}
+                  </span>
+                )}
               </div>
             )}
           />

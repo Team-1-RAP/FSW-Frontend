@@ -80,7 +80,7 @@ const Card = ({
   };
 
   return (
-    <div className="text-start" aria-label="Kartu Bank Aktif" tabIndex={0}>
+    <div className="text-start">
       <div className={classNameMerger(cardVariants({ variant, size }))}>
         <div className="flex justify-between items-start">
           <div>
@@ -96,27 +96,21 @@ const Card = ({
           {previewHidden ? (
             <div className="mt-[88px]"></div>
           ) : (
-            <div
-              className={`flex items-center`}
-              aria-label={isNumberVisible ? undefined : "Angka tersembunyi"}
-            >
-              <p
-                className={isNumberVisible ? "text-xl" : "text-2xl"}
-                aria-label="Angka Tersembunyi"
-                tabIndex={0}
-              >
-                {isNumberVisible
-                  ? (userCardNumber ?? "0000000000000000")
-                      .replace(/(.{4})/g, "$1 ")
-                      .slice(0, -1)
-                  : `**********`}
-              </p>
+            <div className="flex items-center">
+              {isNumberVisible ? (
+                <span className="text-xl">
+                  {(userCardNumber ?? "0000000000000000")
+                    .replace(/(.{4})/g, "$1 ")
+                    .slice(0, -1)}
+                </span>
+              ) : (
+                <span className="text-2xl" aria-label="Angka Tersembunyi">
+                  **********
+                </span>
+              )}
               <button
                 onClick={toggleNumberVisibility}
                 className={`ms-4 cursor-pointer ${sizeLogo}`}
-                aria-label={`Toggle angka ${
-                  isNumberVisible ? "tersembunyi" : "tampil"
-                }`}
               >
                 {isNumberVisible ? (
                   <Eye className={sizeLogo} />

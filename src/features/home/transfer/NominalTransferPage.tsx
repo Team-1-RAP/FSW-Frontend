@@ -121,7 +121,7 @@ const NominalTransferPage: React.FC = () => {
             </div>
 
             <div className="flex flex-col ml-8 gap-5 mt-3">
-                <h1 className="font-semibold text-[22px] text-[#343C6A]" tabIndex={0}>Masukkan Nominal Transfer</h1>
+                <h1 className="font-semibold text-[22px] text-[#343C6A]">Masukkan Nominal Transfer</h1>
                 <div className="flex flex-col w-[417px]">
                     <div className="mb-6">
                         <label className="block mb-2 text-base font-medium">Rekening Tujuan</label>
@@ -129,8 +129,8 @@ const NominalTransferPage: React.FC = () => {
                             <div className="flex items-center justify-center rounded-full w-[40px] h-[40px] bg-[#FF47ED] mt-2">
                                 <p className="text-center text-white font-medium text-base">K</p>
                             </div>
-                            <div className="flex flex-col gap-1" aria-label="Rekening Tujuan Detail" tabIndex={0}>
-                                <p>{accountName}</p>
+                            <div className="flex flex-col gap-1">
+                                <h1>{accountName}</h1>
                                 <p>
                                     {bankName} - {accountNumber}
                                 </p>
@@ -158,10 +158,8 @@ const NominalTransferPage: React.FC = () => {
                         <label className="block mb-2 text-base font-medium">Masukkan Nominal</label>
                         <div className="relative">
                             <img src={NominalIcon} alt="Nominal Icon" width={19} height={19} className="text-[#c4c4c4] absolute left-2 top-3" />
-                            <label htmlFor="nominal" className="sr-only">Nominal Transfer</label>
                             <input
                                 type="text"
-                                id="nominal"
                                 placeholder="Masukkan Nominal"
                                 value={amount}
                                 onWheel={(e) => (e.target as HTMLInputElement).blur()} // Prevent scrolling
@@ -175,9 +173,7 @@ const NominalTransferPage: React.FC = () => {
                         <label className="block mb-2 text-base font-medium">Masukkan Keterangan</label>
                         <div className="relative">
                             <Info width={19} height={19} className="text-[#549EFF] absolute left-2 top-3" />
-                            <label htmlFor="keterangan" className="sr-only">Masukan Keterangan</label>
                             <input
-                                id="keterangan"
                                 type="text"
                                 placeholder="Keterangan Transfer"
                                 value={note}

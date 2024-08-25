@@ -8,14 +8,14 @@ import { useResetValidation } from "../../../hooks/useResetValidation";
 
 export const CardInformation = () => {
   const navigate = useNavigate();
-  const { pinValidationCard } = useResetValidation();
+  const { validationCard } = useResetValidation();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onSubmit = async (data: ICardInformationForm) => {
     setErrorMessage(null); // Clear previous errors
     try {
       // Context ResetValidation
-      await pinValidationCard(
+      await validationCard(
         data.cardNumber,
         data.cardExpMonth,
         data.cardExpYear
