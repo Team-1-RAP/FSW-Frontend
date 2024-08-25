@@ -98,7 +98,7 @@ const router = createBrowserRouter([
             element: <ResetValidationProvider />,
             children: [
               {
-                path: "",
+                path: "*",
                 element: <NewPinPage />,
               },
             ],
@@ -300,144 +300,7 @@ const router = createBrowserRouter([
                     ],
                   },
                 ],
-              },
-              {
-                element: <PrivateRoute />,
-                children: [
-                  {
-                    element: <AccountProvider />,
-                    children: [
-                      {
-                        element: <DashboardLayout />,
-                        children: [
-                          {
-                            element: <MutationProvider />,
-                            children: [
-                              {
-                                path: "/home",
-                                element: <HomePage />,
-                              },
-                              {
-                                path: "/mutasi",
-                                element: <MutasiPage />,
-                              },
-                              {
-                                path: "/profile",
-                                element: <Profile />,
-                              },
-                            ],
-                          },
-                          {
-                            path: "/transfer",
-                            children: [
-                              {
-                                path: "",
-                                element: <TransferPage />,
-                              },
-                              {
-                                path: "/transfer/new",
-                                element: <NewTransferPage />,
-                              },
-                              {
-                                path: "/transfer/nominal",
-                                element: <NominalTransferPage />,
-                              },
-                              {
-                                path: "/transfer/confirm",
-                                element: <ConfirmTransferPage />,
-                              },
-                              {
-                                path: "/transfer/success",
-                                element: <BuktiTransferPage />,
-                              },
-                            ],
-                          },
-                          {
-                            path: "/QRIS",
-                            element: <QrisLayout />,
-                            children: [
-                              {
-                                path: "",
-                                element: <QrisTransfer />,
-                              },
-                              {
-                                path: "display",
-                                element: <QrisQrCodeDisplay />,
-                              },
-                              {
-                                path: "success",
-                                element: <QrisTransactionSuccess />,
-                              },
-                            ],
-                          },
-                          {
-                            path: "/pengaturan",
-                            element: <PengaturanLayout />,
-                            children: [
-                              {
-                                path: "",
-                                element: <Setting />,
-                              },
-                              {
-                                path: "change-pin",
-                                element: <ResetValidationProvider />,
-                                children: [
-                                  {
-                                    path: "",
-                                    element: <CardInformation />,
-                                  },
-                                  {
-                                    path: "birth-date",
-                                    element: <PinBirthDateValidation />,
-                                  },
-                                  {
-                                    path: "email",
-                                    element: <PinEmailVerification />,
-                                  },
-                                  {
-                                    path: "otp",
-                                    element: <PinOtp />,
-                                  },
-                                  {
-                                    path: "new-pin",
-                                    element: <NewPin />,
-                                  },
-                                  {
-                                    path: "success",
-                                    element: <PinChangeSuccess />,
-                                  },
-                                ],
-                              },
-                              {
-                                path: "change-password",
-                                element: <ChangePasswordValidationProvider />,
-                                children: [
-                                  {
-                                    path: "",
-                                    element: <PasswordVerification />,
-                                  },
-                                  {
-                                    path: "email",
-                                    element: <PasswordEmailVerification />,
-                                  },
-                                  {
-                                    path: "otp",
-                                    element: <PasswordChangeOtp />,
-                                  },
-                                  {
-                                    path: "new-password",
-                                    element: <NewPassword />,
-                                  },
-                                ],
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              },
+              },              
             ],
           },
         ],
