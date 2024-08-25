@@ -44,17 +44,20 @@ const NewTransferPage: React.FC = () => {
             </div>
 
             <div className="flex flex-col ml-8 gap-5 mt-3">
-                <h1 className="font-semibold text-[22px] text-[#343C6A]">Masukkan Tujuan Transfer</h1>
+                <h1 className="font-semibold text-[22px] text-[#343C6A]" tabIndex={0}>Masukkan Tujuan Transfer</h1>
                 <div className="flex flex-col w-[417px]">
                     <div className="mb-6">
                         <label className="block mb-2 text-base font-medium">Pilih Bank Tujuan</label>
                         <div className="relative">
                             <img src={BankIcon} alt="" width={19} height={19} className="text-[#c4c4c4] absolute left-2 top-3" />
                             <input
+                                id="bank"
                                 type="text"
                                 placeholder="BCA"
                                 className="bg-white border border-[#549EFF] text-[#549EFF] placeholder-[#549EFF] text-sm rounded-lg block w-[390px] p-2.5 focus:ring-[#549EFF] focus:border-[#549EFF] focus:outline-none py-[10px] pl-[40px] pr-[10px]"
                                 disabled
+                                aria-label="Bank Tujuan BCA"
+                                tabIndex={0}
                             />
                         </div>
                     </div>

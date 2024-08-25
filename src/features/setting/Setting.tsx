@@ -2,10 +2,11 @@ import { useNavigate } from "react-router-dom"
 import { ChevronRight } from "react-feather"
 
 export const Setting = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
 
   return (
-    <div className="text-center w-[531px] flex flex-col items-center gap-7">
+    <div className="text-center w-[531px] flex flex-col items-center gap-7 pb-10">
       <p className="font-medium text-2xl">Password dan PIN Transaksi</p>
       <img src="/assets/images/shield.png" alt="Shield Icon" className="w-48" />
       <button
@@ -25,7 +26,7 @@ export const Setting = () => {
         <ChevronRight />
       </button>
 
-      <h1 className="text-center text-[#838383] mt-10 ">Untuk menjaga keamanan akun Anda Ubah password akun dan PIN transaksi secara berkala</h1>
+      <p className="text-center text-[#838383] mt-10">Untuk menjaga keamanan akun Anda Ubah password akun dan PIN transaksi secara berkala</p>
     </div>
   )
 }

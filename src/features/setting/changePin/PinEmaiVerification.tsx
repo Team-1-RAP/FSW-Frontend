@@ -6,7 +6,7 @@ import { useResetValidation } from "../../../hooks/useResetValidation"
 export const PinEmailVerification = () => {
   const [errorMessage, setErrorMessage] = useState("")
   const navigate = useNavigate()
-  const { validationEmail, cardNumber } = useResetValidation()
+  const { pinValidationEmail, cardNumber } = useResetValidation()
 
   const onSubmit = async (data: IEmailForm) => {
     try {
@@ -14,7 +14,7 @@ export const PinEmailVerification = () => {
         throw new Error("ATM card number is missing from context")
       }
 
-      await validationEmail(cardNumber.atm_card_no, data.email)
+      await pinValidationEmail(cardNumber.atm_card_no, data.email)
       navigate("../otp")
     } catch (error) {
       const errorMessage = (error as Error).message || "An unknown error occurred"

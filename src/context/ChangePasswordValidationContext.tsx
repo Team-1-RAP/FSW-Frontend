@@ -5,6 +5,8 @@ import { useAuth } from "../hooks/useAuth";
 export interface ChangePasswordValidationContextProps {
   validationCurrentPassword: (current_password: string) => Promise<void>;
   isCurrentPasswordValid: boolean;
+  email: string;
+  setEmail: (email: string) => void;
   validationEmail: (email: string) => Promise<void>;
   isEmailValid: boolean;
   validationOtp: (otp: string) => Promise<void>;
@@ -23,6 +25,7 @@ export const ChangePasswordValidationProvider = () => {
   const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
   const [isOtpValid, setIsOtpValid] = useState<boolean>(false);
   const [isNewPasswordValid, setIsNewPasswordValid] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
 
   const validationCurrentPassword = async (current_password: string) => {
     try {
@@ -72,6 +75,7 @@ export const ChangePasswordValidationProvider = () => {
       if (data.code === 200 && data.data.flag_user.is_email_valid) {
         console.log("Email Valid");
         setIsEmailValid(true);
+        setEmail(email);
         console.log("OTP INFO", data.data.otp_code);
       } else {
         throw new Error(data.message);
@@ -141,6 +145,8 @@ export const ChangePasswordValidationProvider = () => {
     isCurrentPasswordValid,
     validationEmail,
     isEmailValid,
+    email,
+    setEmail,
     validationOtp,
     isOtpValid,
     changePassword,
