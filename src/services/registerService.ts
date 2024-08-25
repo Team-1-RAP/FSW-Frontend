@@ -17,7 +17,7 @@ export const registerProfile = async (email: string, username: string, password:
         console.log(data);
 
         return {
-            username : data.data.data_customer.username,
+            username: data.data.data_customer.username,
             email: data.data.data_customer.email,
             otp: data.data.registration.otp_code,
         };

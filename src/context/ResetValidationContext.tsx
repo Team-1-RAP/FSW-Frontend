@@ -3,53 +3,86 @@ import { Outlet } from "react-router-dom";
 
 // Define interfaces
 export interface IAccount {
-  atm_card_no: string;
+    atm_card_no: string;
 }
 
 export interface ResetValidationContextProps {
+
   cardNumber: IAccount | null;
   setCardNumber: (account: IAccount | null) => void;
-  validationCard: (
-    atm_card_no: string,
-    expMonth: string,
-    expYear: string
-  ) => Promise<void>;
-  validationBirthDate: (
-    atm_card_no: string,
-    birthDate: string
-  ) => Promise<void>;
+  validationCard: (atm_card_no: string,expMonth: string,expYear: string) => Promise<void>;
+  validationBirthDate: (atm_card_no: string,birthDate: string) => Promise<void>;
   validationEmail: (atm_card_no: string, email: string) => Promise<void>;
   email: string | null;
   setEmail: (email: string | null) => void;
   validationOtp: (atm_card_no: string, otp: string) => Promise<void>;
-  resetPin: (
-    atm_card_no: string,
-    pin: string,
-    confirmPin: string
-  ) => Promise<void>;
+  resetPin: (atm_card_no: string,pin: string,confirmPin: string) => Promise<void>;
   resetPassword:(atm_card_no: string, password:string, confirmPassword:string) => Promise<void>
-  pinValidationCard: (
-    atm_card_no: string,
-    expMonth: string,
-    expYear: string
-  ) => Promise<void>;
-  pinValidationBirthDate: (
-    atm_card_no: string,
-    birthDate: string,
-  ) => Promise<void>;
+  pinValidationCard: ( atm_card_no: string,expMonth: string,expYear: string) => Promise<void>;
+  pinValidationBirthDate: ( atm_card_no: string, birthDate: string) => Promise<void>;
   pinValidationEmail: (atm_card_no: string, email: string) => Promise<void>;
   pinValidationOtp: (atm_card_no: string, otp: string) => Promise<void>;
-  pinValidation:(atm_card_no: string, pin:string) => Promise<void>
+  pinValidation:(atm_card_no: string, pin: string) => Promise<void>
+  newPin: (pin: string, confirmPin: string, token: string) => Promise<void>;
+  createPin: (pin: string, confirmPin: string, token: string) => Promise<void>;
+
 }
 
 // Create context
-export const ResetValidationContext =
-  createContext<ResetValidationContextProps | null>(null);
+export const ResetValidationContext = createContext<ResetValidationContextProps | null>(null);
 
 export const ResetValidationProvider = () => {
   const [cardNumber, setCardNumber] = useState<IAccount | null>(null);
   const [email, setEmail] = useState<string | null>(null);
 
+      const createPin = async (pin: string, confirmPin: string, token: string) => {
+        try {
+            // console.log(pin, confirmPin, token);
+            const response = await fetch(import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "account/new-pin/" + token, {
+                method: "POST",
+                headers: {
+                    accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    pin,
+                    confirmPin,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Error add new PIN");
+            }
+        } catch (error) {
+            console.error("Error add new PIN:", error);
+            throw error;
+        }
+    };
+
+    const newPin = async (pin: string, confirmPin: string, token: string) => {
+        try {
+            // console.log(pin, confirmPin, token);
+            const response = await fetch(import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "registration/customer/createPin/" + token, {
+                method: "POST",
+                headers: {
+                    accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    pin,
+                    confirmPin,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Error add new PIN");
+            }
+        } catch (error) {
+            console.error("Error add new PIN:", error);
+            throw error;
+        }
+    };
+  
   const validationCard = async (
     cardNumber: string,
     cardExpMonth: string,
@@ -381,6 +414,8 @@ export const ResetValidationProvider = () => {
     pinValidationEmail,
     pinValidationOtp,
     pinValidation,
+    newPin,
+    createPin,
   };
 
   return (
@@ -388,4 +423,4 @@ export const ResetValidationProvider = () => {
       <Outlet />
     </ResetValidationContext.Provider>
   );
-};
+}
