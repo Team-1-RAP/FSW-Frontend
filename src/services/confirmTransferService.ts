@@ -35,6 +35,7 @@ const incrementAttemptCount = (): void => {
 const resetAttemptCount = (): void => {
     localStorage.removeItem("pin_attempts");
 };
+
 const handleError = async (response: Response, setAlert: SetAlertFunction, setIsAlertVisible: SetIsAlertVisibleFunction, setIsModalVisible: SetIsModalVisibleFunction) => {
     if (response.status === 403) {
         setIsModalVisible(true);
@@ -42,26 +43,19 @@ const handleError = async (response: Response, setAlert: SetAlertFunction, setIs
     }
 
     if (response.status === 400) {
-        const errorData = await response.json();
         const attempts = getAttemptCount();
         let errorMessage = "Terjadi kesalahan saat melakukan transfer.";
 
-        if (errorData.message && errorData.message.includes("PIN")) {
-            if (attempts === 0) {
-                errorMessage = "PIN yang Anda masukkan salah.";
-            } else if (attempts === 1) {
-                errorMessage = "Anda memiliki 1 kali kesempatan lagi.";
-            } else {
-                errorMessage = "Percobaan PIN telah habis. Silakan coba lagi nanti.";
-                resetAttemptCount();
-            }
-            incrementAttemptCount();
-        } else if (errorData.message && errorData.message.includes("Account number and recipient account number cannot be same")) {
-            errorMessage = "Anda tidak dapat mentransfer ke rekening sendiri.";
+        if (attempts === 0) {
+            errorMessage = "PIN yang Anda masukkan salah.";
+        } else if (attempts === 1) {
+            errorMessage = "Anda memiliki 1 kali kesempatan lagi.";
         } else {
-            errorMessage = errorData.message || "Terjadi kesalahan saat melakukan transfer.";
+            errorMessage = "Percobaan PIN telah habis. Silakan coba lagi nanti.";
+            resetAttemptCount(); // Reset count after showing the final message
         }
 
+        incrementAttemptCount();
         setAlert(errorMessage);
     } else {
         const errorData = await response.json();

@@ -13,11 +13,9 @@
     "dependencies": {
         "@hookform/resolvers": "^3.9.0",
         "@types/jspdf": "^2.0.0",
-        "@types/react-router-dom": "^5.3.3",
         "chart.js": "^4.4.3",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.1",
-        "date-fns": "^3.6.0",
         "formik": "^2.4.6",
         "jspdf": "^2.5.1",
         "jspdf-autotable": "^3.8.2",
@@ -29,13 +27,12 @@
         "react-feather": "^2.0.10",
         "react-hook-form": "^7.52.1",
         "react-qr-code": "^2.0.15",
-
         "react-router-dom": "^6.24.1",
         "react-toastify": "^10.0.5",
-
         "swiper": "^11.1.4",
         "tailwind-merge": "^2.4.0",
         "uuid": "^10.0.0",
+        "xlsx": "^0.18.5",
         "yup": "^1.4.0"
     },
     "devDependencies": {

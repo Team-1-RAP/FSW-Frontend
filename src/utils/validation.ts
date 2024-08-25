@@ -25,11 +25,3 @@ export const validatePin = (pin: string): string | null => {
 
     return null;
 };
-
-export const validateConfirmPin = (pin: string, confirmPin: string): string | null => {
-    if (confirmPin !== pin) {
-        return "PIN harus sama dengan konfirmasi PIN.";
-    }
-
-    return null;
-};

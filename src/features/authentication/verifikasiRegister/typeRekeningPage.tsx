@@ -1,50 +1,56 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { RegisterContext } from "../../../context/RegisterContext";
-import AccountTypeRadio from "../../../components/fragments/AccountType";
-import { fetchAccountTypes } from "../../../utils/fetchAccountType";
-import { AccountType } from "../../../components/fragments/AccountType/type";
-import Alert from "../../../components/fragments/Alert";
+
+interface AccountType {
+    id: number;
+    code: string;
+    type: string;
+    created_at: string;
+    updated_at: string;
+}
 
 const TypeRekeningPage: React.FC = () => {
     const navigate = useNavigate();
     const context = useContext(RegisterContext);
     const [accountTypes, setAccountTypes] = useState<AccountType[]>([]);
-    const [errorMessage, setErrorMessage] = useState<string>("");
-    const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
 
-    const { accountTypeId = null, setAccountTypeId = () => {}, username, email, otp } = context || {};
+    if (!context) {
+        return <div>Loading...</div>;
+    }
+
+    const { accountTypeId, setAccountTypeId, username, email, otp } = context;
 
     useEffect(() => {
-        const loadAccountTypes = async () => {
+        const fetchAccountTypes = async () => {
             try {
-                const types = await fetchAccountTypes();
-                setAccountTypes(types);
+                const response = await fetch("https://simplebank.my.id/v1/account/type/accountTypes");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch account types");
+                }
+                const result = await response.json();
+                setAccountTypes(result.data);
             } catch (error) {
-                console.error("Failed to fetch account types:", error);
+                console.error("Error fetching account types:", error);
             }
         };
-        loadAccountTypes();
+
+        fetchAccountTypes();
     }, []);
 
-    if (!context) return <div>Loading...</div>;
-
-    const handleChange = (id: number) => setAccountTypeId(id);
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newTypeId = Number(event.target.value); // Convert value to number directly
+        setAccountTypeId(newTypeId); // Update context directly
+    };
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        if (accountTypeId === null) {
-            setErrorMessage("Pilih tipe rekening!");
-            setIsAlertVisible(true);
-            return;
+        if (accountTypeId !== null) {
+            console.log("User Details:", { username, email, otp, accountTypeId });
+            navigate("/register/data-diri");
+        } else {
+            console.error("Please select an account type.");
         }
-
-        // Clear error message if validation passes
-        setErrorMessage("");
-        setIsAlertVisible(false);
-
-        console.log("User Details:", { username, email, otp, accountTypeId });
-        navigate("/register/data-diri");
     };
 
     return (
@@ -54,11 +60,30 @@ const TypeRekeningPage: React.FC = () => {
                 <div className="flex w-full space-y-2">
                     <div className="flex flex-col w-full space-y-6">
                         {accountTypes.map((type) => (
-                            <AccountTypeRadio key={type.id} type={type} selectedId={accountTypeId} onChange={handleChange} />
+                            <div key={type.id} className="flex flex-row space-x-3 border border-[#C4C4C4] px-4 py-2 rounded-xl">
+                                <input
+                                    type="radio"
+                                    name="jenisRekening"
+                                    id={`type-${type.id}`} // Unique id based on type.id
+                                    value={type.id} // Use id as value
+                                    checked={accountTypeId === type.id}
+                                    onChange={handleChange}
+                                    className="w-[20px]"
+                                />
+                                <div className="space-y-1">
+                                    <label htmlFor={`type-${type.id}`} className="text-lg">
+                                        {type.type}
+                                    </label>
+                                    <p className="text-[9px] text-[#A09FA4]">
+                                        {type.type === "BRONZE" && "Rekening pemula dengan layanan dasar dan biaya rendah"}
+                                        {type.type === "GOLD" && "Rekening dengan fitur tambahan dan layanan prioritas"}
+                                        {type.type === "PLATINUM" && "Rekening premium dengan layanan eksklusif"}
+                                    </p>
+                                </div>
+                            </div>
                         ))}
                     </div>
                 </div>
-                <Alert message={errorMessage} isVisible={isAlertVisible} />
                 <div className="flex flex-row justify-center w-full space-x-4 text-base font-bold">
                     <button type="submit" className="py-3 bg-[#055287] rounded-lg text-white w-1/2">
                         Selanjutnya

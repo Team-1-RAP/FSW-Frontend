@@ -1,60 +1,61 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { RegisterContext } from "../../../context/RegisterContext";
-import FormField from "../../../components/elements/form/FormRegister";
-import { fetchAccountPurposes, isOver17YearsOld, AccountPurpose } from "../../../utils/fetchAccountPurpouse";
-import Alert from "../../../components/fragments/Alert";
+
+interface AccountPurpose {
+    id: number;
+    type: string;
+}
 
 const VerifyBiodataPage: React.FC = () => {
     const navigate = useNavigate();
     const context = useContext(RegisterContext);
     const [accountPurposes, setAccountPurposes] = useState<AccountPurpose[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [errorMessage, setErrorMessage] = useState<string>("");
-    const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
-    const [formData, setFormData] = useState({
-        fullname: context?.fullname || "",
-        nik: context?.nik || "",
-        bornDate: context?.born_date || "",
-        address: context?.address || "",
-        accountPurposeId: context?.accountPurpose_id || null,
-    });
+
+    if (!context) {
+        return <div>Loading...</div>;
+    }
+
+    const { username, email, otp, accountTypeId, fullname, nik, born_date, address, accountPurpose_id, setFullname, setNik, setBornDate, setAddress, setAccountPurposeId } = context;
+
+    // Initialize local state with context values if available
+    const [localFullname, setLocalFullname] = useState<string>(fullname || "");
+    const [localNik, setLocalNik] = useState<string>(nik || "");
+    const [localBornDate, setLocalBornDate] = useState<string>(born_date || "");
+    const [localAddress, setLocalAddress] = useState<string>(address || "");
+    const [localAccountPurposeId, setLocalAccountPurposeId] = useState<number | null>(accountPurpose_id || null);
 
     useEffect(() => {
-        const loadAccountPurposes = async () => {
-            const purposes = await fetchAccountPurposes();
-            setAccountPurposes(purposes);
-            setLoading(false);
+        const fetchAccountPurposes = async () => {
+            try {
+                const response = await fetch("https://simplebank.my.id/v1/account/purposes/accountPurposes");
+                const result = await response.json();
+                if (result.status) {
+                    setAccountPurposes(result.data);
+                } else {
+                    console.error("Failed to fetch account purposes");
+                }
+            } catch (error) {
+                console.error("Error fetching account purposes:", error);
+            } finally {
+                setLoading(false);
+            }
         };
 
-        loadAccountPurposes();
+        fetchAccountPurposes();
     }, []);
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
+        // Update context with local state values
+        setFullname(localFullname);
+        setNik(localNik);
+        setBornDate(localBornDate);
+        setAddress(localAddress);
+        setAccountPurposeId(localAccountPurposeId);
 
-        // Validation checks
-        if (!isOver17YearsOld(formData.bornDate)) {
-            setErrorMessage("Anda harus berusia lebih dari 17 tahun untuk mendaftar.");
-            return;
-        }
-
-        if (formData.accountPurposeId === null) {
-            setErrorMessage("Anda harus memilih tujuan membuka rekening.");
-            setIsAlertVisible(true);
-            return;
-        }
-
-        setErrorMessage("");
-        if (context) {
-            context.setFullname(formData.fullname);
-            context.setNik(formData.nik);
-            context.setBornDate(formData.bornDate);
-            context.setAddress(formData.address);
-            context.setAccountPurposeId(formData.accountPurposeId);
-        }
-        setErrorMessage("");
-        setIsAlertVisible(false);
+        console.log("User Details:", { username, email, otp, accountTypeId, fullname, nik, born_date, address, accountPurpose_id });
         navigate("/register/upload-persyaratan");
     };
 
@@ -62,15 +63,30 @@ const VerifyBiodataPage: React.FC = () => {
         <div className="flex flex-col items-center justify-center w-[340px] mb-10">
             <h1 className="text-[28px] font-medium">Formulir Data Diri</h1>
             <form className="w-full mt-8 space-y-6" onSubmit={handleSubmit}>
-                <FormField id="nama" label="Nama Lengkap" type="text" placeholder="Masukan nama" minLength={5} value={formData.fullname} onChange={(e) => setFormData({ ...formData, fullname: e.target.value.replace(/[^a-zA-Z\s]/g, "") })} />
-                <FormField id="nik" label="NIK" type="text" placeholder="Masukan NIK" value={formData.nik} minLength={16} maxLength={16} onChange={(e) => setFormData({ ...formData, nik: e.target.value.replace(/\D/g, "") })} />
+                <div className="space-y-1">
+                    <label htmlFor="nama" className="block text-xs font-light">
+                        Nama Lengkap
+                    </label>
+                    <input type="text" id="nama" placeholder="Nama Lengkap" value={localFullname} onChange={(e) => setLocalFullname(e.target.value)} className="w-full p-3 border rounded-lg border-[#C4C4C4]" />
+                </div>
+                <div className="space-y-1">
+                    <label htmlFor="nik" className="block text-xs font-light">
+                        NIK
+                    </label>
+                    <input type="text" id="nik" placeholder="NIK" value={localNik} onChange={(e) => setLocalNik(e.target.value)} className="w-full p-3 border rounded-lg border-[#C4C4C4]" />
+                </div>
                 <div className="space-y-1">
                     <label htmlFor="tanggalLahir" className="block text-xs font-light">
                         Tanggal Lahir
                     </label>
-                    <input type="date" id="tanggalLahir" value={formData.bornDate} onChange={(e) => setFormData({ ...formData, bornDate: e.target.value })} className="w-full p-3 border rounded-lg border-[#C4C4C4]" />
+                    <input type="date" id="tanggalLahir" value={localBornDate} onChange={(e) => setLocalBornDate(e.target.value)} className="w-full p-3 border rounded-lg border-[#C4C4C4]" />
                 </div>
-                <FormField id="alamat" label="Alamat Domisili" placeholder="Masukan Alamat" type="text" value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} />
+                <div className="space-y-1">
+                    <label htmlFor="alamat" className="block text-xs font-light">
+                        Alamat Domisili
+                    </label>
+                    <input type="text" id="alamat" placeholder="Alamat Domisili" value={localAddress} onChange={(e) => setLocalAddress(e.target.value)} className="w-full p-3 border rounded-lg border-[#C4C4C4]" />
+                </div>
                 <div className="space-y-1">
                     <label htmlFor="rekening" className="block text-xs font-light">
                         Tujuan Membuka Rekening
@@ -81,8 +97,8 @@ const VerifyBiodataPage: React.FC = () => {
                         <select
                             name="rekening"
                             id="rekening"
-                            value={formData.accountPurposeId !== null ? formData.accountPurposeId : ""}
-                            onChange={(e) => setFormData({ ...formData, accountPurposeId: Number(e.target.value) || null })}
+                            value={localAccountPurposeId !== null ? localAccountPurposeId : ""}
+                            onChange={(e) => setLocalAccountPurposeId(Number(e.target.value) || null)}
                             className="w-full p-3 border rounded-lg border-[#C4C4C4]"
                         >
                             <option value="" disabled hidden>
@@ -96,7 +112,6 @@ const VerifyBiodataPage: React.FC = () => {
                         </select>
                     )}
                 </div>
-                <Alert message={errorMessage} isVisible={isAlertVisible} />
                 <div className="flex flex-row w-full space-x-4 text-base font-bold">
                     <Link to="/register/tipe-rekening" className="py-3 border-[#055287] rounded-lg text-[#055287] w-1/2 border text-center">
                         Kembali
