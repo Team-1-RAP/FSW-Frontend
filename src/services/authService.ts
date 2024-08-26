@@ -18,7 +18,22 @@ export const loginUser = async (username: string, password: string): Promise<str
             body: JSON.stringify({ username, password }),
         });
 
-        if (response.status === 400 || response.status === 403) {
+        if (response.status === 400) {
+            const errorData = await response.json();
+            let errorMessage = "Login gagal.";
+
+            if (errorData.message && errorData.message.includes("Your invalid username or password has been attempted")) {
+                if (errorData.message.includes("1 times")) {
+                    errorMessage = "Password yang Anda masukkan salah. ";
+                } else if (errorData.message.includes("2 times")) {
+                    errorMessage = "Password yang Anda masukkan salah. Anda memiliki 1x percobaan sebelum password terblokir otomatis oleh sistem ";
+                }
+            } else {
+                errorMessage = errorData.message || "Terjadi kesalahan saat melakukan login.";
+            }
+
+            throw new Error(errorMessage);
+        } else if (response.status === 403) {
             throw { status: response.status };
         }
 
