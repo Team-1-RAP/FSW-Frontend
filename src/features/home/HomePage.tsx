@@ -24,6 +24,9 @@ const HomePage: React.FC = () => {
   } = useMutation();
   const [isLoading, setIsLoading] = useState(false);
   const [dataFetched, setDataFetched] = useState(false);
+  const currentMonthName = new Date().toLocaleString("id-ID", {
+    month: "long",
+  });
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -44,7 +47,7 @@ const HomePage: React.FC = () => {
         try {
           await fetchMutationAmounts(
             token,
-            parseInt(accounts[activeAccountIndex].noAccount)
+            accounts[activeAccountIndex].noAccount
           );
           const noAccount = accounts[activeAccountIndex].noAccount;
           const month = new Date().getMonth() + 1;
@@ -159,7 +162,7 @@ const HomePage: React.FC = () => {
           <TransactionItem
             key="income-transaction"
             icon={Income}
-            label="Pemasukan"
+            label={`Pemasukan Bulan ${currentMonthName}`}
             value={currentMutationAmount.income}
             color="E7EDFF"
           />
@@ -167,7 +170,7 @@ const HomePage: React.FC = () => {
           <TransactionItem
             key="expense-transaction"
             icon={Outcome}
-            label="Pengeluaran"
+            label={`Pengeluaran Bulan ${currentMonthName}`}
             value={currentMutationAmount.spending}
             color="FFE0EB"
           />

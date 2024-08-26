@@ -1,33 +1,15 @@
-const MAX_LOGIN_ATTEMPTS = 2; // Maksimal percobaan login
-
-const getLoginAttemptCount = (): number => {
-    const attempts = sessionStorage.getItem("login_attempts");
-    return attempts ? parseInt(attempts, 10) : 0;
-};
-
-const incrementLoginAttemptCount = (): void => {
-    const attempts = getLoginAttemptCount();
-    sessionStorage.setItem("login_attempts", (attempts + 1).toString());
-};
-
-const resetLoginAttemptCount = (): void => {
-    sessionStorage.removeItem("login_attempts");
-};
-
 const setupSessionCleanup = () => {
     window.addEventListener("beforeunload", () => {
         sessionStorage.removeItem("token");
-        sessionStorage.removeItem("activeSession");
+        localStorage.removeItem("activeSession");
     });
 };
 
 export const loginUser = async (username: string, password: string): Promise<string | null> => {
     try {
-        const attempts = getLoginAttemptCount();
-        if (attempts >= MAX_LOGIN_ATTEMPTS) {
-            throw new Error("Jumlah percobaan login telah melebihi batas. Silakan coba lagi nanti.");
+        if (localStorage.getItem("activeSession") === "true") {
+            throw new Error("Ada sesi aktif di tab lain. Silakan tutup terlebih dahulu atau kembali ke tab tersebut.");
         }
-
         const response = await fetch(import.meta.env.VITE_API_BASE_URL + "api/v1/auth/login", {
             method: "POST",
             headers: {
@@ -36,16 +18,26 @@ export const loginUser = async (username: string, password: string): Promise<str
             body: JSON.stringify({ username, password }),
         });
 
-        if (response.status === 403) {
-            // Menangani status 403 dengan modal
-            throw { status: 403 };
+        if (response.status === 400) {
+            const errorData = await response.json();
+            let errorMessage = "Login gagal.";
+
+            if (errorData.message && errorData.message.includes("Your invalid username or password has been attempted")) {
+                if (errorData.message.includes("1 times")) {
+                    errorMessage = "Password yang Anda masukkan salah. ";
+                } else if (errorData.message.includes("2 times")) {
+                    errorMessage = "Password yang Anda masukkan salah. Anda memiliki 1x percobaan sebelum password terblokir otomatis oleh sistem ";
+                }
+            } else {
+                errorMessage = errorData.message || "Terjadi kesalahan saat melakukan login.";
+            }
+
+            throw new Error(errorMessage);
+        } else if (response.status === 403) {
+            throw { status: response.status };
         }
 
         if (!response.ok) {
-            incrementLoginAttemptCount();
-            if (getLoginAttemptCount() >= MAX_LOGIN_ATTEMPTS) {
-                throw new Error("Jumlah percobaan login telah melebihi batas. Silakan coba lagi nanti.");
-            }
             throw new Error("Username atau Password Salah!");
         }
 
@@ -54,12 +46,12 @@ export const loginUser = async (username: string, password: string): Promise<str
 
         if (data?.data?.accessToken) {
             sessionStorage.setItem("token", data.data.accessToken);
-            sessionStorage.setItem("activeSession", "true");
+            localStorage.setItem("activeSession", "true");
             if (!sessionStorage.getItem("cleanupSetup")) {
                 setupSessionCleanup();
                 sessionStorage.setItem("cleanupSetup", "true");
             }
-            resetLoginAttemptCount(); // Reset percobaan login setelah login berhasil
+            sessionStorage.removeItem("errorCount");
             return data.data.accessToken;
         } else {
             throw new Error("Login Gagal!");

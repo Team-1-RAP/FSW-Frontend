@@ -39,7 +39,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
         <div className="flex flex-col items-start justify-start">
           <span
             id={`transaction-${label}`}
-            className="xl:text-[16px] text-[#718EBF]"
+            className="xl:text-[14px] text-[#718EBF]"
           >
             {label}
           </span>

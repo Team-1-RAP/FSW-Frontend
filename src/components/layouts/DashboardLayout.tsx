@@ -1,20 +1,21 @@
-import { useState } from "react";
-import Navbar from "../fragments/Dashboard/Navbar";
-import SideBar from "../fragments/Dashboard/Sidebar";
-import { Outlet } from "react-router-dom";
+import { useState } from "react"
+import Navbar from "../fragments/Navbar"
+import SideBar from "../fragments/Sidebar"
+import { Outlet } from "react-router-dom"
 
 const DashboardLayout = () => {
-  const [isAsideOpen, setIsAsideOpen] = useState(false);
+  const [isAsideOpen, setIsAsideOpen] = useState(false)
   const toggleAside = () => {
-    setIsAsideOpen(!isAsideOpen);
-  };
+    setIsAsideOpen(!isAsideOpen)
+  }
   const closeAside = () => {
-    setIsAsideOpen(false);
-  };
+    setIsAsideOpen(false)
+  }
+
   return (
     <div className="flex h-screen">
       {/* Navbar */}
-      <Navbar toggleAside={toggleAside} />
+      <Navbar toggleAside={toggleAside} showGreeting={true} showSearchBar={true} showHelpButton={true} showLogoutButton={true} />
       <div className="flex flex-row flex-grow w-full mt-40 lg:mt-20">
         {/* Sidebar */}
         <SideBar isAsideOpen={isAsideOpen} closeAside={closeAside} />
@@ -24,7 +25,7 @@ const DashboardLayout = () => {
         </main>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DashboardLayout;
+export default DashboardLayout

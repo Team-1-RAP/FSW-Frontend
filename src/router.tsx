@@ -37,6 +37,26 @@ import NewTransferPage from "./features/home/transfer/NewTransferPage";
 import NominalTransferPage from "./features/home/transfer/NominalTransferPage";
 import ConfirmTransferPage from "./features/home/transfer/ConfirmTransferPage";
 import BuktiTransferPage from "./features/home/transfer/BuktiTransferPage";
+import { QrisLayout } from "./components/layouts/QrisLayout";
+import { QrisTransfer } from "./features/home/qris/QrisTransfer";
+import { QrisQrCodeDisplay } from "./features/home/qris/QrisQrCodeDisplay";
+import { QrisTransactionSuccess } from "./features/home/qris/QrisTransactionSuccess";
+import RegisterPage from "./features/authentication/RegisterPage";
+import RegisterLayout from "./components/layouts/RegisterLayout";
+import VerifyEmailPage from "./features/authentication/verifikasiRegister/verifyEmailPage";
+import TypeRekeningPage from "./features/authentication/verifikasiRegister/typeRekeningPage";
+import VerifyBiodataPage from "./features/authentication/verifikasiRegister/verifyBiodataPage";
+import UploadDocumentPage from "./features/authentication/verifikasiRegister/uploadDocumentPage";
+import NewPinPage from "./features/authentication/verifikasiRegister/newPinPage";
+import { RegisterProvider } from "./context/RegisterContext";
+import NewAccountPage from "./features/home/newAccount/NewAccountPage";
+import Biodata from "./features/home/newAccount/BiodataPage";
+import NewAccountLayout from "./components/layouts/NewAccountLayout";
+import CreatePinPage from "./features/home/newAccount/CreatePinPage";
+import DonePage from "./features/home/newAccount/DonePage";
+import SuccessNewAccount from "./features/home/newAccount/SuccessNewAccount";
+import VerificationRegister from "./features/authentication/verifikasiRegister/VerificationRegister";
+import CompleteRegister from "./features/authentication/verifikasiRegister/CompleteRegister";
 
 const router = createBrowserRouter([
     {
@@ -46,6 +66,75 @@ const router = createBrowserRouter([
     {
         path: "/",
         element: <LandingPage />,
+    },
+    {
+        element: <RegisterProvider />,
+        children: [
+            {
+                element: <RegisterLayout />,
+                path: "/register",
+                children: [
+                    {
+                        path: "",
+                        element: <RegisterPage />,
+                    },
+                    {
+                        path: "verifikasi-email",
+                        element: <VerifyEmailPage />,
+                    },
+                    {
+                        path: "tipe-rekening",
+                        element: <TypeRekeningPage />,
+                    },
+                    {
+                        path: "data-diri",
+                        element: <VerifyBiodataPage />,
+                    },
+                    {
+                        path: "upload-persyaratan",
+                        element: <UploadDocumentPage />,
+                    },
+                    {
+                        path: "selesai",
+                        element: <VerificationRegister />,
+                    },
+                    {
+                        path: "new-pin",
+                        element: <ResetValidationProvider />,
+                        children: [
+                            {
+                                path: "*",
+                                element: <NewPinPage />,
+                            },
+                        ],
+                    },
+                    {
+                        path: "success",
+                        element: <CompleteRegister />,
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        element: <NewAccountLayout />,
+        path: "/new-account",
+        children: [
+            {
+                path: "new-pin",
+                element: <ResetValidationProvider />,
+                children: [
+                    {
+                        path: "*",
+                        element: <CreatePinPage />,
+                    },
+                ],
+            },
+            {
+                path: "success",
+                element: <DonePage />,
+            },
+        ],
     },
     {
         element: <AuthProvider />,
@@ -106,6 +195,24 @@ const router = createBrowserRouter([
                         element: <AccountProvider />,
                         children: [
                             {
+                                element: <NewAccountLayout />,
+                                path: "/new-account",
+                                children: [
+                                    {
+                                        path: "",
+                                        element: <NewAccountPage />,
+                                    },
+                                    {
+                                        path: "biodata",
+                                        element: <Biodata />,
+                                    },
+                                    {
+                                        path: "finish",
+                                        element: <SuccessNewAccount />,
+                                    },
+                                ],
+                            },
+                            {
                                 element: <DashboardLayout />,
                                 children: [
                                     {
@@ -147,6 +254,24 @@ const router = createBrowserRouter([
                                             {
                                                 path: "/transfer/success",
                                                 element: <BuktiTransferPage />,
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        path: "/QRIS",
+                                        element: <QrisLayout />,
+                                        children: [
+                                            {
+                                                path: "",
+                                                element: <QrisTransfer />,
+                                            },
+                                            {
+                                                path: "display",
+                                                element: <QrisQrCodeDisplay />,
+                                            },
+                                            {
+                                                path: "success",
+                                                element: <QrisTransactionSuccess />,
                                             },
                                         ],
                                     },
@@ -211,9 +336,6 @@ const router = createBrowserRouter([
                                                 ],
                                             },
                                         ],
-                                    },
-                                    {
-                                        path: "/transfer",
                                     },
                                 ],
                             },
