@@ -21,6 +21,13 @@ const VerifyBiodataPage: React.FC = () => {
     });
 
     useEffect(() => {
+        if (!context || !context.username || !context.email) {
+            navigate("/register", { replace: true });
+            return;
+        }
+    }, [context, navigate]);
+
+    useEffect(() => {
         const loadAccountPurposes = async () => {
             const purposes = await fetchAccountPurposes();
             setAccountPurposes(purposes);

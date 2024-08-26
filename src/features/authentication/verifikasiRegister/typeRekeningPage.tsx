@@ -13,7 +13,7 @@ const TypeRekeningPage: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
 
-    const { accountTypeId = null, setAccountTypeId = () => {}, username, email, otp } = context || {};
+    const { accountTypeId = null, setAccountTypeId = () => {} } = context || {};
 
     useEffect(() => {
         const loadAccountTypes = async () => {
@@ -29,7 +29,7 @@ const TypeRekeningPage: React.FC = () => {
 
     useEffect(() => {
         if (!context || !context.username || !context.email) {
-            navigate("/", { replace: true });
+            navigate("/register", { replace: true });
             return;
         }
     }, [context, navigate]);
@@ -47,7 +47,6 @@ const TypeRekeningPage: React.FC = () => {
         setErrorMessage("");
         setIsAlertVisible(false);
 
-        console.log("User Details:", { username, email, otp, accountTypeId });
         navigate("/register/data-diri", { replace: true });
     };
 
