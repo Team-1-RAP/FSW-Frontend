@@ -10,7 +10,7 @@ interface FinishPageProps {
     buttonText: string;
     title: string;
     message: string;
-    icon: IconType; 
+    icon: IconType;
 }
 
 const Success: React.FC<FinishPageProps> = ({ path, buttonText, title, message, icon }) => {
@@ -23,7 +23,11 @@ const Success: React.FC<FinishPageProps> = ({ path, buttonText, title, message, 
     const renderIcon = () => {
         switch (icon) {
             case "check":
-                return <Check className="text-white stroke-[3px]" size={85} />;
+                return (
+                    <div className="bg-[#055287] p-8 rounded-full">
+                        <Check className="text-white stroke-[3px]" size={85} />
+                    </div>
+                );
             case "clock":
             default:
                 return <Clock className="text-[#055287] stroke-[3px] rounded-full" size={139} />;
