@@ -19,7 +19,9 @@ const Profile: React.FC = () => {
     setActiveAccountIndex,
   } = useAccount();
   const [isRefresh, setRefresh] = useToggle(true);
+  const [isLoading, setIsLoading] = useToggle(false);
   const { mutationAmounts, fetchMutationAmounts } = useMutation();
+  const [isAccountChanged, setIsAccountChanged] = useToggle(false);
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (token && isRefresh) {
@@ -36,6 +38,26 @@ const Profile: React.FC = () => {
     setRefresh,
   ]);
 
+  useEffect(() => {
+    console.log("isAccountChanged", isAccountChanged);
+    console.log("isLoading", isLoading);
+    const fetchData = async () => {
+      if (isAccountChanged) {
+        const token = sessionStorage.getItem("token");
+        if (token) {
+          try {
+            await fetchMutationAmounts(token, activeAccount.noAccount);
+          } finally {
+            setIsLoading();
+            setIsAccountChanged();
+          }
+        }
+      }
+    };
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAccountChanged]);
+
   const userInfo = {
     username: user?.username ?? "",
     phoneNumber: user?.phoneNumber ?? "",
@@ -45,17 +67,17 @@ const Profile: React.FC = () => {
   const handleCardChange = (index: number) => {
     setActiveAccountIndex(index);
     setIsDropDownOpen(false);
+    setIsAccountChanged();
+    setIsLoading();
   };
 
   const activeAccount = accounts
     ? accounts[activeAccountIndex]
     : ({} as IAccount);
 
-  const currentMutationAmount = mutationAmounts[activeAccountIndex] ||
-    mutationAmounts || {
-      income: 0,
-      spending: 0,
-    };
+  const currentMonth = new Date().toLocaleString("id-ID", {
+    month: "long",
+  });
 
   return (
     <div className="w-full flex flex-col">
@@ -106,8 +128,10 @@ const Profile: React.FC = () => {
         <div className="xl:w-1/3 w-full">
           <ScoreCard
             imgFile="expense-icon.png"
-            title="Pengeluaran"
-            value1={currentMutationAmount ? currentMutationAmount.spending : 0}
+            title={`Pengeluaran Bulan ${currentMonth}`}
+            value1={mutationAmounts[0] ? mutationAmounts[0].spending : 0}
+            isLoading={isLoading}
+            ariaLabel={`Informasi Total Pengeluaran Bulan ${currentMonth}`}
           />
         </div>
         <div className="xl:w-1/3 w-full">
@@ -117,19 +141,22 @@ const Profile: React.FC = () => {
             value1={activeAccount.balance}
             value2={activeAccount.noAccount}
             isVisible={false}
+            ariaLabel="Informasi Saldo dan Nomor Rekening"
           />
         </div>
         <div className="xl:w-1/3 w-full">
           <ScoreCard
             imgFile="income-icon.png"
-            title="Pemasukan"
-            value1={currentMutationAmount ? currentMutationAmount.income : 0}
+            title={`Pemasukan Bulan ${currentMonth}`}
+            value1={mutationAmounts[0] ? mutationAmounts[0].income : 0}
+            isLoading={isLoading}
+            ariaLabel={`Informasi Total Pemasukan Bulan ${currentMonth}`}
           />
         </div>
       </div>
       <div className="flex flex-col gap-12 my-12 sm:mx-8 mx-4">
         <div className="bg-white flex flex-col w-full gap-5 py-8 px-10">
-          <p className="font-bold text-xl text-[#343C6A]">
+          <p className="font-bold text-xl text-[#343C6A]" tabIndex={0}>
             Informasi Kartu Simple Bank
           </p>
           <div className="flex">
@@ -150,7 +177,9 @@ const Profile: React.FC = () => {
           </div>
         </div>
         <div className="bg-white flex flex-col w-full gap-5 py-8 px-10">
-          <p className="font-bold text-xl text-[#343C6A]">Informasi Akun</p>
+          <p className="font-bold text-xl text-[#343C6A]" tabIndex={0}>
+            Informasi Akun
+          </p>
           <div className="flex">
             <span className="sm:w-1/3 w-1/2 text-xl text-[#343C6A]">
               Username
@@ -162,7 +191,7 @@ const Profile: React.FC = () => {
               Nomor telepon
             </span>
             <span className="text-xl text-[#343C6A]">
-              {userInfo.phoneNumber}
+              {userInfo.phoneNumber ? userInfo.phoneNumber : "-"}
             </span>
           </div>
           <div className="flex">

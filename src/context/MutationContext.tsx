@@ -90,7 +90,7 @@ export const MutationProvider = () => {
     try {
       const data = await fetchMutationAmounts(token, noAccount);
       setMutationAmounts([data]);
-      console.log("Mutation amount fetched:", data);
+      console.log("Mutation amount fetched:", data, noAccount);
     } catch (error) {
       console.error("Fetch mutations amount error:", error);
     }
