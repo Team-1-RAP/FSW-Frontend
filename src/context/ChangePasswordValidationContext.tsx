@@ -11,6 +11,8 @@ export interface ChangePasswordValidationContextProps {
   isOtpValid: boolean;
   changePassword: (password: string, confirmPassword: string) => Promise<void>;
   isNewPasswordValid: boolean;
+  email: string;
+  setEmail: (email: string) => void;
 }
 
 export const ChangePasswordValidationContext =
@@ -23,6 +25,7 @@ export const ChangePasswordValidationProvider = () => {
   const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
   const [isOtpValid, setIsOtpValid] = useState<boolean>(false);
   const [isNewPasswordValid, setIsNewPasswordValid] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
 
   const validationCurrentPassword = async (current_password: string) => {
     try {
@@ -71,6 +74,7 @@ export const ChangePasswordValidationProvider = () => {
       const data = await response.json();
       if (data.code === 200 && data.data.flag_user.is_email_valid) {
         console.log("Email Valid");
+        setEmail(email);
         setIsEmailValid(true);
         console.log("OTP INFO", data.data.otp_code);
       } else {
@@ -145,6 +149,8 @@ export const ChangePasswordValidationProvider = () => {
     isOtpValid,
     changePassword,
     isNewPasswordValid,
+    email,
+    setEmail,
   };
 
   return (
