@@ -13,7 +13,7 @@ const TypeRekeningPage: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false);
 
-    const { accountTypeId = null, setAccountTypeId = () => {}, username, email, otp } = context || {};
+    const { accountTypeId = null, setAccountTypeId = () => {} } = context || {};
 
     useEffect(() => {
         const loadAccountTypes = async () => {
@@ -27,7 +27,12 @@ const TypeRekeningPage: React.FC = () => {
         loadAccountTypes();
     }, []);
 
-    if (!context) return <div>Loading...</div>;
+    useEffect(() => {
+        if (!context || !context.username || !context.email) {
+            navigate("/register", { replace: true });
+            return;
+        }
+    }, [context, navigate]);
 
     const handleChange = (id: number) => setAccountTypeId(id);
 
@@ -39,13 +44,13 @@ const TypeRekeningPage: React.FC = () => {
             return;
         }
 
-        // Clear error message if validation passes
         setErrorMessage("");
         setIsAlertVisible(false);
 
-        console.log("User Details:", { username, email, otp, accountTypeId });
-        navigate("/register/data-diri");
+        navigate("/register/data-diri", { replace: true });
     };
+
+    if (!context) return <div>Loading...</div>;
 
     return (
         <div className="flex flex-col items-center justify-center w-[340px] mb-20">

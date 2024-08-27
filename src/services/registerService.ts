@@ -10,11 +10,27 @@ export const registerProfile = async (email: string, username: string, password:
         });
 
         if (!response.ok) {
-            throw new Error("Error registering profile");
+            const errorData = await response.json();
+            let errorMessage = "Registrasi gagal.";
+
+            if (response.status === 400 && errorData.message) {
+                if (errorData.message.includes("Invalid email format")) {
+                    errorMessage = "Format email salah!";
+                } else if (errorData.message.includes("Email is already taken")) {
+                    errorMessage = "Email sudah digunakan.";
+                } else if (errorData.message.includes("Username is already taken")) {
+                    errorMessage = "Demi keamanan, gunakan username unik.";
+                } else {
+                    errorMessage = errorData.message;
+                }
+            } else if (response.status === 403) {
+                errorMessage = "Akses ditolak.";
+            }
+
+            throw new Error(errorMessage);
         }
 
         const data = await response.json();
-        console.log(data);
 
         return {
             username: data.data.data_customer.username,

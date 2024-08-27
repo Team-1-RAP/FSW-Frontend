@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { RegisterContext, RegisterContextProps } from "../../../context/RegisterContext";
 import FileUpload from "../../../components/elements/file/FileUpload";
 import Alert from "../../../components/fragments/Alert";
@@ -19,6 +19,13 @@ const UploadDocumentPage: React.FC = () => {
     }
 
     const { username, email, accountTypeId, fullname, nik, born_date, address, accountPurpose_id } = context as RegisterContextProps;
+
+    useEffect(() => {
+        if (!context || !context.username || !context.email) {
+            navigate("/register", { replace: true });
+            return;
+        }
+    }, [context, navigate]);
 
     const handleSubmit = async () => {
         if (!validateFiles()) {
@@ -69,9 +76,9 @@ const UploadDocumentPage: React.FC = () => {
             {isAlertVisible && <Alert message={errorMessage} isVisible={isAlertVisible} />}
 
             <div className="flex justify-end p-[20px] gap-5 pr-5 md:pr-0">
-                <button onClick={() => navigate(-1)} className="bg-white w-[163px] h-[47px] rounded-xl border border-[#0066AE] text-[#0066AE]">
+                <Link to="/register/data-diri" className="py-3 border-[#055287] rounded-lg text-[#055287] w-1/2 border text-center">
                     Kembali
-                </button>
+                </Link>
                 <button onClick={handleSubmit} className="bg-[#0066AE] w-[163px] h-[47px] rounded-xl border text-white">
                     Kirim
                 </button>
