@@ -5,4 +5,5 @@ export interface ScoreCardProps {
   value2?: string;
   isVisible?: boolean;
   isLoading?: boolean;
+  ariaLabel: string;
 }
