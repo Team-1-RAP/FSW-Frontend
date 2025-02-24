@@ -68,19 +68,3 @@ input[type="number"] {
     color: #549EFF;
   }
 
-  .Toastify__toast-container {
-    top: 5%;
-    left: 50%;
-  }
-
-  .Toastify__toast-theme--colored.Toastify__toast--success {
-    background: #34C759;
-  }
-
-  .Toastify__toast--success .Toastify__toast-icon {
-    color: #34C759;
-    background: white;
-    border: 1px solid ;
-    border-radius: 100%;
-    border-color: white;
-  }
