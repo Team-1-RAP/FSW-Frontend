@@ -27,11 +27,11 @@ const LandingPage: React.FC = () => {
     return (
         <div className="min-h-screen overflow-hidden bg-white ">
             {/* Header */}
-            <header className="flex flex-col justify-between p-3 px-16 bg-white md:items-center md:flex-row">
+            <header className="flex flex-col justify-between pl-5 md:px-16 bg-white md:items-center md:flex-row">
                 <div className="font-bold text-[#1BABB5]">
-                    <img src={logo} alt="Simple Bank" aria-label="Simple Bank" className="size-[136px] ml-[-40px] md:ml-0" />
+                    <img src={logo} alt="Simple Bank" aria-label="Simple Bank" className="size-[136px] md:ml-0" />
                 </div>
-                <div className="flex ml-[-40px] md:ml-0">
+                <div className="flex md:ml-0">
                     <Link to={"/register"}>
                         <button className="px-4 py-2 mr-2 text-white rounded-xl bg-[#0079CB] drop-shadow-md w-[120px] h-[40px] md:w-[140px] md:h-[50px]" aria-label="Tombol Register">
                             Register
@@ -44,13 +44,13 @@ const LandingPage: React.FC = () => {
             </header>
 
             {/* Hero Section */}
-            <section id="hero" className="w-full h-full md:mt-[-40px] mt-0 ">
-                <div className="container z-10 flex flex-col w-11/12 mx-auto md:flex-wrap md:w-3/4 md:mt-10 md:flex-row">
-                    <div className="flex md:w-1/2 md:mt-[150px] mt-0 my-10 order-1 md:order-1">
-                        <h1 className="text-[#1BABB5] font-bold text-[45px] w-[75%]">Kelola Finansialmu dengan Mudah</h1>
+            <section id="hero" className="w-full h-full md:h-screen md:flex items-center md:pt-[200px] lg:pt-0">
+                <div className="container z-10 flex flex-col md:ml-16 md:flex-wrap md:flex-row md:mt-[20px]">
+                    <div className="flex md:w-1/2 my-10 order-1 md:order-1 pl-5">
+                        <h1 className="text-[#1BABB5] font-bold text-[45px]">Kelola Finansialmu dengan Mudah</h1>
                     </div>
                     <div className="flex order-4 md:order-2 md:w-1/2"></div>
-                    <div className="flex md:w-1/2  md:mt-[-30px] mt-[20px] my-10 flex-col space-y-1 order-3 md:order-3">
+                    <div className="flex md:w-1/2  md:mt-[-30px] mt-[20px] my-10 flex-col space-y-1 order-3 md:order-3 pl-5">
                         <p
                             className="text-[33px] font-medium"
                             aria-label="Aplikasi mobile banking yang simpel, aman, dan
@@ -67,13 +67,13 @@ const LandingPage: React.FC = () => {
                         </div>
                     </div>
                     <div className="flex order-2 md:w-1/2 md:order-4">
-                        <img src={jumbotron} alt="Gambar Hero Section" aria-label="Gambar Hero Section" className="flex md:absolute md:top-0 md:right-0 object-cover md:mt-[160px] mt-0 md:w-[40%] w-full" />
+                        <img src={jumbotron} alt="Gambar Hero Section" aria-label="Gambar Hero Section" className="flex md:absolute md:top-0 md:right-0 object-cover md:mt-[120px] mt-0 md:w-[40%] w-full" />
                     </div>
                 </div>
             </section>
 
             {/* Features Section */}
-            <section className="py-10 mt-[55px] flex flex-col">
+            <section className="py-10 md:mt-[200px] lg:mt-0 flex flex-col">
                 <div className="flex items-center justify-center">
                     <h2 className="mb-20 text-[40px] font-bold text-center text-[#1BABB5] md:w-[40%] w-[80%] md:leading-loose leading-normal" aria-label="Tersedia Fitur Yang Memudahkan Pengguna Simple Bank">
                         Tersedia Fitur Yang Memudahkan Pengguna Simple Bank
