@@ -32,7 +32,7 @@ const LandingPage: React.FC = () => {
 
     return (
         <div className="flex justify-center">
-            <div className="container flex flex-col justify-center min-h-screen overflow-hidden bg-white">
+            <div className="2xl:container flex flex-col justify-center min-h-screen overflow-hidden bg-white">
                 {/* Header */}
                 <header className="flex flex-col justify-between pl-5 md:px-16 bg-white md:items-center md:flex-row">
                     <div className="font-bold text-[#1BABB5]">
