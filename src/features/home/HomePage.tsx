@@ -146,6 +146,7 @@ const HomePage: React.FC = () => {
           ) : (
             separateMutations.map((mutasi) => (
               <MutationItems
+                key={mutasi.date + mutasi.recipientTargetAccount + accounts}
                 id="mutation-item"
                 transactionType={mutasi.transactionType}
                 mutationType={mutasi.mutationType}

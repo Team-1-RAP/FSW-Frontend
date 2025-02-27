@@ -1,0 +1,12 @@
+{
+  "code": 200,
+  "data": {
+    "recipient_account": {
+      "fullname": "John Doe",
+      "account_no": "12345678"
+    },
+    "bank_destination": {
+      "name": "Bank XYZ"
+    }
+  }
+}

@@ -10,13 +10,17 @@ export const loginUser = async (username: string, password: string): Promise<str
         if (localStorage.getItem("activeSession") === "true") {
             throw new Error("Ada sesi aktif di tab lain. Silakan tutup terlebih dahulu atau kembali ke tab tersebut.");
         }
-        const response = await fetch(import.meta.env.VITE_API_BASE_URL + "api/v1/auth/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ username, password }),
-        });
+        // const response = await fetch(import.meta.env.VITE_API_BASE_URL + "api/v1/auth/login", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({ username, password }),
+        // });
+
+        //Mock API
+        const response = await fetch("/mockApi/login.json");
+        console.log(`username: ${username}  password: ${password}`);
 
         if (response.status === 400) {
             const errorData = await response.json();
@@ -35,10 +39,6 @@ export const loginUser = async (username: string, password: string): Promise<str
             throw new Error(errorMessage);
         } else if (response.status === 403) {
             throw { status: response.status };
-        }
-
-        if (!response.ok) {
-            throw new Error("Username atau Password Salah!");
         }
 
         const data = await response.json();

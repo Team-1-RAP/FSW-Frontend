@@ -23,6 +23,7 @@ const resetAttemptCount = (): void => {
     localStorage.removeItem("pin_attempts");
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const handleError = async (response: Response, setAlert: SetAlertFunction, setIsAlertVisible: SetIsAlertVisibleFunction, setIsModalVisible: SetIsModalVisibleFunction) => {
     let errorMessage = "Terjadi kesalahan saat melakukan transfer.";
     const data = await response.json();
@@ -69,6 +70,7 @@ const handleError = async (response: Response, setAlert: SetAlertFunction, setIs
     setTimeout(() => setIsAlertVisible(false), 3000);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const generateCode = async (datacode: DataCode, token: string, navigate: NavigateFunction, setAlert: SetAlertFunction, setIsAlertVisible: SetIsAlertVisibleFunction, setIsModalVisible: SetIsModalVisibleFunction) => {
     if (!token) {
         setAlert("Token tidak ditemukan. Silakan login kembali.");
@@ -78,20 +80,31 @@ export const generateCode = async (datacode: DataCode, token: string, navigate: 
     }
 
     try {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/v1/qris/generate-qr-code`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(datacode),
-        });
+        // const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/v1/qris/generate-qr-code`, {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         Authorization: `Bearer ${token}`,
+        //     },
+        //     body: JSON.stringify(datacode),
+        // });
 
-        if (!response.ok) {
-            await handleError(response, setAlert, setIsAlertVisible, setIsModalVisible);
-            return;
+        // if (!response.ok) {
+        //     await handleError(response, setAlert, setIsAlertVisible, setIsModalVisible);
+        //     return;
+        // }
+        // const dataResponse = await response.json();
+
+        //Mock API Response
+        const now = new Date();
+        const dataResponse = {
+            status:200,
+            data: {
+                dueDate: now.setMinutes(now.getMinutes() + 5),
+                qrCode: "https://github.com/Team-1-RAP/FSW-Frontend",
+            }
         }
-        const dataResponse = await response.json();
+
         navigate("display", { state: { dataResponse } });
     } catch (error) {
         const errorMessage = (error as Error).message || "Terjadi kesalahan yang tidak diketahui.";

@@ -57,294 +57,300 @@ import DonePage from "./features/home/newAccount/DonePage";
 import SuccessNewAccount from "./features/home/newAccount/SuccessNewAccount";
 import VerificationRegister from "./features/authentication/verifikasiRegister/VerificationRegister";
 import CompleteRegister from "./features/authentication/verifikasiRegister/CompleteRegister";
+import { NotificationProvider } from "./context/NotificationContext";
 
 const router = createBrowserRouter([
-    {
-        path: "*",
-        element: <NotFound />,
-    },
-    {
-        path: "/",
-        element: <LandingPage />,
-    },
-    {
-        element: <RegisterProvider />,
+  {
+    path: "*",
+    element: <NotFound />,
+  },
+  {
+    path: "/",
+    element: <LandingPage />,
+  },
+  {
+    element: <RegisterProvider />,
+    children: [
+      {
+        element: <RegisterLayout />,
+        path: "/register",
         children: [
-            {
-                element: <RegisterLayout />,
-                path: "/register",
-                children: [
-                    {
-                        path: "",
-                        element: <RegisterPage />,
-                    },
-                    {
-                        path: "verifikasi-email",
-                        element: <VerifyEmailPage />,
-                    },
-                    {
-                        path: "tipe-rekening",
-                        element: <TypeRekeningPage />,
-                    },
-                    {
-                        path: "data-diri",
-                        element: <VerifyBiodataPage />,
-                    },
-                    {
-                        path: "upload-persyaratan",
-                        element: <UploadDocumentPage />,
-                    },
-                    {
-                        path: "selesai",
-                        element: <VerificationRegister />,
-                    },
-                    {
-                        path: "new-pin",
-                        element: <ResetValidationProvider />,
-                        children: [
-                            {
-                                path: "*",
-                                element: <NewPinPage />,
-                            },
-                        ],
-                    },
-                    {
-                        path: "success",
-                        element: <CompleteRegister />,
-                    },
-                ],
-            },
+          {
+            path: "",
+            element: <RegisterPage />,
+          },
+          {
+            path: "verifikasi-email",
+            element: <VerifyEmailPage />,
+          },
+          {
+            path: "tipe-rekening",
+            element: <TypeRekeningPage />,
+          },
+          {
+            path: "data-diri",
+            element: <VerifyBiodataPage />,
+          },
+          {
+            path: "upload-persyaratan",
+            element: <UploadDocumentPage />,
+          },
+          {
+            path: "selesai",
+            element: <VerificationRegister />,
+          },
+          {
+            path: "new-pin",
+            element: <ResetValidationProvider />,
+            children: [
+              {
+                path: "*",
+                element: <NewPinPage />,
+              },
+            ],
+          },
+          {
+            path: "success",
+            element: <CompleteRegister />,
+          },
         ],
-    },
-    {
-        element: <NewAccountLayout />,
-        path: "/new-account",
+      },
+    ],
+  },
+  {
+    element: <NewAccountLayout />,
+    path: "/new-account",
+    children: [
+      {
+        path: "new-pin",
+        element: <ResetValidationProvider />,
         children: [
-            {
-                path: "new-pin",
-                element: <ResetValidationProvider />,
-                children: [
-                    {
-                        path: "*",
-                        element: <CreatePinPage />,
-                    },
-                ],
-            },
-            {
-                path: "success",
-                element: <DonePage />,
-            },
+          {
+            path: "*",
+            element: <CreatePinPage />,
+          },
         ],
-    },
-    {
-        element: <AuthProvider />,
+      },
+      {
+        path: "success",
+        element: <DonePage />,
+      },
+    ],
+  },
+  {
+    element: <AuthProvider />,
+    children: [
+      {
+        element: <NotificationProvider />,
         children: [
-            {
-                path: "/login",
+          {
+            path: "/login",
+            element: <AuthLayout />,
+            children: [
+              {
+                path: "",
+                element: <LoginPage />,
+              },
+            ],
+          },
+          {
+            element: <ResetValidationProvider />,
+            children: [
+              {
+                path: "/ubah-password",
                 element: <AuthLayout />,
                 children: [
-                    {
+                  {
+                    path: "",
+                    element: <AuthCardValidation />,
+                  },
+                  {
+                    path: "birth-date",
+                    element: <AuthBirthDateValidation />,
+                  },
+                  {
+                    path: "email",
+                    element: <AuthEmailVerification />,
+                  },
+                  {
+                    path: "otp",
+                    element: <AuthOtpPassword />,
+                  },
+                  {
+                    path: "new-password",
+                    element: <AuthNewPassword />,
+                  },
+                  {
+                    path: "pin-verification",
+                    element: <AuthPinVerification />,
+                  },
+                  {
+                    path: "success",
+                    element: <AuthResetPasswordSuccess />,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            element: <PrivateRoute />,
+            children: [
+              {
+                element: <AccountProvider />,
+                children: [
+                  {
+                    element: <NewAccountLayout />,
+                    path: "/new-account",
+                    children: [
+                      {
                         path: "",
-                        element: <LoginPage />,
-                    },
-                ],
-            },
-            {
-                element: <ResetValidationProvider />,
-                children: [
-                    {
-                        path: "/ubah-password",
-                        element: <AuthLayout />,
+                        element: <NewAccountPage />,
+                      },
+                      {
+                        path: "biodata",
+                        element: <Biodata />,
+                      },
+                      {
+                        path: "finish",
+                        element: <SuccessNewAccount />,
+                      },
+                    ],
+                  },
+                  {
+                    element: <DashboardLayout />,
+                    children: [
+                      {
+                        element: <MutationProvider />,
                         children: [
-                            {
+                          {
+                            path: "/home",
+                            element: <HomePage />,
+                          },
+                          {
+                            path: "/mutasi",
+                            element: <MutasiPage />,
+                          },
+                          {
+                            path: "/profile",
+                            element: <Profile />,
+                          },
+                        ],
+                      },
+                      {
+                        path: "/transfer",
+                        children: [
+                          {
+                            path: "",
+                            element: <TransferPage />,
+                          },
+                          {
+                            path: "/transfer/new",
+                            element: <NewTransferPage />,
+                          },
+                          {
+                            path: "/transfer/nominal",
+                            element: <NominalTransferPage />,
+                          },
+                          {
+                            path: "/transfer/confirm",
+                            element: <ConfirmTransferPage />,
+                          },
+                          {
+                            path: "/transfer/success",
+                            element: <BuktiTransferPage />,
+                          },
+                        ],
+                      },
+                      {
+                        path: "/QRIS",
+                        element: <QrisLayout />,
+                        children: [
+                          {
+                            path: "",
+                            element: <QrisTransfer />,
+                          },
+                          {
+                            path: "display",
+                            element: <QrisQrCodeDisplay />,
+                          },
+                          {
+                            path: "success",
+                            element: <QrisTransactionSuccess />,
+                          },
+                        ],
+                      },
+                      {
+                        path: "/pengaturan",
+                        element: <PengaturanLayout />,
+                        children: [
+                          {
+                            path: "",
+                            element: <Setting />,
+                          },
+                          {
+                            path: "change-pin",
+                            element: <ResetValidationProvider />,
+                            children: [
+                              {
                                 path: "",
-                                element: <AuthCardValidation />,
-                            },
-                            {
+                                element: <CardInformation />,
+                              },
+                              {
                                 path: "birth-date",
-                                element: <AuthBirthDateValidation />,
-                            },
-                            {
+                                element: <PinBirthDateValidation />,
+                              },
+                              {
                                 path: "email",
-                                element: <AuthEmailVerification />,
-                            },
-                            {
+                                element: <PinEmailVerification />,
+                              },
+                              {
                                 path: "otp",
-                                element: <AuthOtpPassword />,
-                            },
-                            {
-                                path: "new-password",
-                                element: <AuthNewPassword />,
-                            },
-                            {
-                                path: "pin-verification",
-                                element: <AuthPinVerification />,
-                            },
-                            {
+                                element: <PinOtp />,
+                              },
+                              {
+                                path: "new-pin",
+                                element: <NewPin />,
+                              },
+                              {
                                 path: "success",
-                                element: <AuthResetPasswordSuccess />,
-                            },
+                                element: <PinChangeSuccess />,
+                              },
+                            ],
+                          },
+                          {
+                            path: "change-password",
+                            element: <ChangePasswordValidationProvider />,
+                            children: [
+                              {
+                                path: "",
+                                element: <PasswordVerification />,
+                              },
+                              {
+                                path: "email",
+                                element: <PasswordEmailVerification />,
+                              },
+                              {
+                                path: "otp",
+                                element: <PasswordChangeOtp />,
+                              },
+                              {
+                                path: "new-password",
+                                element: <NewPassword />,
+                              },
+                            ],
+                          },
                         ],
-                    },
+                      },
+                    ],
+                  },
                 ],
-            },
-            {
-                element: <PrivateRoute />,
-                children: [
-                    {
-                        element: <AccountProvider />,
-                        children: [
-                            {
-                                element: <NewAccountLayout />,
-                                path: "/new-account",
-                                children: [
-                                    {
-                                        path: "",
-                                        element: <NewAccountPage />,
-                                    },
-                                    {
-                                        path: "biodata",
-                                        element: <Biodata />,
-                                    },
-                                    {
-                                        path: "finish",
-                                        element: <SuccessNewAccount />,
-                                    },
-                                ],
-                            },
-                            {
-                                element: <DashboardLayout />,
-                                children: [
-                                    {
-                                        element: <MutationProvider />,
-                                        children: [
-                                            {
-                                                path: "/home",
-                                                element: <HomePage />,
-                                            },
-                                            {
-                                                path: "/mutasi",
-                                                element: <MutasiPage />,
-                                            },
-                                            {
-                                                path: "/profile",
-                                                element: <Profile />,
-                                            },
-                                        ],
-                                    },
-                                    {
-                                        path: "/transfer",
-                                        children: [
-                                            {
-                                                path: "",
-                                                element: <TransferPage />,
-                                            },
-                                            {
-                                                path: "/transfer/new",
-                                                element: <NewTransferPage />,
-                                            },
-                                            {
-                                                path: "/transfer/nominal",
-                                                element: <NominalTransferPage />,
-                                            },
-                                            {
-                                                path: "/transfer/confirm",
-                                                element: <ConfirmTransferPage />,
-                                            },
-                                            {
-                                                path: "/transfer/success",
-                                                element: <BuktiTransferPage />,
-                                            },
-                                        ],
-                                    },
-                                    {
-                                        path: "/QRIS",
-                                        element: <QrisLayout />,
-                                        children: [
-                                            {
-                                                path: "",
-                                                element: <QrisTransfer />,
-                                            },
-                                            {
-                                                path: "display",
-                                                element: <QrisQrCodeDisplay />,
-                                            },
-                                            {
-                                                path: "success",
-                                                element: <QrisTransactionSuccess />,
-                                            },
-                                        ],
-                                    },
-                                    {
-                                        path: "/pengaturan",
-                                        element: <PengaturanLayout />,
-                                        children: [
-                                            {
-                                                path: "",
-                                                element: <Setting />,
-                                            },
-                                            {
-                                                path: "change-pin",
-                                                element: <ResetValidationProvider />,
-                                                children: [
-                                                    {
-                                                        path: "",
-                                                        element: <CardInformation />,
-                                                    },
-                                                    {
-                                                        path: "birth-date",
-                                                        element: <PinBirthDateValidation />,
-                                                    },
-                                                    {
-                                                        path: "email",
-                                                        element: <PinEmailVerification />,
-                                                    },
-                                                    {
-                                                        path: "otp",
-                                                        element: <PinOtp />,
-                                                    },
-                                                    {
-                                                        path: "new-pin",
-                                                        element: <NewPin />,
-                                                    },
-                                                    {
-                                                        path: "success",
-                                                        element: <PinChangeSuccess />,
-                                                    },
-                                                ],
-                                            },
-                                            {
-                                                path: "change-password",
-                                                element: <ChangePasswordValidationProvider />,
-                                                children: [
-                                                    {
-                                                        path: "",
-                                                        element: <PasswordVerification />,
-                                                    },
-                                                    {
-                                                        path: "email",
-                                                        element: <PasswordEmailVerification />,
-                                                    },
-                                                    {
-                                                        path: "otp",
-                                                        element: <PasswordChangeOtp />,
-                                                    },
-                                                    {
-                                                        path: "new-password",
-                                                        element: <NewPassword />,
-                                                    },
-                                                ],
-                                            },
-                                        ],
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                ],
-            },
+              },
+            ],
+          },
         ],
-    },
+      },
+    ],
+  },
 ]);
 
 export default router;

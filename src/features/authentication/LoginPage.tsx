@@ -5,10 +5,13 @@ import { useAuth } from "../../hooks/useAuth";
 import useIdleTimer from "../../hooks/useIdleTimer";
 import Modal from "../../components/fragments/Modal";
 import { useToggle } from "../../hooks/useToggle";
+import { useNotification } from "../../hooks/useNotification";
+import { toast, ToastContainer } from "react-toastify";
 
 const LoginPage: React.FC = () => {
     const { token, logout } = useAuth();
     const navigate = useNavigate();
+    const { notificationMessage, clearNotification } = useNotification();
 
     useEffect(() => {
         const storedToken = sessionStorage.getItem("token");
@@ -16,7 +19,18 @@ const LoginPage: React.FC = () => {
         if (token && storedToken) {
             navigate("/home");
         }
-    }, [token, navigate]);
+
+        if (notificationMessage) {
+            toast.success(notificationMessage, {
+              position: "top-center",
+              theme: "colored",
+              hideProgressBar: true,
+              className: "w-[424px] min-h-[49px] font-semibold font-sans",
+            });
+          }
+          clearNotification();
+
+    }, [token, navigate, notificationMessage, clearNotification]);
 
     useIdleTimer(() => {
         logout();
@@ -41,6 +55,7 @@ const LoginPage: React.FC = () => {
     return (
         <>
             <LoginForm onLoginError={handleLoginError} />
+            <ToastContainer />
             <div className="p-6">
                 <Modal
                     visible={isModalVisible}

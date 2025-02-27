@@ -1,0 +1,25 @@
+{
+    "status": 200,
+    "message": "Success get account",
+    "data": [
+      {
+        "noAccount": "012000001",
+        "fullName": "Demo User",
+        "accountType": "GOLD",
+        "cardNumber": "37376575982138765",
+        "expDate": "2023-11-27T00:00:00.000+00:00",
+        "balance": 1500000000,
+        "pin": "1234567"
+      },
+      {
+        "noAccount": "012000013",
+        "fullName": "Demo User",
+        "accountType": "SILVER",
+        "cardNumber": "37376575982135432",
+        "expDate": "2023-11-27T00:00:00.000+00:00",
+        "balance": 100000000,
+        "pin": "123456"
+      }
+    ]
+  }
+  

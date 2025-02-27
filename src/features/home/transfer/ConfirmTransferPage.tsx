@@ -49,6 +49,7 @@ const ConfirmTransferPage: React.FC = () => {
             accountNo: selectedAccount?.noAccount ?? "",
             recipientAccountNo: accountNumber ?? "",
             recipientBankName: bankName ?? "",
+            recipientFullName: accountName ?? "",
             amount,
             pin,
             description: note ?? "",

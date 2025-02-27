@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
@@ -29,20 +30,34 @@ export const ChangePasswordValidationProvider = () => {
 
   const validationCurrentPassword = async (current_password: string) => {
     try {
-      const response = await fetch(
-        import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION +
-          "change/password/validation/currentPassword",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ current_password }),
-        }
-      );
+      // const response = await fetch(
+      //   import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION +
+      //     "change/password/validation/currentPassword",
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({ current_password }),
+      //   }
+      // );
 
-      const data = await response.json();
+      // const data = await response.json();
+      
+      //Mock API Response
+      const data = {
+        code: 200,
+        message: "Password Verified",
+        data: {
+          flag_user: {
+            is_currentPass_valid: true,
+            is_email_valid: false,
+            is_verified: false,
+          },
+        otp_code: null,
+        }
+      }
       if (data.code === 200 && data.data.flag_user.is_currentPass_valid) {
         console.log("Current Password Valid");
         setIsCurrentPasswordValid(true);
@@ -58,20 +73,33 @@ export const ChangePasswordValidationProvider = () => {
 
   const validationEmail = async (email: string) => {
     try {
-      const response = await fetch(
-        import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION +
-          "change/password/validation/email",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        }
-      );
+      // const response = await fetch(
+      //   import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION +
+      //     "change/password/validation/email",
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({ email }),
+      //   }
+      // );
 
-      const data = await response.json();
+      // const data = await response.json();
+      //Mock API Response
+      const data = {
+        code: 200,
+        message: "Email Verified",
+        data: {
+          flag_user: {
+            is_currentPass_valid: true,
+            is_email_valid: true,
+            is_verified: false,
+          },
+        otp_code: 123456,
+        }
+      }
       if (data.code === 200 && data.data.flag_user.is_email_valid) {
         console.log("Email Valid");
         setEmail(email);
@@ -88,20 +116,33 @@ export const ChangePasswordValidationProvider = () => {
 
   const validationOtp = async (otp: string) => {
     try {
-      const response = await fetch(
-        import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION +
-          "change/password/validation/otpVerify",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ otp }),
-        }
-      );
+      // const response = await fetch(
+      //   import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION +
+      //     "change/password/validation/otpVerify",
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({ otp }),
+      //   }
+      // );
 
-      const data = await response.json();
+      // const data = await response.json();
+      //Mock API Response
+      const data = {
+        code: 200,
+        message: "Password Correct",
+        data: {
+          flag_user: {
+            is_currentPass_valid: true,
+            is_email_valid: true,
+            is_verified: true,
+          },
+        otp_code: 123456,
+        }
+      }
       if (data.code === 200 && data.data.flag_user.is_verified) {
         setIsOtpValid(true);
       } else {
@@ -115,20 +156,27 @@ export const ChangePasswordValidationProvider = () => {
 
   const changePassword = async (password: string, confirmPassword: string) => {
     try {
-      const response = await fetch(
-        import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION +
-          "change/password/validation/changePassword",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ password, confirmPassword }),
-        }
-      );
+      // const response = await fetch(
+      //   import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION +
+      //     "change/password/validation/changePassword",
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({ password, confirmPassword }),
+      //   }
+      // );
 
-      const data = await response.json();
+      // const data = await response.json();
+      
+      //Mock API Response
+      const data = {
+        code: 200,
+        message: "Password Changed",
+      }
+      
       if (data.code === 200) {
         setIsNewPasswordValid(true);
       } else {

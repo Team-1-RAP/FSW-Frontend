@@ -41,7 +41,7 @@ export const PasswordVerification = () => {
       setIsRefresh;
       navigate("email");
     }
-  }, [isCurrentPasswordValid, navigate, isRefresh, setIsRefresh]);
+  }, [isCurrentPasswordValid, isRefresh]);
 
   const onSubmit = async (data: IPasswordVerificationForm) => {
     setErrorMessage("");

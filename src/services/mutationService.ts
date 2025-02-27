@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export interface IMutation {
   date: string;
   amount: number;
@@ -31,30 +32,36 @@ export const fetchMutations = async (
   type?: string
 ): Promise<IMutationResponse> => {
   try {
-    const url = new URL(
-      import.meta.env.VITE_API_BASE_URL +
-        `api/v1/mutations/${noAccount}?month=${month}`
-    );
+    // const url = new URL(
+    //   import.meta.env.VITE_API_BASE_URL +
+    //     `api/v1/mutations/${noAccount}?month=${month}`
+    // );
 
-    if (page) {
-      url.searchParams.append("page", page.toString());
-    }
+    // if (page) {
+    //   url.searchParams.append("page", page.toString());
+    // }
 
-    if (size) {
-      url.searchParams.append("size", size.toString());
-    }
+    // if (size) {
+    //   url.searchParams.append("size", size.toString());
+    // }
 
-    if (type) {
-      url.searchParams.append("type", type.toString());
-    }
+    // if (type) {
+    //   url.searchParams.append("type", type.toString());
+    // }
 
-    const response = await fetch(url.toString(), {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    // const response = await fetch(url.toString(), {
+    //   method: "GET",
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+
+    //Mock API
+    const response = await fetch("/mockApi/mutations.json");
+
+    // Simulate API response delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     if (!response.ok) {
       throw new Error("Failed to fetch mutations");
@@ -80,17 +87,23 @@ export const fetchSeparateMutations = async (
   size: number
 ): Promise<IMutation[]> => {
   try {
-    const response = await fetch(
-      import.meta.env.VITE_API_BASE_URL +
-        `api/v1/mutations/${noAccount}?month=${month}&size=${size}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    // const response = await fetch(
+    //   import.meta.env.VITE_API_BASE_URL +
+    //     `api/v1/mutations/${noAccount}?month=${month}&size=${size}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+
+    //Mock API
+    const response = await fetch("/mockApi/mutations.json");
+
+    // Simulate API response delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     if (!response.ok) {
       throw new Error("Failed to fetch mutations");
@@ -99,7 +112,7 @@ export const fetchSeparateMutations = async (
     const data = await response.json();
 
     if (data.status) {
-      return data.data.pagingData;
+      return data.data.pagingData.slice(0, size);
     } else {
       throw new Error(data.message || "Failed to fetch mutations");
     }
@@ -114,17 +127,23 @@ export const fetchMutationAmounts = async (
   noAccount: string
 ): Promise<IMutationAmount> => {
   try {
-    const response = await fetch(
-      import.meta.env.VITE_API_BASE_URL +
-        `api/v1/mutations/${noAccount}/amounts`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    // const response = await fetch(
+    //   import.meta.env.VITE_API_BASE_URL +
+    //     `api/v1/mutations/${noAccount}/amounts`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+
+    //Mock API
+    const response = await fetch(`/mockApi/mutations/${noAccount}/amounts.json`);
+
+    // Simulate API response delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     if (!response.ok) {
       throw new Error("Failed to fetch mutation amount");

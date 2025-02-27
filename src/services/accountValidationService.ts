@@ -33,17 +33,20 @@ export const validateAndFetchAccountData = async (accountNumber: string, token: 
     setError(null);
 
     try {
-        const response = await fetch(import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "transfer/validation/bank", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-                bank_id: 1,
-                recipient_no_account: accountNumber,
-            }),
-        });
+        // const response = await fetch(import.meta.env.VITE_API_BASE_URL_NON_TRANSACTION + "transfer/validation/bank", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         Authorization: `Bearer ${token}`,
+        //     },
+        //     body: JSON.stringify({
+        //         bank_id: 1,
+        //         recipient_no_account: accountNumber,
+        //     }),
+        // });
+
+        //Mock API
+        const response = await fetch("/mockApi/transfer/validation.json");
 
         if (!response.ok) {
             if (response.status === 404) {

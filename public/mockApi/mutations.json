@@ -1,0 +1,112 @@
+{
+    "status": 200,
+    "data": {
+      "currentPage": 1,
+      "totalPage": 1,
+      "size": 10,
+      "totalItem": 2,
+      "pagingData": [
+        {
+          "date": "2024-02-20",
+          "amount": 5000,
+          "transactionType": "Transfer",
+          "recipientTargetAccount": "987654321",
+          "transactionStatus": "Completed",
+          "mutationType": "Outgoing",
+          "recipientName": "Jane Doe",
+          "type": "Debit"
+        },
+        {
+          "date": "2024-02-19",
+          "amount": 10000,
+          "transactionType": "Deposit",
+          "recipientTargetAccount": "123456789",
+          "transactionStatus": "Completed",
+          "mutationType": "Incoming",
+          "recipientName": "John Doe",
+          "type": "Credit"
+        },
+        {
+          "date": "2024-02-18",
+          "amount": 7500,
+          "transactionType": "Withdrawal",
+          "recipientTargetAccount": "ATM-98765",
+          "transactionStatus": "Completed",
+          "mutationType": "Outgoing",
+          "recipientName": "ATM Withdrawal",
+          "type": "Debit"
+        },
+        {
+          "date": "2024-02-17",
+          "amount": 2000,
+          "transactionType": "Bill Payment",
+          "recipientTargetAccount": "Electric Company",
+          "transactionStatus": "Completed",
+          "mutationType": "Outgoing",
+          "recipientName": "Electric Bill",
+          "type": "Debit"
+        },
+        {
+          "date": "2024-02-16",
+          "amount": 15000,
+          "transactionType": "Salary",
+          "recipientTargetAccount": "Company XYZ",
+          "transactionStatus": "Completed",
+          "mutationType": "Incoming",
+          "recipientName": "Payroll Deposit",
+          "type": "Credit"
+        },
+        {
+          "date": "2024-02-15",
+          "amount": 3500,
+          "transactionType": "Transfer",
+          "recipientTargetAccount": "555888999",
+          "transactionStatus": "Pending",
+          "mutationType": "Outgoing",
+          "recipientName": "Alice Smith",
+          "type": "Debit"
+        },
+        {
+          "date": "2024-02-14",
+          "amount": 5000,
+          "transactionType": "Shopping",
+          "recipientTargetAccount": "Online Store",
+          "transactionStatus": "Completed",
+          "mutationType": "Outgoing",
+          "recipientName": "Amazon Purchase",
+          "type": "Debit"
+        },
+        {
+          "date": "2024-02-13",
+          "amount": 12000,
+          "transactionType": "Loan Repayment",
+          "recipientTargetAccount": "Bank XYZ",
+          "transactionStatus": "Completed",
+          "mutationType": "Outgoing",
+          "recipientName": "Personal Loan Payment",
+          "type": "Debit"
+        },
+        {
+          "date": "2024-02-12",
+          "amount": 2500,
+          "transactionType": "Transfer",
+          "recipientTargetAccount": "111222333",
+          "transactionStatus": "Failed",
+          "mutationType": "Outgoing",
+          "recipientName": "Bob Johnson",
+          "type": "Debit"
+        },
+        {
+          "date": "2024-02-11",
+          "amount": 8000,
+          "transactionType": "Bonus",
+          "recipientTargetAccount": "Company ABC",
+          "transactionStatus": "Completed",
+          "mutationType": "Incoming",
+          "recipientName": "Yearly Bonus",
+          "type": "Credit"
+        }
+      ]
+    }
+  }
+  

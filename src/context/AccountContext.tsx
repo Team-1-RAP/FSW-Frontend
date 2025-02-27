@@ -46,15 +46,19 @@ export const AccountProvider: React.FC = () => {
     const [activeAccountIndex, setActiveAccountIndex] = useState<number>(0);
     const [user, setUser] = useState<IUserInfo | null>(null);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const fetchAccounts = async (token: string) => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/v1/accounts`, {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            });
+            // const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/v1/accounts`, {
+            //     method: "GET",
+            //     headers: {
+            //         Authorization: `Bearer ${token}`,
+            //         "Content-Type": "application/json",
+            //     },
+            // });
+
+            //Mock API
+            const response = await fetch("/mockApi/accounts.json");
 
             if (!response.ok) {
                 throw new Error("Failed to fetch accounts");
@@ -71,15 +75,19 @@ export const AccountProvider: React.FC = () => {
         }
     };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
     const fetchUserInfo = async (token: string) => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/v1/profiles`, {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            });
+            // const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/v1/profiles`, {
+            //     method: "GET",
+            //     headers: {
+            //         Authorization: `Bearer ${token}`,
+            //         "Content-Type": "application/json",
+            //     },
+            // });
+
+            //Mock API
+            const response = await fetch("/mockApi/profiles.json");
 
             if (!response.ok) {
                 throw new Error("Failed to fetch profile");

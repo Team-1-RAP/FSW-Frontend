@@ -1,0 +1,12 @@
+{
+    "status": true,
+    "data": {
+      "username": "johndoe",
+      "phoneNumber": "+62123456789",
+      "email": "johndoe@example.com",
+      "nik": "1234567890123456",
+      "bornDate": "1990-01-15",
+      "address": "Jl. Sudirman No. 10, Jakarta"
+    }
+  }
+  

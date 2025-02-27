@@ -1,0 +1,7 @@
+{
+   "status": 200,
+   "message": "Login Success",
+    "data": {
+      "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZW1vLXVzZXIiLCJpYXQiOjE3MDkyODAwMDAsImV4cCI6MzAyNDYzMjAwMCwiZnVsbF9uYW1lIjoiRGVtbyBVc2VyIn0.kdwMU2obo9G-C1_QqoDd9VUcYiJ5NR0B9ZGSdMF_AVM"
+    } 
+}

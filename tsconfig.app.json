@@ -8,6 +8,10 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
+    //Json File Handler for ts
+    "resolvePackageJsonImports": true,
+    "esModuleInterop": true,
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

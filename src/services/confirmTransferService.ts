@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 interface TransferData {
     accountNo: string;
     recipientAccountNo: string;
     recipientBankName: string;
+    recipientFullName: string;
     amount: number;
     pin: string;
     description: string;
@@ -81,25 +83,44 @@ export const submitTransfer = async (
     setIsModalVisible: SetIsModalVisibleFunction
 ): Promise<void> => {
     try {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/v1/bank-transfers`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(transferData),
-        });
+        // const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/v1/bank-transfers`, {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         Authorization: `Bearer ${token}`,
+        //     },
+        //     body: JSON.stringify(transferData),
+        // });
 
-        if (!response.ok) {
-            await handleError(response, setAlert, setIsAlertVisible, setIsModalVisible);
-            return;
+        // if (!response.ok) {
+        //     await handleError(response, setAlert, setIsAlertVisible, setIsModalVisible);
+        //     return;
+        // }
+
+        //Mock API
+        const response = {
+            status:200,
+            data: {
+                noRef: "1231230009123",
+                date: new Date().toString(),
+                recipientFullName: transferData.recipientFullName,
+                recipientBankName: transferData.recipientBankName,
+                recipientBankAccountNo: transferData.recipientAccountNo,
+                amount: transferData.amount,
+            }
         }
+
+        // Simulate API response delay
+        await new Promise((resolve) => setTimeout(resolve, 500));
 
         // Reset attempt count on successful transfer
         resetAttemptCount();
 
         // Proses sukses
-        const { data }: { data: TransferResponse } = await response.json();
+        // const { data }: { data: TransferResponse } = await response.json();
+
+        //Testing only
+        const { data }: { data: TransferResponse } = await response;
         navigate("/transfer/success", {
             state: {
                 noRef: data.noRef,
