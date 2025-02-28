@@ -22,7 +22,7 @@ export const OtpForm = ({ onSubmit, email, errorMessage }: OtpFormProps) => {
   } = useForm<IOtpForm>({
     resolver: yupResolver(OtpSchema),
     defaultValues: {
-      otp: "",
+      otp: "123456", //Autofill for demo
     },
   })
 

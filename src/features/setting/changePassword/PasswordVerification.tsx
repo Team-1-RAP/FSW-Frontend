@@ -25,7 +25,7 @@ export const PasswordVerification = () => {
   } = useForm<IPasswordVerificationForm>({
     resolver: yupResolver(PasswordVerificationSchema),
     defaultValues: {
-      password: "",
+      password: "password", //Autofill for demo
     },
   });
   const [show, setShow] = useToggle(false);

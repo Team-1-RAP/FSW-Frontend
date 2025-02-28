@@ -22,7 +22,7 @@ export const EmailForm = ({ onSubmit, errorMessage }: EmailFormProps) => {
   } = useForm<IEmailForm>({
     resolver: yupResolver(EmailSchema),
     defaultValues: {
-      email: "",
+      email: "johndoe@example.com", //Autofill for demo
     },
   });
 

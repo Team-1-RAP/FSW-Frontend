@@ -17,7 +17,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginError }) => {
     const [showPassword, toggleShowPassword] = useToggle(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [isAlertVisible, setIsAlertVisible] = useState(false);
-    const [formData, setFormData] = useState({ username: "", password: "" });
+    const [formData, setFormData] = useState({ username: "johndoe", password: "password" }); //Autofill for demo
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
